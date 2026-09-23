@@ -1,6 +1,6 @@
 # Local tool snapshots
 
-These are local snapshots included in the study branch, not a verified set of separate public tool repositories.
+These are local study snapshots included in this repository. No separate tool repositories are planned.
 
 | Directory | Source cell | Recorded check |
 | --- | --- | --- |

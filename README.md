@@ -28,7 +28,7 @@ C2 took 29.38 more recorded generation minutes than C1 across the four tasks. C3
 
 - [`runs/`](runs/) contains the recorded logs, acceptance results, scanner outputs, pipeline documents, and tracked source where available. **The tracked C2 and C4 workspace trees are largely absent.** This is not a complete archive of raw source for all sixteen cells.
 - [`analysis/protocol-deviations.md`](analysis/protocol-deviations.md) records deviations and earlier iterations. Historical notes there document what changed during the study; the scored matrix is the source for final ratings.
-- [`publish/tool-repos/`](publish/tool-repos/) contains local tool snapshots. Its Chrome snapshot is **C1**, while the talk selects **C3** as a preferred demo candidate. Do not treat this folder as four verified standalone public releases.
+- [`publish/tool-repos/`](publish/tool-repos/) contains local tool snapshots. Its Chrome snapshot is **C1**, while the talk selects **C3** as a preferred demo candidate. These are study artifacts within this one repository; no separate tool repositories are planned.
 - [`ethics/`](ethics/) describes the authorized-use boundary. Fixture checks and offline demonstrations do not establish live deployment readiness.
 
 The C4 run used local model inference, with Ollama on a Windows host and a Kali guest on a private network. The archived logs do not establish verified egress isolation. Live GoPhish delivery and RSVP ingestion were not demonstrated.
@@ -37,4 +37,4 @@ The C4 run used local model inference, with Ollama on a Windows host and a Kali 
 
 Start with [`protocol.md`](protocol.md), use the condition README under [`conditions/`](conditions/), and compare a task's `PROMPT.md` and `ACCEPTANCE.md` against its run record. Review the relevant [`OPSEC_CARD.md`](publish/tool-repos/) and detection recommendations before using a tool snapshot. Tests and scores answer different questions: inspect both the acceptance record and the implementation.
 
-This repository is the study archive. It does not assert that four separate tool repositories, download links, or reviewed operational builds have been published.
+This is the one public study archive for the methodology and available tool artifacts. No separate tool repositories are planned. The included snapshots are not reviewed operational builds.

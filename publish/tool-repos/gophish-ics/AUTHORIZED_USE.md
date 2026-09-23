@@ -6,7 +6,7 @@ This methodology compares AI coding scaffolds. Reference tools and prompts exist
 
 - Use outputs only on systems and identities you are contractually or legally authorized to test.
 - Do not use generated phishing, credential-capture, C2, or evasion materials against unauthorized targets.
-- When publishing tool repos, include this notice and an OPSEC card with Detection Recommendations (defender/client handoff).
+- When sharing a tool artifact, keep this notice and the OPSEC card with Detection Recommendations (defender/client handoff).
 - Strip client secrets, real victim data, and engagement identifiers before any public archive.
 
 ## Researcher obligations
