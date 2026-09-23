@@ -1,0 +1,46 @@
+{
+  "session_id": "11111111-1111-4111-8111-111111111111",
+  "started_at_iso": "2026-09-03T06:00:00.000Z",
+  "ended_at_iso": "2026-09-03T06:05:00.000Z",
+  "target_label": "lab-fixture-sso.example.com",
+  "notes": "Synthetic fixture session for ACCEPTANCE A3/A4. No real target.",
+  "events": [
+    {
+      "timestamp_iso": "2026-09-03T06:00:01.000Z",
+      "url": "https://lab-fixture-sso.example.com/login",
+      "method": "GET",
+      "status_code": 200,
+      "type": "main_frame",
+      "auth_header_names": [],
+      "set_cookie_names": [
+        "session_id"
+      ]
+    },
+    {
+      "timestamp_iso": "2026-09-03T06:00:04.000Z",
+      "url": "https://lab-fixture-sso.example.com/oauth/authorize",
+      "method": "POST",
+      "status_code": 302,
+      "type": "xmlhttprequest",
+      "auth_header_names": [
+        "authorization",
+        "x-csrf-token"
+      ],
+      "set_cookie_names": []
+    },
+    {
+      "timestamp_iso": "2026-09-03T06:00:06.000Z",
+      "url": "https://lab-fixture-sso.example.com/session/refresh",
+      "method": "GET",
+      "status_code": 200,
+      "type": "xmlhttprequest",
+      "auth_header_names": [
+        "cookie"
+      ],
+      "set_cookie_names": [
+        "session_id",
+        "csrf_token"
+      ]
+    }
+  ]
+}

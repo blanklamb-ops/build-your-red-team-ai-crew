@@ -1,0 +1,12 @@
+note[print-usage]: print() call — confirm CLI status only.
+    ┌─ src/main.py:340:13
+    │
+340 │             print(f"error: {e}", file=sys.stderr)
+    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call — confirm CLI status only.
+    ┌─ src/main.py:342:9
+    │
+342 │         print(json.dumps(stats, indent=2))
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+

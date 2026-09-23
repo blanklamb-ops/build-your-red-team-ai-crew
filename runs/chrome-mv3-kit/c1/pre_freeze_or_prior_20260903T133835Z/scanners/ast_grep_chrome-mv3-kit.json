@@ -1,0 +1,221 @@
+[
+{
+  "text": "chrome.scripting.executeScript({\n      target: { tabId: tab.id },\n      func: () => {\n        // Sanitize: strip <script> content and inline event handlers so a\n        // reopened snapshot cannot re-execute page logic. This is a static\n        // offline-review artifact, not a functional clone.\n        const doc = document.documentElement.cloneNode(true);\n        doc.querySelectorAll(\"script\").forEach((el) => el.remove());\n        doc.querySelectorAll(\"*\").forEach((el) => {\n          [...el.attributes].forEach((attr) => {\n            if (attr.name.toLowerCase().startsWith(\"on\")) el.removeAttribute(attr.name);\n          });\n        });\n        return {\n          html: \"<!DOCTYPE html>\\n\" + doc.outerHTML,\n          title: document.title,\n          url: location.href,\n          scriptsStripped: document.querySelectorAll(\"script\").length,\n        };\n      },\n    })",
+  "range": {
+    "byteOffset": {
+      "start": 11790,
+      "end": 12664
+    },
+    "start": {
+      "line": 337,
+      "column": 24
+    },
+    "end": {
+      "line": 357,
+      "column": 6
+    }
+  },
+  "file": "extension/background.js",
+  "lines": "    [injection] = await chrome.scripting.executeScript({\n      target: { tabId: tab.id },\n      func: () => {\n        // Sanitize: strip <script> content and inline event handlers so a\n        // reopened snapshot cannot re-execute page logic. This is a static\n        // offline-review artifact, not a functional clone.\n        const doc = document.documentElement.cloneNode(true);\n        doc.querySelectorAll(\"script\").forEach((el) => el.remove());\n        doc.querySelectorAll(\"*\").forEach((el) => {\n          [...el.attributes].forEach((attr) => {\n            if (attr.name.toLowerCase().startsWith(\"on\")) el.removeAttribute(attr.name);\n          });\n        });\n        return {\n          html: \"<!DOCTYPE html>\\n\" + doc.outerHTML,\n          title: document.title,\n          url: location.href,\n          scriptsStripped: document.querySelectorAll(\"script\").length,\n        };\n      },\n    });",
+  "charCount": {
+    "leading": 24,
+    "trailing": 1
+  },
+  "language": "JavaScript",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "{\n      target: { tabId: tab.id },\n      func: () => {\n        // Sanitize: strip <script> content and inline event handlers so a\n        // reopened snapshot cannot re-execute page logic. This is a static\n        // offline-review artifact, not a functional clone.\n        const doc = document.documentElement.cloneNode(true);\n        doc.querySelectorAll(\"script\").forEach((el) => el.remove());\n        doc.querySelectorAll(\"*\").forEach((el) => {\n          [...el.attributes].forEach((attr) => {\n            if (attr.name.toLowerCase().startsWith(\"on\")) el.removeAttribute(attr.name);\n          });\n        });\n        return {\n          html: \"<!DOCTYPE html>\\n\" + doc.outerHTML,\n          title: document.title,\n          url: location.href,\n          scriptsStripped: document.querySelectorAll(\"script\").length,\n        };\n      },\n    }",
+          "range": {
+            "byteOffset": {
+              "start": 11821,
+              "end": 12663
+            },
+            "start": {
+              "line": 337,
+              "column": 55
+            },
+            "end": {
+              "line": 357,
+              "column": 5
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "chrome-scripting-executescript",
+  "severity": "warning",
+  "note": null,
+  "message": "chrome.scripting.executeScript found - expected only for R5's page-snapshot capture and the labeled training-awareness banner injection, both scoped to the active tab and triggered by an explicit popup click. Confirm any other use stays within lab-authorized targets and does not rewrite forms or inject collectors (Non-goals in PROMPT.md).",
+  "labels": [
+    {
+      "text": "chrome.scripting.executeScript({\n      target: { tabId: tab.id },\n      func: () => {\n        // Sanitize: strip <script> content and inline event handlers so a\n        // reopened snapshot cannot re-execute page logic. This is a static\n        // offline-review artifact, not a functional clone.\n        const doc = document.documentElement.cloneNode(true);\n        doc.querySelectorAll(\"script\").forEach((el) => el.remove());\n        doc.querySelectorAll(\"*\").forEach((el) => {\n          [...el.attributes].forEach((attr) => {\n            if (attr.name.toLowerCase().startsWith(\"on\")) el.removeAttribute(attr.name);\n          });\n        });\n        return {\n          html: \"<!DOCTYPE html>\\n\" + doc.outerHTML,\n          title: document.title,\n          url: location.href,\n          scriptsStripped: document.querySelectorAll(\"script\").length,\n        };\n      },\n    })",
+      "range": {
+        "byteOffset": {
+          "start": 11790,
+          "end": 12664
+        },
+        "start": {
+          "line": 337,
+          "column": 24
+        },
+        "end": {
+          "line": 357,
+          "column": 6
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "chrome.scripting.executeScript({\n    target: { tabId: tab.id },\n    func: (text) => {\n      const banner = document.createElement(\"div\");\n      banner.textContent = text;\n      banner.setAttribute(\"data-chrome-mv3-kit-training-demo\", \"true\");\n      Object.assign(banner.style, {\n        position: \"fixed\",\n        top: \"0\",\n        left: \"0\",\n        right: \"0\",\n        zIndex: \"2147483647\",\n        background: \"#b00020\",\n        color: \"#fff\",\n        font: \"bold 14px sans-serif\",\n        padding: \"8px\",\n        textAlign: \"center\",\n      });\n      document.documentElement.appendChild(banner);\n      setTimeout(() => banner.remove(), 8000);\n    },\n    args: [mod.bannerText],\n  })",
+  "range": {
+    "byteOffset": {
+      "start": 15413,
+      "end": 16099
+    },
+    "start": {
+      "line": 436,
+      "column": 8
+    },
+    "end": {
+      "line": 458,
+      "column": 4
+    }
+  },
+  "file": "extension/background.js",
+  "lines": "  await chrome.scripting.executeScript({\n    target: { tabId: tab.id },\n    func: (text) => {\n      const banner = document.createElement(\"div\");\n      banner.textContent = text;\n      banner.setAttribute(\"data-chrome-mv3-kit-training-demo\", \"true\");\n      Object.assign(banner.style, {\n        position: \"fixed\",\n        top: \"0\",\n        left: \"0\",\n        right: \"0\",\n        zIndex: \"2147483647\",\n        background: \"#b00020\",\n        color: \"#fff\",\n        font: \"bold 14px sans-serif\",\n        padding: \"8px\",\n        textAlign: \"center\",\n      });\n      document.documentElement.appendChild(banner);\n      setTimeout(() => banner.remove(), 8000);\n    },\n    args: [mod.bannerText],\n  });",
+  "charCount": {
+    "leading": 8,
+    "trailing": 1
+  },
+  "language": "JavaScript",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "{\n    target: { tabId: tab.id },\n    func: (text) => {\n      const banner = document.createElement(\"div\");\n      banner.textContent = text;\n      banner.setAttribute(\"data-chrome-mv3-kit-training-demo\", \"true\");\n      Object.assign(banner.style, {\n        position: \"fixed\",\n        top: \"0\",\n        left: \"0\",\n        right: \"0\",\n        zIndex: \"2147483647\",\n        background: \"#b00020\",\n        color: \"#fff\",\n        font: \"bold 14px sans-serif\",\n        padding: \"8px\",\n        textAlign: \"center\",\n      });\n      document.documentElement.appendChild(banner);\n      setTimeout(() => banner.remove(), 8000);\n    },\n    args: [mod.bannerText],\n  }",
+          "range": {
+            "byteOffset": {
+              "start": 15444,
+              "end": 16098
+            },
+            "start": {
+              "line": 436,
+              "column": 39
+            },
+            "end": {
+              "line": 458,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "chrome-scripting-executescript",
+  "severity": "warning",
+  "note": null,
+  "message": "chrome.scripting.executeScript found - expected only for R5's page-snapshot capture and the labeled training-awareness banner injection, both scoped to the active tab and triggered by an explicit popup click. Confirm any other use stays within lab-authorized targets and does not rewrite forms or inject collectors (Non-goals in PROMPT.md).",
+  "labels": [
+    {
+      "text": "chrome.scripting.executeScript({\n    target: { tabId: tab.id },\n    func: (text) => {\n      const banner = document.createElement(\"div\");\n      banner.textContent = text;\n      banner.setAttribute(\"data-chrome-mv3-kit-training-demo\", \"true\");\n      Object.assign(banner.style, {\n        position: \"fixed\",\n        top: \"0\",\n        left: \"0\",\n        right: \"0\",\n        zIndex: \"2147483647\",\n        background: \"#b00020\",\n        color: \"#fff\",\n        font: \"bold 14px sans-serif\",\n        padding: \"8px\",\n        textAlign: \"center\",\n      });\n      document.documentElement.appendChild(banner);\n      setTimeout(() => banner.remove(), 8000);\n    },\n    args: [mod.bannerText],\n  })",
+      "range": {
+        "byteOffset": {
+          "start": 15413,
+          "end": 16099
+        },
+        "start": {
+          "line": 436,
+          "column": 8
+        },
+        "end": {
+          "line": 458,
+          "column": 4
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fetch(url)",
+  "range": {
+    "byteOffset": {
+      "start": 14333,
+      "end": 14343
+    },
+    "start": {
+      "line": 403,
+      "column": 22
+    },
+    "end": {
+      "line": 403,
+      "column": 32
+    }
+  },
+  "file": "extension/background.js",
+  "lines": "    const res = await fetch(url);",
+  "charCount": {
+    "leading": 22,
+    "trailing": 1
+  },
+  "language": "JavaScript",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "url",
+          "range": {
+            "byteOffset": {
+              "start": 14339,
+              "end": 14342
+            },
+            "start": {
+              "line": 403,
+              "column": 28
+            },
+            "end": {
+              "line": 403,
+              "column": 31
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "unexpected-network-call",
+  "severity": "error",
+  "note": null,
+  "message": "fetch()/XMLHttpRequest usage found - this kit must not exfiltrate captured auth-flow metadata off-host by default (R2/README \"Data handling\"). The only expected call site is extension/background.js's getLabUnsafeModules(), which fetches the extension's own bundled config/lab_unsafe_modules.json via chrome.runtime.getURL (same-origin, no network egress). Any other call site should be treated as a finding.",
+  "labels": [
+    {
+      "text": "fetch(url)",
+      "range": {
+        "byteOffset": {
+          "start": 14333,
+          "end": 14343
+        },
+        "start": {
+          "line": 403,
+          "column": 22
+        },
+        "end": {
+          "line": 403,
+          "column": 32
+        }
+      },
+      "style": "primary"
+    }
+  ]
+}
+]

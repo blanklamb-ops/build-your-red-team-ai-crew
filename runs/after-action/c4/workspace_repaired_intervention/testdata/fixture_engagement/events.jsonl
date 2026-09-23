@@ -1,0 +1,4 @@
+{"timestamp": "2026-08-01T10:00:00Z", "asset": "host-a", "message": "session start"}
+{"timestamp": "2026-08-01T10:05:00Z", "asset": "host-a", "message": "observed auth redirect"}
+{"timestamp": "2026-08-01T10:20:00Z", "asset": "mail-1", "message": "campaign send batch=1"}
+{"timestamp": "2026-08-01T11:00:00Z", "asset": "host-b", "message": "planted secret AKIAIOSFODNN7EXAMPLE password=SuperSecret123"}

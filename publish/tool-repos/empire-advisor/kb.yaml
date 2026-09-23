@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "description": "Curated, read-only alternatives. Placeholders require operator review and authorized scope.",
+  "suggestions": [
+    {
+      "id": "transparent-powershell",
+      "title": "Use a reviewable local script",
+      "template": "powershell.exe -NoProfile -File \"<approved_local_script.ps1>\"",
+      "rationale": "A version-controlled local script is reviewable before a separate, human-approved submission; this template does not imply stealth.",
+      "citation": {
+        "title": "Microsoft: about_PowerShell_exe",
+        "url": "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_powershell_exe"
+      }
+    },
+    {
+      "id": "verify-approved-local-file",
+      "title": "Verify a pre-staged approved file",
+      "template": "Get-FileHash -Algorithm SHA256 -Path \"<approved_local_file>\"",
+      "rationale": "Validate an engagement-approved local artifact instead of combining retrieval and interpretation in one command.",
+      "citation": {
+        "title": "Microsoft: Get-FileHash",
+        "url": "https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-filehash"
+      }
+    },
+    {
+      "id": "inspect-local-account-metadata",
+      "title": "Inspect one approved local account",
+      "template": "Get-LocalUser -Name \"<approved_local_user>\" | Select-Object Name,Enabled,LastLogon",
+      "rationale": "Read limited account metadata without accessing credential material.",
+      "citation": {
+        "title": "Microsoft: Get-LocalUser",
+        "url": "https://learn.microsoft.com/powershell/module/microsoft.powershell.localaccounts/get-localuser"
+      }
+    },
+    {
+      "id": "inspect-protection-status",
+      "title": "Read endpoint protection status",
+      "template": "Get-MpComputerStatus | Select-Object AntivirusEnabled,RealTimeProtectionEnabled",
+      "rationale": "Read status without changing security-control configuration.",
+      "citation": {
+        "title": "Microsoft: Get-MpComputerStatus",
+        "url": "https://learn.microsoft.com/powershell/module/defender/get-mpcomputerstatus"
+      }
+    },
+    {
+      "id": "sample-event-log",
+      "title": "Read a bounded event sample",
+      "template": "Get-WinEvent -LogName \"<approved_log_name>\" -MaxEvents 20",
+      "rationale": "Inspect a bounded sample while preserving event evidence.",
+      "citation": {
+        "title": "Microsoft: Get-WinEvent",
+        "url": "https://learn.microsoft.com/powershell/module/microsoft.powershell.diagnostics/get-winevent"
+      }
+    },
+    {
+      "id": "inspect-shadow-copies",
+      "title": "Read shadow-copy metadata",
+      "template": "Get-CimInstance -ClassName Win32_ShadowCopy | Select-Object ID,InstallDate,VolumeName",
+      "rationale": "Read recovery metadata without deleting or modifying shadow copies.",
+      "citation": {
+        "title": "Microsoft: Win32_ShadowCopy class",
+        "url": "https://learn.microsoft.com/windows/win32/cimwin32prov/win32-shadowcopy"
+      }
+    },
+    {
+      "id": "query-approved-domain-user",
+      "title": "Query one approved domain identity",
+      "template": "Get-ADUser -Identity \"<approved_user>\" -Properties Enabled | Select-Object SamAccountName,Enabled",
+      "rationale": "Constrain directory lookup to a named identity that is already in the authorized test scope.",
+      "citation": {
+        "title": "Microsoft: Get-ADUser",
+        "url": "https://learn.microsoft.com/powershell/module/activedirectory/get-aduser"
+      }
+    },
+    {
+      "id": "query-approved-group",
+      "title": "Query one approved group",
+      "template": "Get-ADGroupMember -Identity \"<approved_group>\" | Select-Object Name,ObjectClass",
+      "rationale": "Use a specific, engagement-approved group rather than an indiscriminate domain query.",
+      "citation": {
+        "title": "Microsoft: Get-ADGroupMember",
+        "url": "https://learn.microsoft.com/powershell/module/activedirectory/get-adgroupmember"
+      }
+    },
+    {
+      "id": "query-approved-process",
+      "title": "Query a specific approved process",
+      "template": "Get-CimInstance -ClassName Win32_Process -Filter \"ProcessId = <approved_pid>\" | Select-Object ProcessId,Name",
+      "rationale": "Limit collection to a process identifier justified by the engagement.",
+      "citation": {
+        "title": "Microsoft: Get-CimInstance",
+        "url": "https://learn.microsoft.com/powershell/module/cimcmdlets/get-ciminstance"
+      }
+    },
+    {
+      "id": "query-approved-interface",
+      "title": "Query one approved network interface",
+      "template": "Get-NetIPConfiguration -InterfaceAlias \"<approved_interface>\"",
+      "rationale": "Limit network configuration collection to the interface relevant to the test.",
+      "citation": {
+        "title": "Microsoft: Get-NetIPConfiguration",
+        "url": "https://learn.microsoft.com/powershell/module/nettcpip/get-netipconfiguration"
+      }
+    },
+    {
+      "id": "query-approved-path",
+      "title": "List one bounded approved path",
+      "template": "Get-ChildItem -LiteralPath \"<approved_path>\" -Depth 1",
+      "rationale": "Bound file discovery to a reviewed path and shallow depth.",
+      "citation": {
+        "title": "Microsoft: Get-ChildItem",
+        "url": "https://learn.microsoft.com/powershell/module/microsoft.powershell.management/get-childitem"
+      }
+    },
+    {
+      "id": "query-current-identity",
+      "title": "Read the current user identifier",
+      "template": "whoami.exe /user",
+      "rationale": "Return the current identity and SID without collecting the full token, group, and privilege set.",
+      "citation": {
+        "title": "Microsoft: whoami",
+        "url": "https://learn.microsoft.com/windows-server/administration/windows-commands/whoami"
+      }
+    },
+    {
+      "id": "query-approved-domain-controller",
+      "title": "Query one approved domain controller",
+      "template": "Get-ADDomainController -Identity \"<approved_dc>\" | Select-Object HostName,Site",
+      "rationale": "Constrain directory discovery to a controller already authorized in scope.",
+      "citation": {
+        "title": "Microsoft: Get-ADDomainController",
+        "url": "https://learn.microsoft.com/powershell/module/activedirectory/get-addomaincontroller"
+      }
+    }
+  ]
+}

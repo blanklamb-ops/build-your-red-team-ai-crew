@@ -1,0 +1,13 @@
+{
+  "name": "chrome-mv3-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Authorized-lab MV3 authentication-flow documentation kit",
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

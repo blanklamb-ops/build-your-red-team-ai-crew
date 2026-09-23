@@ -1,0 +1,36 @@
+{
+  "synthetic_fixture": true,
+  "engagement_name": "Northstar Laboratory Security Review",
+  "client_name": "Northstar Lab",
+  "period": "2026-08-12 12:00–13:00 UTC",
+  "executive_summary": "The authorized exercise validated monitoring coverage and response coordination. Draft coordination contact: analyst@example.test.",
+  "findings": [
+    {
+      "title": "Administrative authentication visibility",
+      "summary": "Monitoring identified repeated administrative authentication activity and enabled a timely operator response.",
+      "recommendation": "Centralize administrative authentication logs and alert on unusual source-to-asset combinations."
+    },
+    {
+      "title": "Service account review cadence",
+      "summary": "A synthetic service credential appeared in evidence collected during the approved test window.",
+      "recommendation": "Review service account use, ownership, and rotation on a documented schedule."
+    }
+  ],
+  "detection_recommendations": [
+    "Alert on bursts of failed and successful administrative authentication from the same source.",
+    "Correlate process creation with network connections on high-value servers.",
+    "Review privileged service-account activity outside approved maintenance windows."
+  ],
+  "successes": [
+    "Operators paused activity when the monitoring team requested validation.",
+    "Both endpoint and gateway exports used stable UTC timestamps."
+  ],
+  "failures": [
+    "One JSONL record was malformed and required source-side correction.",
+    "The database alias was not represented in the asset inventory."
+  ],
+  "tool_gaps": [
+    "The collector intentionally does not infer hostname aliases.",
+    "Regex redaction requires engagement-specific review."
+  ]
+}

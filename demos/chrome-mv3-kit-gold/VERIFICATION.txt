@@ -1,0 +1,55 @@
+CHROME MV3 KIT - VERIFICATION CHECKLIST
+========================================
+
+Implementation Date: 2026-09-04
+ROOTCON 20 - Prompt Validation Study (C1)
+
+✓ CORE COMPONENTS
+- [x] Extension manifest.json (MV3, optional host permissions)
+- [x] Service worker with MV3 persistence
+- [x] Popup UI with host-access gate
+- [x] Content script for form field capture (names only, no values)
+- [x] Shared utilities (idempotent normalization)
+
+✓ GENERATORS
+- [x] Phishlet generator (capture-complete, Evilginx 3.x)
+- [x] Traffic pattern exporter
+- [x] YAML validator (js-yaml + Ajv)
+
+✓ SCHEMAS & FIXTURES
+- [x] phishlet-schema.json
+- [x] synthetic-session.json (multi-origin with form fields)
+- [x] secret-fixture.json (JWT rejection test)
+
+✓ TESTS (6/6 PASSED)
+- [x] Origin normalization (idempotent, rejection)
+- [x] MV3 lifecycle persistence
+- [x] Form field capture (no values)
+- [x] Phishlet generator
+- [x] Secret rejection
+- [x] YAML validator
+
+✓ DOCUMENTATION
+- [x] README.md (installation, usage, Grant→Reload→Start flow)
+- [x] OPSEC_CARD.md (10 detection categories)
+- [x] AUTHORIZED_USE.md
+- [x] IMPLEMENTATION_SUMMARY.md
+
+✓ SCANNER OUTPUTS
+- [x] Semgrep output archived
+- [x] ast-grep output archived
+
+✓ END-TO-END VALIDATION
+- [x] Phishlet generation from fixture
+- [x] Schema validation passes
+- [x] Traffic pattern generation
+- [x] auth_tokens populated from Set-Cookie names
+- [x] credentials populated from form field names
+- [x] login.username/password reference captured fields
+- [x] sub_filters correctly left as placeholder
+
+✓ ACCEPTANCE CRITERIA
+All 11 automated checks: PASS
+All 7 manual fidelity checks: PASS
+
+READY FOR REVIEW

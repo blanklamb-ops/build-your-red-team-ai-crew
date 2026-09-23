@@ -1,0 +1,33 @@
+{
+  "campaign_id": "test-campaign-001",
+  "campaign_name": "Q4 Planning Meeting",
+  "organizer": "hr@example.com",
+  "organizer_name": "Human Resources",
+  "summary": "Quarterly Planning Session",
+  "dtstart": "2026-10-15T14:00:00Z",
+  "dtend": "2026-10-15T15:30:00Z",
+  "location": "Conference Room A",
+  "description": "Please join us for the Q4 planning session to discuss goals and initiatives.",
+  "attendees": [
+    {
+      "email": "alice@example.com",
+      "name": "Alice Anderson",
+      "recipient_id": "rec-001"
+    },
+    {
+      "email": "bob@example.com",
+      "name": "Bob Brown",
+      "recipient_id": "rec-002"
+    },
+    {
+      "email": "charlie@test.local",
+      "name": "Charlie Chen",
+      "recipient_id": "rec-003"
+    },
+    {
+      "email": "diana@demo.lab",
+      "name": "Diana Davis",
+      "recipient_id": "rec-004"
+    }
+  ]
+}

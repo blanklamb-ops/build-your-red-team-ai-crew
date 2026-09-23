@@ -1,0 +1,67 @@
+id: no-eval
+language: python
+rule:
+  pattern: eval($$$ARGS)
+message: "eval() found — empire-advisor must remain read-only/advisory (R7); dynamic eval is disallowed."
+severity: error
+---
+id: no-exec-call
+language: python
+rule:
+  pattern: exec($$$ARGS)
+message: "exec() found — empire-advisor must remain read-only/advisory (R7); dynamic exec is disallowed."
+severity: error
+---
+id: no-os-system
+language: python
+rule:
+  pattern: os.system($$$ARGS)
+message: "os.system() found — command execution is out of scope for an advisory-only tool (R7)."
+severity: error
+---
+id: no-subprocess-import
+language: python
+rule:
+  any:
+    - pattern: import subprocess
+    - pattern: from subprocess import $$$X
+message: "subprocess import found — empire-advisor must never execute operator commands or suggested alternatives (R7)."
+severity: error
+---
+id: no-pickle-loads
+language: python
+rule:
+  any:
+    - pattern: pickle.loads($$$ARGS)
+    - pattern: pickle.load($$$ARGS)
+message: "pickle deserialization found — unsafe on untrusted input; this tool only reads YAML/JSON fixtures/config."
+severity: warning
+---
+id: no-yaml-unsafe-load
+language: python
+rule:
+  pattern: yaml.load($ARG)
+  not:
+    has:
+      field: arguments
+      pattern: Loader=$$$
+message: "yaml.load() without an explicit safe Loader — use yaml.safe_load() instead."
+severity: error
+---
+id: no-shell-true
+language: python
+rule:
+  pattern: $CALL($$$ARGS, shell=True, $$$REST)
+message: "shell=True found — shell-invoking calls are disallowed in this advisory-only tool (R7)."
+severity: error
+---
+id: no-bare-except
+language: python
+rule:
+  pattern: |
+    try:
+      $$$BODY
+    except:
+      $$$HANDLER
+message: "Bare except: swallows errors silently — prefer a specific exception type for auditability."
+severity: warning

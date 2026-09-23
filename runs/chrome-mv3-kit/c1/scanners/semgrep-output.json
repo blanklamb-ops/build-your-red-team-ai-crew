@@ -1,0 +1,23 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 0 files tracked by git with 1074 Code rules:
+  Nothing to scan.
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 0 (0 blocking)
+ • Rules run: 1074
+ • Targets scanned: 0
+ • Parsed lines: an unknown percentage
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 1074 rules on 0 files: 0 findings.
+If Semgrep missed a finding, please send us feedback to let us know!
+See https://semgrep.dev/docs/reporting-false-negatives/
+{"version":"1.176.0","results":[],"errors":[],"paths":{"scanned":[]},"time":{"rules":[],"rules_parse_time":0.25263094902038574,"profiling_times":{"config_time":1.2645149230957031,"core_time":1.0775306224822998,"ignores_time":0.0005254745483398438,"total_time":2.3467354774475098},"fixpoint_timeouts":[],"targets":[],"total_bytes":0,"max_memory_bytes":756400064},"engine_requested":"OSS","skipped_rules":[],"profiling_results":[]}

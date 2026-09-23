@@ -1,0 +1,7 @@
+timestamp,decision,rationale,related_asset,outcome,ttp_ref
+2026-08-12T12:02:00Z,Continue controlled validation,Authentication telemetry confirmed the authorized source,web-01.example.test,Visibility confirmed,TTP-AUTH-001
+2026-08-12T12:06:00Z,Stop process activity,Monitoring team requested a pause on the lab host,WEB-01.EXAMPLE.TEST.,Activity stopped,TTP-PROC-002
+2026-08-12T12:24:00Z,Limit query sequence,Minimize synthetic database impact; password=internal-fixture-pass,db-01.example.test,Query sequence limited,TTP-DATA-003
+2026-08-12T12:34:00Z,Remove synthetic mailbox rule,Validation objective was complete,mail-01.example.test,Rule removed,TTP-MAIL-004
+2026-08-12T12:44:00Z,End remote session,Planned network evidence had been collected,vpn-01.example.test,Session ended,TTP-NET-005
+2026-08-12T12:54:00Z,Stop authentication attempts,Rate threshold was demonstrated,web-02.example.test,Attempts stopped,TTP-AUTH-006

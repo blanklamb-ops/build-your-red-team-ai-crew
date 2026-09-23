@@ -1,0 +1,7 @@
+{"timestamp": "2024-01-15T09:00:00Z", "decision": "launch-phishing-campaign", "rationale": "Initial access via spear phishing to executive assistants", "asset": "mail-server"}
+{"timestamp": "2024-01-15T09:17:00Z", "decision": "validate-credentials", "rationale": "Credentials obtained from phishing site, testing against DC", "asset": "WORKSTATION-7"}
+{"timestamp": "2024-01-15T10:30:00Z", "decision": "pivot-to-domain-controller", "rationale": "Valid domain user creds obtained, escalating to DC for credential dump", "asset": "DC01"}
+{"timestamp": "2024-01-15T11:15:30Z", "decision": "extract-domain-credentials", "rationale": "Administrative access achieved on DC01, dumping credential material", "asset": "DC01"}
+{"timestamp": "2024-01-15T11:19:00Z", "decision": "lateral-movement-to-exchange", "rationale": "Domain admin creds obtained, moving to Exchange for email access", "asset": "EXCHANGE-01"}
+{"timestamp": "2024-01-15T12:00:00Z", "decision": "stage-sensitive-data", "rationale": "Located financial records on Exchange server, preparing for exfiltration", "asset": "EXCHANGE-01"}
+{"timestamp": "2024-01-15T12:28:00Z", "decision": "exfiltrate-data", "rationale": "Data staged successfully, exfiltrating to external C2 infrastructure", "asset": "EXCHANGE-01"}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "A1",
+    "status": "PASS",
+    "description": "Plugin/shim loads successfully"
+  },
+  {
+    "id": "A2",
+    "status": "PASS",
+    "description": "Advisory produced without execution"
+  },
+  {
+    "id": "A3",
+    "status": "PASS",
+    "description": "Rules file has 12 rules with id + rationale"
+  },
+  {
+    "id": "A4",
+    "status": "PASS",
+    "description": "Deterministic scoring: 125 == 125"
+  },
+  {
+    "id": "A5",
+    "status": "PASS",
+    "description": "At least one fixture triggers suggestion with KB citation"
+  },
+  {
+    "id": "A6",
+    "status": "PASS",
+    "description": "Offline mode processed 14 fixture commands"
+  },
+  {
+    "id": "A7",
+    "status": "PASS",
+    "description": "README documents Empire compatibility/shim"
+  },
+  {
+    "id": "A8",
+    "status": "PASS",
+    "description": "OPSEC_CARD.md has Detection Recommendations (39 bullets)"
+  },
+  {
+    "id": "A9",
+    "status": "PASS",
+    "description": "Authorized-use notice present"
+  },
+  {
+    "id": "M1",
+    "status": "PASS",
+    "description": "All matched rules have detailed rationales"
+  },
+  {
+    "id": "M2",
+    "status": "PASS",
+    "description": "Suggestions include concrete alternative commands"
+  },
+  {
+    "id": "M3",
+    "status": "PASS",
+    "description": "Dangerous command gets 'block' advisory"
+  }
+]

@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  chrome-mv3-kit popup — authorized-lab-only auth-flow recorder UI.
+  See ../AUTHORIZED_USE.md and ../OPSEC_CARD.md.
+-->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>chrome-mv3-kit</title>
+  <style>
+    body { font-family: system-ui, sans-serif; width: 340px; padding: 12px; }
+    h1 { font-size: 14px; margin: 0 0 8px; }
+    .warn { font-size: 11px; color: #7a5b00; background: #fff6da; border: 1px solid #e5c94a; padding: 6px 8px; border-radius: 4px; margin-bottom: 10px; }
+    label { display: block; font-size: 12px; margin: 8px 0 2px; }
+    input[type=text] { width: 100%; box-sizing: border-box; padding: 4px; font-size: 12px; }
+    button { margin: 6px 6px 0 0; font-size: 12px; padding: 4px 8px; }
+    #status { font-size: 12px; margin-top: 8px; white-space: pre-wrap; }
+    .row { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>chrome-mv3-kit — auth-flow lab recorder</h1>
+  <div class="warn">
+    Authorized lab use only. Records request <b>metadata</b> (URL, method, status,
+    auth-related header <b>names</b>) — never header/cookie values, bodies, or secrets.
+    Nothing leaves this browser.
+  </div>
+
+  <label for="targetLabel">Target label (free text, no secrets)</label>
+  <input id="targetLabel" type="text" placeholder="e.g. lab-sso-fixture" />
+
+  <div class="row">
+    <button id="grantAccess">Grant lab host access</button>
+    <button id="start">Start recording</button>
+    <button id="stop">Stop recording</button>
+  </div>
+  <div class="row">
+    <button id="exportJson">Export JSON</button>
+    <button id="exportMd">Export Markdown</button>
+    <button id="clear">Clear session</button>
+  </div>
+
+  <div id="status">(loading status…)</div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

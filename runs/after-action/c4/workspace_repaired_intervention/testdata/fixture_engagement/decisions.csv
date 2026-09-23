@@ -1,0 +1,6 @@
+timestamp,asset,decision,rationale
+2026-08-01T10:06:00Z,host-a,continue monitoring,auth flow incomplete
+2026-08-01T10:22:00Z,mail-1,hold second wave,need telemetry
+2026-08-01T10:08:00Z,host-a,document findings,enough evidence
+2026-08-01T11:01:00Z,host-b,scrub secrets before export,api_key=should-be-redacted AKIAIOSFODNN7EXAMPLE
+2026-08-01T10:30:00Z,mail-1,close campaign path,objectives met

@@ -1,0 +1,50 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.egg-info/
+.DS_Store
+.tools/
+node_modules/
+
+# Default: ignore scored workspaces and transcripts
+runs/**/workspace/**
+!runs/**/workspace/.gitkeep
+runs/**/transcript/**
+!runs/**/transcript/.gitkeep
+
+# Formal C1/C3 workspaces are shareable study artifacts (source only; still ignore deps)
+!runs/*/c1/workspace/
+!runs/*/c1/workspace/**
+!runs/*/c3/workspace/
+!runs/*/c3/workspace/**
+runs/*/c1/workspace/node_modules/
+runs/*/c1/workspace/venv/
+runs/*/c1/workspace/.venv/
+runs/*/c1/workspace/__pycache__/
+runs/*/c3/workspace/node_modules/
+runs/*/c3/workspace/venv/
+runs/*/c3/workspace/.venv/
+runs/*/c3/workspace/__pycache__/
+
+# C1 prompt-validation workspaces are review artifacts (allow source; still ignore deps)
+!runs/prompt-validation/**/workspace/
+!runs/prompt-validation/**/workspace/**
+runs/prompt-validation/**/workspace/node_modules/
+runs/prompt-validation/**/workspace/venv/
+runs/prompt-validation/**/workspace/.venv/
+runs/prompt-validation/**/archive/
+
+# Demo / gold kits are intentional shareable artifacts
+!demos/
+!demos/**
+demos/**/node_modules/
+demos/**/venv/
+demos/**/.venv/
+demos/**/__pycache__/
+
+# Bytecode / pytest caches under allowed workspaces
+runs/**/__pycache__/
+runs/**/.pytest_cache/
+*.pyc

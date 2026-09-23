@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Evilginx 3.x Phishlet",
+  "type": "object",
+  "required": [
+    "name",
+    "min_ver",
+    "proxy_hosts",
+    "auth_tokens",
+    "auth_urls",
+    "login",
+    "credentials",
+    "sub_filters"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "min_ver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "proxy_hosts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "phish_sub",
+          "orig_sub",
+          "domain",
+          "session",
+          "is_landing",
+          "auto_filter"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "phish_sub": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "orig_sub": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "domain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "session": {
+            "type": "boolean"
+          },
+          "is_landing": {
+            "type": "boolean"
+          },
+          "auto_filter": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "auth_tokens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "domain",
+          "keys"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "domain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "auth_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "login": {
+      "type": "object",
+      "required": [
+        "domain",
+        "path"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "credentials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "search",
+          "type"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "search": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "username",
+              "password"
+            ]
+          }
+        }
+      }
+    },
+    "sub_filters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

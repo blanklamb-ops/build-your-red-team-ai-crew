@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "description": "Synthetic commands for offline authorized-lab acceptance. These strings are analyzed, never run.",
+  "commands": [
+    {
+      "id": "targeted-identity",
+      "source": "fixture",
+      "command": "whoami.exe /user",
+      "expected_state": "allow"
+    },
+    {
+      "id": "broad-identity",
+      "source": "fixture",
+      "command": "whoami.exe /all",
+      "expected_state": "warn"
+    },
+    {
+      "id": "broad-domain-users",
+      "source": "fixture",
+      "command": "net.exe user /domain",
+      "expected_state": "warn"
+    },
+    {
+      "id": "destructive-log-clear",
+      "source": "fixture",
+      "command": "wevtutil.exe cl System",
+      "expected_state": "deny"
+    },
+    {
+      "id": "security-control-change",
+      "source": "fixture",
+      "command": "Set-MpPreference -DisableRealtimeMonitoring $true",
+      "expected_state": "deny"
+    },
+    {
+      "id": "bounded-path",
+      "source": "fixture",
+      "command": "Get-ChildItem -LiteralPath \"C:\\Lab\\Approved\" -Depth 1",
+      "expected_state": "allow"
+    }
+  ]
+}

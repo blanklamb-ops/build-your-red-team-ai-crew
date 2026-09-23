@@ -1,0 +1,4 @@
+Error: No ast-grep project configuration is found.
+Help: You need to create an ast-grep project for this command. Try `sg new` to create one.
+See also: https://ast-grep.github.io/guide/scan-project.html
+

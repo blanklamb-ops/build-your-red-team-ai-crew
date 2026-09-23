@@ -1,0 +1,4 @@
+{
+  "$comment": "Default config for chrome-mv3-kit. lab_unsafe_modules MUST be true here AND --lab-unsafe passed on the CLI before clickjack/file-prompt lab modules run. Default is false/false — safe by default.",
+  "lab_unsafe_modules": false
+}

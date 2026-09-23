@@ -1,0 +1,54 @@
+# Empire Advisor Plugin Manifest
+# For PowerShell Empire 4.x+ compatibility
+
+name: EmpireAdvisor
+version: 1.0.0
+author: Research Team
+description: OPSEC advisory plugin for Empire commands
+
+# Empire plugin metadata
+main: empire_advisor.py
+class: Plugin
+
+# Compatibility
+empire_version: ">=4.0.0"
+python_version: ">=3.7"
+
+# Dependencies
+dependencies:
+  - PyYAML>=5.4.1
+
+# Plugin type
+type: advisory
+category: operational_security
+
+# Hooks
+hooks:
+  - command_pre_execute  # Called before command execution
+
+# Configuration files
+config_files:
+  - rules.yaml
+  - knowledge_base.yaml
+
+# Permissions required
+permissions:
+  - read_commands
+  - display_output
+
+# Settings
+settings:
+  auto_advisory: true  # Automatically show advisory for all commands
+  block_critical: false  # Don't auto-block, only warn
+  output_format: text  # text or json
+
+# Documentation
+readme: README.md
+opsec_card: OPSEC_CARD.md
+
+# Testing
+test_command: pytest tests/test_advisor.py -v
+
+# Authorized use only
+authorized_use_only: true
+ethical_use_required: true

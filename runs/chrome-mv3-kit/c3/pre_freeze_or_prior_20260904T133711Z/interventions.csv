@@ -1,0 +1,2 @@
+timestamp_iso,intervention_number,summary
+2026-09-04T11:05:00Z,1,"Fixed origin double-canonicalization: popup passed match patterns to SW which re-validated and rejected /*. origins.js now idempotent; accepts bare origins, full URLs, and /* patterns."

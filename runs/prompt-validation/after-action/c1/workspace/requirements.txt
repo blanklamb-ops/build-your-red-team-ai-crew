@@ -1,0 +1,11 @@
+# After-Action Report Generator Dependencies
+
+# Core dependencies
+# (Using standard library only - no external dependencies required)
+
+# Optional: for PDF generation (not required for basic functionality)
+# markdown2>=2.4.0
+# weasyprint>=52.0
+
+# Development/Testing
+pytest>=7.0.0

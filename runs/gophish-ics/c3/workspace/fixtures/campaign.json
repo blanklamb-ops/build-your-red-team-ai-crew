@@ -1,0 +1,33 @@
+{
+  "campaign_id": "lab-campaign-001",
+  "organizer": {
+    "name": "Authorized Lab Coordinator",
+    "email": "coordinator@calendar-lab.test"
+  },
+  "summary": "Synthetic Safety Drill",
+  "dtstart": "2030-06-15T09:00:00-04:00",
+  "dtend": "2030-06-15T09:30:00-04:00",
+  "description": "Authorized lab exercise only; no external delivery.",
+  "attendees": [
+    {
+      "recipient_id": "recipient-001",
+      "name": "Synthetic One",
+      "email": "recipient-001@calendar-lab.test"
+    },
+    {
+      "recipient_id": "recipient-002",
+      "name": "Synthetic Two",
+      "email": "recipient-002@calendar-lab.test"
+    },
+    {
+      "recipient_id": "recipient-003",
+      "name": "Synthetic Three",
+      "email": "recipient-003@calendar-lab.test"
+    },
+    {
+      "recipient_id": "recipient-004",
+      "name": "Synthetic Four",
+      "email": "recipient-004@calendar-lab.test"
+    }
+  ]
+}

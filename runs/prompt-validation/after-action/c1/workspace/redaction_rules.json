@@ -1,0 +1,49 @@
+{
+  "patterns": [
+    {
+      "name": "openai_api_key",
+      "regex": "sk-[a-zA-Z0-9]{32,}",
+      "replacement": "[REDACTED-API-KEY]"
+    },
+    {
+      "name": "generic_api_key",
+      "regex": "(?i)api[_-]?key[\"']?\\s*[:=]\\s*[\"']?([a-zA-Z0-9_\\-]{16,})",
+      "replacement": "api_key=[REDACTED-API-KEY]"
+    },
+    {
+      "name": "password",
+      "regex": "(?i)password[\"']?\\s*[:=]\\s*[\"']?([^\\s\"']{6,})",
+      "replacement": "password=[REDACTED-PASSWORD]"
+    },
+    {
+      "name": "aws_access_key",
+      "regex": "AKIA[0-9A-Z]{16}",
+      "replacement": "[REDACTED-AWS-KEY]"
+    },
+    {
+      "name": "private_key",
+      "regex": "-----BEGIN (RSA |EC )?PRIVATE KEY-----[\\s\\S]*?-----END (RSA |EC )?PRIVATE KEY-----",
+      "replacement": "[REDACTED-PRIVATE-KEY]"
+    },
+    {
+      "name": "email",
+      "regex": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b",
+      "replacement": "[REDACTED-EMAIL]"
+    },
+    {
+      "name": "jwt",
+      "regex": "eyJ[a-zA-Z0-9_-]*\\.eyJ[a-zA-Z0-9_-]*\\.[a-zA-Z0-9_-]*",
+      "replacement": "[REDACTED-JWT]"
+    },
+    {
+      "name": "ssn",
+      "regex": "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+      "replacement": "[REDACTED-SSN]"
+    },
+    {
+      "name": "credit_card",
+      "regex": "\\b\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}\\b",
+      "replacement": "[REDACTED-CC]"
+    }
+  ]
+}

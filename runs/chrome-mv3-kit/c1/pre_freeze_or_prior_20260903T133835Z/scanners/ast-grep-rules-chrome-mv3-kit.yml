@@ -1,0 +1,64 @@
+id: eval-or-function-ctor
+language: javascript
+severity: error
+message: >-
+  eval()/new Function() found - dynamic code execution has no legitimate use
+  in this recorder/generator kit and would be a code-injection risk if
+  fixture or captured-page content ever reached it.
+rule:
+  any:
+    - pattern: eval($$$ARGS)
+    - pattern: new Function($$$ARGS)
+---
+id: innerhtml-assignment
+language: javascript
+severity: warning
+message: >-
+  .innerHTML assignment found - this kit renders operator-authored/fixture
+  strings into extension pages; prefer textContent or explicit DOM creation
+  to avoid XSS if a captured/observed value is ever interpolated in.
+rule:
+  kind: assignment_expression
+  has:
+    field: left
+    regex: '\.innerHTML$'
+---
+id: unexpected-network-call
+language: javascript
+severity: error
+message: >-
+  fetch()/XMLHttpRequest usage found - this kit must not exfiltrate captured
+  auth-flow metadata off-host by default (R2/README "Data handling"). The
+  only expected call site is extension/background.js's
+  getLabUnsafeModules(), which fetches the extension's own bundled
+  config/lab_unsafe_modules.json via chrome.runtime.getURL (same-origin,
+  no network egress). Any other call site should be treated as a finding.
+rule:
+  any:
+    - pattern: fetch($$$ARGS)
+    - pattern: new XMLHttpRequest()
+---
+id: hardcoded-secret-like-assignment
+language: javascript
+severity: warning
+message: >-
+  Variable/property name suggests a hardcoded credential/secret - this tool
+  must only ever handle header/cookie NAMES, never values, tokens, or
+  passwords (ACCEPTANCE M2).
+rule:
+  kind: pair
+  regex: '(?i)"?(password|secret|api_key|access_token|refresh_token)"?\s*:'
+---
+id: chrome-scripting-executescript
+language: javascript
+severity: warning
+message: >-
+  chrome.scripting.executeScript found - expected only for R5's page-snapshot
+  capture and the labeled training-awareness banner injection, both scoped
+  to the active tab and triggered by an explicit popup click. Confirm any
+  other use stays within lab-authorized targets and does not rewrite forms
+  or inject collectors (Non-goals in PROMPT.md).
+rule:
+  any:
+    - pattern: chrome.scripting.executeScript($$$ARGS)
+    - pattern: chrome.tabs.executeScript($$$ARGS)

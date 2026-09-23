@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Lab flow recorder</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+  <main>
+    <h1>Lab flow recorder</h1>
+    <p class="warning">Authorized lab use only. Captures metadata, never credential values.</p>
+    <button id="enable">Enable lab access</button>
+    <p id="access" aria-live="polite">Checking host access…</p>
+    <label for="origins">Authorized origins (one per line)</label>
+    <textarea id="origins" rows="4" placeholder="https://login.example.test"></textarea>
+    <button id="approve">Approve listed origins</button>
+    <dl><dt>Requested</dt><dd id="requested">none</dd><dt>Granted</dt><dd id="granted">none</dd><dt>Missing</dt><dd id="missing">none</dd></dl>
+    <div class="buttons"><button id="start">Start</button><button id="stop">Stop</button></div>
+    <p id="status" aria-live="polite"></p>
+    <div class="buttons"><button id="json">Export JSON</button><button id="markdown">Export Markdown</button><button id="snapshot">Save static snapshot</button></div>
+    <section id="training" hidden>
+      <h2>Training awareness demos</h2>
+      <p>Lab-only UI-overlay and file-picker awareness modules are enabled by explicit configuration.</p>
+      <button id="overlay-demo">UI overlay awareness</button><button id="picker-demo">File picker awareness</button>
+    </section>
+  </main>
+  <script src="shared.js"></script><script src="config.js"></script><script src="popup.js"></script>
+</body>
+</html>

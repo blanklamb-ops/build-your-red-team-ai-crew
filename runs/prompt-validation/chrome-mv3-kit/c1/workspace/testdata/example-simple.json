@@ -1,0 +1,39 @@
+{
+  "session_id": "test-00000000-0000-4000-8000-000000000000",
+  "started_at": "2026-09-01T10:00:00.000Z",
+  "stopped_at": "2026-09-01T10:05:00.000Z",
+  "coverage": "complete",
+  "events": [
+    {
+      "url": "https://login.example.test/login",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["session_id", "xsrf_token"],
+      "form_fields": [
+        {
+          "url": "https://login.example.test/login",
+          "form_action": "https://login.example.test/auth/submit",
+          "fields": [
+            { "name": "username", "type": "text" },
+            { "name": "password", "type": "password" }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://login.example.test/auth/submit",
+      "method": "POST",
+      "status": 302,
+      "source": "webRequest",
+      "set_cookie_names": ["auth_token"]
+    },
+    {
+      "url": "https://app.example.test/dashboard",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["app_session"]
+    }
+  ]
+}

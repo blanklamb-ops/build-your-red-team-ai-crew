@@ -1,0 +1,9 @@
+{"timestamp": "2026-09-01T10:15:00Z", "asset": "webserver-01.target.local", "action": "port_scan", "details": "Scanned ports 1-65535"}
+{"timestamp": "2026-09-01T10:22:30Z", "asset": "webserver-01.target.local", "action": "service_enumeration", "details": "Identified Apache 2.4.41 on port 80"}
+{"timestamp": "2026-09-01T10:45:00Z", "asset": "webserver-01.target.local", "action": "vulnerability_scan", "details": "CVE-2021-41773 path traversal detected"}
+{"timestamp": "2026-09-01T11:05:00Z", "asset": "webserver-01.target.local", "action": "exploit_attempt", "details": "Attempted CVE-2021-41773 exploitation", "secret_key": "sk-proj-ABCdef123456789XYZabcdef123456789"}
+{"timestamp": "2026-09-01T11:15:30Z", "asset": "webserver-01.target.local", "action": "shell_access", "details": "Interactive shell obtained"}
+{"timestamp": "2026-09-01T11:30:00Z", "asset": "database-01.target.local", "action": "lateral_movement", "details": "Attempted SSH to database server"}
+{"timestamp": "2026-09-01T11:35:00Z", "asset": "database-01.target.local", "action": "credential_reuse", "details": "Used recovered credentials"}
+{"timestamp": "2026-09-01T11:40:00Z", "asset": "database-01.target.local", "action": "database_enumeration", "details": "Listed databases and tables"}
+{"timestamp": "2026-09-01T12:00:00Z", "asset": "database-01.target.local", "action": "data_exfiltration", "details": "Exported customer records", "contact": "admin@target.local"}

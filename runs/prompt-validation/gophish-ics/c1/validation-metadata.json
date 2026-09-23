@@ -1,0 +1,11 @@
+{
+  "purpose": "C1 prompt validation; not a formal matrix cell",
+  "tool": "gophish-ics",
+  "condition": "c1",
+  "method": "single comprehensive prompt; no agent personas",
+  "model": "claude-sonnet-4-5",
+  "prompt_sha256": "e6b0d5687c4809b468fefcedefbedfd9bec9721670f46d3d7c5d437f1c988f87",
+  "acceptance_sha256": "7d1860f31eca6b473bfe24323bf799db061e739f25a22ce7669147c6d6a8406f",
+  "repository_head": "fc240352c1385ca4e356f4ea6760bb599c0dd88e",
+  "prepared_at": "2026-09-04T05:14:30Z"
+}

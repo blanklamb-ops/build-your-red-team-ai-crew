@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.invalid/schemas/phishlet_input.schema.json",
+  "title": "PhishletTemplateInput",
+  "description": "Input form for the phishlet-oriented template generator. Purely structural — no attack payloads.",
+  "type": "object",
+  "required": ["target_name", "login_paths", "cookie_names"],
+  "additionalProperties": false,
+  "properties": {
+    "target_name": { "type": "string", "minLength": 1, "description": "Operator label for the engagement target, e.g. 'acme-corp-sso'. Must not be a real hostname of an unauthorized third party." },
+    "landing_domain_placeholder": { "type": "string", "default": "REPLACE_ME.lab.invalid" },
+    "login_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Relative paths observed for login/auth endpoints, e.g. '/login', '/oauth/authorize'."
+    },
+    "cookie_names": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Cookie *names* relevant to session establishment, e.g. 'session_id'. No values."
+    },
+    "notes": { "type": "string" }
+  }
+}

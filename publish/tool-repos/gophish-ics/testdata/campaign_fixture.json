@@ -1,0 +1,19 @@
+{
+  "id": "fixture-campaign-001",
+  "organizer": "hr-director@example.com",
+  "summary": "Q2 All-Hands Meeting",
+  "description": "Join us for our quarterly all-hands meeting to discuss company updates and strategic priorities.\n\nAgenda:\n- Q1 Results\n- Q2 Planning\n- Team Recognition\n\nPlease RSVP to confirm attendance.",
+  "start_time": "2025-06-15T14:00:00Z",
+  "end_time": "2025-06-15T15:30:00Z",
+  "location": "Main Conference Room / Virtual",
+  "attendees": [
+    "alice.smith@example.com",
+    "bob.jones@example.com",
+    "carol.davis@example.com",
+    "dave.wilson@example.com",
+    "eve.martinez@example.com",
+    "frank.brown@example.com",
+    "grace.taylor@example.com",
+    "henry.anderson@example.com"
+  ]
+}

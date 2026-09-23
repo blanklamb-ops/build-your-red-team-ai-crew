@@ -1,0 +1,10 @@
+ast-grep controlled static-analysis archive
+Timestamp (UTC): 2026-09-04T09:57:17Z
+Scanner version: ast-grep 0.45.3
+Scope: gophish_ics and tests, Python syntax, VCS ignore disabled
+Commands:
+  ast-grep run --lang python --pattern 'eval($A)' --json=compact --no-ignore vcs gophish_ics tests
+  ast-grep run --lang python --pattern 'exec($A)' --json=compact --no-ignore vcs gophish_ics tests
+  ast-grep run --lang python --pattern 'subprocess.$F($$$A, shell=True, $$$B)' --json=compact --no-ignore vcs gophish_ics tests
+Exit status: 1 for each query (ast-grep's documented/no-match command outcome)
+Result: PASS — each query returned the empty JSON match set `[]`; no dynamic eval, dynamic exec, or shell-enabled subprocess call was found.

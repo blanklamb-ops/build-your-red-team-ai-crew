@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome MV3 Lab Kit",
+  "version": "1.0.0",
+  "description": "Lab documentation kit for authorized security research (local capture only)",
+  "permissions": [
+    "webRequest",
+    "webNavigation",
+    "storage",
+    "downloads"
+  ],
+  "optional_permissions": [],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/form-capture.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "128": "icon128.png"
+  },
+  "host_permissions": []
+}

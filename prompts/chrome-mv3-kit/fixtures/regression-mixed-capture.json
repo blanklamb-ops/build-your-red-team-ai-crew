@@ -1,0 +1,167 @@
+{
+  "session_id": "00000000-0000-4000-8000-000000000001",
+  "started_at": "2026-09-04T12:00:00.000Z",
+  "stopped_at": "2026-09-04T12:04:00.000Z",
+  "coverage": "complete",
+  "events": [
+    {
+      "url": "https://login.idp.test/consumers/oauth2/v2.0/authorize",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["fpc", "stsservicecookie"]
+    },
+    {
+      "url": "https://login.idp.test/common/GetCredentialType",
+      "method": "POST",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://login.wallet.test/login.srf",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["MSPRequ", "uaid"],
+      "form_fields": [
+        {
+          "url": "https://login.wallet.test/login.srf",
+          "form_action": "https://login.wallet.test/consumers/savestate",
+          "fields": [
+            { "name": "LoginOptions", "type": "hidden" },
+            { "name": "NewUser", "type": "hidden" }
+          ]
+        },
+        {
+          "url": "https://login.wallet.test/login.srf",
+          "form_action": "https://login.wallet.test/ppsecure/post.srf",
+          "fields": [
+            { "name": "loginfmt", "type": "hidden" },
+            { "name": "passwd", "type": "password" },
+            { "name": "PPFT", "type": "hidden" }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://login.wallet.test/ppsecure/post.srf",
+      "method": "POST",
+      "status": 302,
+      "source": "webRequest",
+      "set_cookie_names": ["MSPAuth", "MSPProf"]
+    },
+    {
+      "url": "https://login.wallet.test/checkpassword.srf",
+      "method": "POST",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://login.wallet.test/consumers/savestate",
+      "method": "POST",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://login.wallet.test/auth/complete-silent-signin",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://assets.authcdn.test/shared/js/login.js",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://account.corp.test/account/home",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["MSPVis", "x-portal-routekey"]
+    },
+    {
+      "url": "https://graph.idp.test/v1.0/me",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["api_session"]
+    },
+    {
+      "url": "https://admin.corp.test/admin",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["admin_session"]
+    },
+    {
+      "url": "https://monitor.metrics.test/ingest",
+      "method": "POST",
+      "status": 204,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://wcpstatic.cdn.test/assets/app.js",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://uhf-exp-fd-gbcrdgggfbggh0g3.b02.edgecdn.test/uhf/header.js",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://storage.blob.test/container/file",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://amcdn.static.test/amcdn/x",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://fpt.wallet.test/fpt/collect",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://copilot.idp.test/",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": ["fpc"]
+    },
+    {
+      "url": "https://events.clarity.ms/collect",
+      "method": "GET",
+      "status": 200,
+      "source": "webRequest",
+      "set_cookie_names": []
+    },
+    {
+      "url": "https://browser.events.data.idp.test/OneCollector/1.0/",
+      "method": "POST",
+      "status": 204,
+      "source": "webRequest",
+      "set_cookie_names": []
+    }
+  ]
+}

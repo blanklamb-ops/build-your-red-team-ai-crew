@@ -1,0 +1,182 @@
+[
+{
+  "text": "print(f\"error: {e}\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 11432,
+      "end": 11469
+    },
+    "start": {
+      "line": 339,
+      "column": 12
+    },
+    "end": {
+      "line": 339,
+      "column": 49
+    }
+  },
+  "file": "src/main.py",
+  "lines": "            print(f\"error: {e}\", file=sys.stderr)",
+  "charCount": {
+    "leading": 12,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"error: {e}\"",
+          "range": {
+            "byteOffset": {
+              "start": 11438,
+              "end": 11451
+            },
+            "start": {
+              "line": 339,
+              "column": 18
+            },
+            "end": {
+              "line": 339,
+              "column": 31
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 11451,
+              "end": 11452
+            },
+            "start": {
+              "line": 339,
+              "column": 31
+            },
+            "end": {
+              "line": 339,
+              "column": 32
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 11453,
+              "end": 11468
+            },
+            "start": {
+              "line": 339,
+              "column": 33
+            },
+            "end": {
+              "line": 339,
+              "column": 48
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call — confirm CLI status only.",
+  "labels": [
+    {
+      "text": "print(f\"error: {e}\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 11432,
+          "end": 11469
+        },
+        "start": {
+          "line": 339,
+          "column": 12
+        },
+        "end": {
+          "line": 339,
+          "column": 49
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(json.dumps(stats, indent=2))",
+  "range": {
+    "byteOffset": {
+      "start": 11499,
+      "end": 11533
+    },
+    "start": {
+      "line": 341,
+      "column": 8
+    },
+    "end": {
+      "line": 341,
+      "column": 42
+    }
+  },
+  "file": "src/main.py",
+  "lines": "        print(json.dumps(stats, indent=2))",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "json.dumps(stats, indent=2)",
+          "range": {
+            "byteOffset": {
+              "start": 11505,
+              "end": 11532
+            },
+            "start": {
+              "line": 341,
+              "column": 14
+            },
+            "end": {
+              "line": 341,
+              "column": 41
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call — confirm CLI status only.",
+  "labels": [
+    {
+      "text": "print(json.dumps(stats, indent=2))",
+      "range": {
+        "byteOffset": {
+          "start": 11499,
+          "end": 11533
+        },
+        "start": {
+          "line": 341,
+          "column": 8
+        },
+        "end": {
+          "line": 341,
+          "column": 42
+        }
+      },
+      "style": "primary"
+    }
+  ]
+}
+]

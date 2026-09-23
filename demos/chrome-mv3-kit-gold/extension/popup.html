@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Kit Recorder</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 16px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0 0 12px 0;
+    }
+    .section {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .section:last-child {
+      border-bottom: none;
+    }
+    button {
+      padding: 8px 16px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .status {
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .status.recording {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .status.stopped {
+      background-color: #f8f9fa;
+      color: #495057;
+    }
+    .status.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .status.warning {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .status.info {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+    .origins-list {
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 8px;
+      margin: 8px 0;
+      font-size: 12px;
+      background-color: #f8f9fa;
+    }
+    .origins-list div {
+      padding: 2px 0;
+    }
+    .granted {
+      color: #28a745;
+    }
+    .missing {
+      color: #dc3545;
+    }
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      margin: 8px 0;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔬 Lab Kit Recorder</h1>
+
+  <div class="section">
+    <label>Authorized Origins (one per line)</label>
+    <textarea id="origins" placeholder="https://example.test&#10;https://auth.example.test"></textarea>
+    <button id="enableAccess">Enable Lab Access</button>
+    <div id="accessStatus" class="status stopped">Host access: Not granted</div>
+    <div id="originsList" class="origins-list" style="display: none;"></div>
+  </div>
+
+  <div class="section">
+    <div id="recordingStatus" class="status stopped">Recorder: Stopped</div>
+    <button id="startRecording">Start Recording</button>
+    <button id="stopRecording" disabled>Stop Recording</button>
+    <div id="eventCount" style="margin-top: 8px; font-size: 12px; color: #666;"></div>
+  </div>
+
+  <div class="section">
+    <button id="exportJson">Export Session (JSON)</button>
+    <button id="exportMarkdown">Export Summary (Markdown)</button>
+    <button id="clearSession">Clear Session</button>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# Malleable-profile STUB — draft skeleton, not a production profile
+# label: lab-fixture-sso-traffic-shape
+# generated_at: 2026-09-03T11:14:49.693Z
+# tool: chrome-mv3-kit / generators/lib/profile_stub.js
+#
+# This file is intentionally incomplete. It captures *shape* observed during
+# an authorized engagement (URL paths, methods, content types) so an operator
+# can hand-author a real profile in their own C2 framework's syntax. It is
+# not parseable by any specific C2 product as-is, and ships with no jitter,
+# sleep, indicator, or crypto configuration.
+#
+# Non-goal: this tool does not guarantee detection bypass of any control.
+
+set sleeptime "__REPLACE_SLEEPTIME_MS__";
+set jitter    "__REPLACE_JITTER_PERCENT__";
+
+# --- Observed URL patterns (informational only) --------------------------
+#
+    # Observed pattern #1 — initial login page load
+    # uri      "/login"
+    # method   "GET"
+    # NOTE: This is a draft comment block, not an active transaction.
+    #       Fill in client/server blocks per your C2 framework's profile
+    #       language before use, with content-type "text/html".
+
+    # Observed pattern #2 — auth submission
+    # uri      "/oauth/authorize"
+    # method   "POST"
+    # NOTE: This is a draft comment block, not an active transaction.
+    #       Fill in client/server blocks per your C2 framework's profile
+    #       language before use, with content-type "application/x-www-form-urlencoded".
+
+    # Observed pattern #3 — periodic session refresh
+    # uri      "/session/refresh"
+    # method   "GET"
+    # NOTE: This is a draft comment block, not an active transaction.
+    #       Fill in client/server blocks per your C2 framework's profile
+    #       language before use, with content-type "application/json".
+#
+# ---------------------------------------------------------------------------
+
+# notes:
+# Synthetic fixture for ACCEPTANCE A7. Documentation aid only, derived from testdata/fixtures/session.sample.json.

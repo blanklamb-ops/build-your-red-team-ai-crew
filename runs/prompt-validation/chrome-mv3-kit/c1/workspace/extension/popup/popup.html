@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Auth Flow Recorder</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 15px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+    }
+    h1 {
+      font-size: 16px;
+      margin: 0 0 15px 0;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    .section h2 {
+      font-size: 13px;
+      margin: 0 0 8px 0;
+      color: #555;
+    }
+    button {
+      padding: 8px 12px;
+      margin: 4px 4px 4px 0;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    button:hover {
+      background: #3367d6;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    button.secondary {
+      background: #f1f3f4;
+      color: #333;
+    }
+    button.secondary:hover {
+      background: #e8eaed;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 6px;
+      margin: 4px 0;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    .status {
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .status.recording {
+      background: #e8f5e9;
+      border: 1px solid #4caf50;
+      color: #2e7d32;
+    }
+    .status.stopped {
+      background: #fff3e0;
+      border: 1px solid #ff9800;
+      color: #e65100;
+    }
+    .status.error {
+      background: #ffebee;
+      border: 1px solid #f44336;
+      color: #c62828;
+    }
+    .status.info {
+      background: #e3f2fd;
+      border: 1px solid #2196f3;
+      color: #1565c0;
+    }
+    .origin-list {
+      max-height: 100px;
+      overflow-y: auto;
+      font-size: 11px;
+      line-height: 1.6;
+      margin: 4px 0;
+    }
+    .warning {
+      color: #d32f2f;
+      font-weight: bold;
+      margin: 8px 0;
+      font-size: 12px;
+    }
+    .small {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔬 Chrome MV3 Auth Flow Lab Kit</h1>
+
+  <div class="warning">⚠️ Authorized lab use only</div>
+
+  <div class="section">
+    <h2>1. Grant Host Access</h2>
+    <div id="accessStatus" class="status info">
+      Checking permissions...
+    </div>
+    <button id="enableAccessBtn">Enable Lab Access (All HTTP/HTTPS)</button>
+    <div class="small">Or specify origins:</div>
+    <input type="text" id="customOrigins" placeholder="https://example.test, https://login.example.com">
+    <button id="requestCustomBtn" class="secondary">Request Custom Origins</button>
+  </div>
+
+  <div class="section">
+    <h2>2. Recording Control</h2>
+    <div id="recordingStatus" class="status stopped">
+      Not recording
+    </div>
+    <button id="startBtn" disabled>Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+    <div class="small">
+      <strong>Requested origins:</strong>
+      <div id="requestedOrigins" class="origin-list">None</div>
+    </div>
+    <div class="small">
+      Events captured: <strong id="eventCount">0</strong>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. Export</h2>
+    <button id="exportJsonBtn" class="secondary">Export JSON</button>
+    <button id="exportMarkdownBtn" class="secondary">Export Markdown</button>
+  </div>
+
+  <script src="../shared/utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "purpose": "C1 prompt validation; not a formal matrix cell",
+  "tool": "empire-advisor",
+  "condition": "c1",
+  "method": "single comprehensive prompt; no agent personas",
+  "model": "claude-sonnet-4-5",
+  "prompt_sha256": "5681cb3fbe434680b10873875b51fdbdd6fbca26709b54e3df521e80667e82ae",
+  "acceptance_sha256": "935c9286d4a006e449de1fad7343d8076740fbae6145609a30db5798b0e6634f",
+  "repository_head": "fc240352c1385ca4e356f4ea6760bb599c0dd88e",
+  "prepared_at": "2026-09-04T04:52:17Z"
+}

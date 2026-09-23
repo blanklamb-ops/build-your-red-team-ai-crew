@@ -1,0 +1,36 @@
+# GoPhish ICS Integration Configuration
+# This is the SHIPPED configuration - DO NOT enable ICS in production without authorization
+
+# Feature flag to enable/disable ICS calendar invite generation
+# MUST be false by default for safety
+ics_enabled: false
+
+# Telemetry database path (SQLite)
+telemetry_db: "telemetry.db"
+
+# ICS generation settings
+ics_settings:
+  # Default timezone for calendar events
+  default_timezone: "UTC"
+
+  # Calendar product identifier
+  prodid: "-//GoPhish ICS Integration//EN"
+
+  # Default event duration in minutes if end time not specified
+  default_duration: 60
+
+# RSVP webhook settings (optional)
+rsvp_webhook:
+  enabled: false
+  url: ""
+
+# Lab/demo mode
+demo_mode:
+  # Use synthetic data only
+  use_fixtures: true
+
+  # Synthetic test addresses
+  test_domains:
+    - "example.com"
+    - "test.local"
+    - "demo.lab"

@@ -1,0 +1,19 @@
+# gophish-ics configuration
+# SAFETY DEFAULT: ICS generation is DISABLED by default
+# Only enable for authorized testing in controlled lab environments
+
+ics_enabled: false
+
+# Campaign settings
+campaign:
+  timezone: "UTC"
+  default_duration_minutes: 60
+
+# Telemetry database
+database:
+  path: "telemetry.db"
+
+# Server settings for RSVP webhooks
+server:
+  host: "127.0.0.1"
+  port: 8080

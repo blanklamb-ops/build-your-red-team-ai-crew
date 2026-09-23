@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "session_id": "00000000-0000-4000-8000-000000000002",
+  "started_at": "2026-09-04T10:00:00.000Z",
+  "stopped_at": "2026-09-04T10:02:00.000Z",
+  "recording": false,
+  "requested_origins": ["https://login.alpha.test/*", "https://account.beta.test/*"],
+  "granted_origins": ["https://*/*"],
+  "events": [
+    {
+      "request_id": "1",
+      "url": "https://login.alpha.test/login",
+      "method": "GET",
+      "status": 200,
+      "resource_type": "main_frame",
+      "source": "webRequest_response",
+      "response_header_names": ["content-type", "set-cookie"],
+      "set_cookie_names": ["lab_session"],
+      "form_fields": [{
+        "url": "https://login.alpha.test/login",
+        "form_action": "https://login.alpha.test/password",
+        "fields": [{"name": "email", "type": "email"}, {"name": "password", "type": "password"}],
+        "submit_label": "Sign in"
+      }]
+    },
+    {
+      "request_id": "2",
+      "url": "https://login.alpha.test/password",
+      "method": "POST",
+      "status": 302,
+      "resource_type": "xmlhttprequest",
+      "source": "webRequest_response",
+      "set_cookie_names": ["lab_auth"]
+    },
+    {
+      "request_id": "3",
+      "url": "https://account.beta.test/account/home",
+      "method": "GET",
+      "status": 200,
+      "resource_type": "main_frame",
+      "source": "webRequest_response",
+      "set_cookie_names": ["route"]
+    },
+    {
+      "url": "https://account.beta.test/account/home",
+      "resource_type": "main_frame",
+      "source": "webNavigation_fallback"
+    },
+    {
+      "request_id": "4",
+      "url": "https://login.alpha.test/oauth/authorize",
+      "method": "GET",
+      "status": 200,
+      "resource_type": "main_frame",
+      "source": "webRequest_response",
+      "set_cookie_names": []
+    }
+  ],
+  "coverage": "complete",
+  "diagnostics": {
+    "counts_by_source": {"webRequest_response": 4, "webNavigation_fallback": 1},
+    "counts_by_origin": {"https://login.alpha.test": 3, "https://account.beta.test": 2},
+    "requested_origins": ["https://login.alpha.test/*", "https://account.beta.test/*"],
+    "granted_origins": ["https://*/*"],
+    "missing_origins": [],
+    "warnings": []
+  }
+}

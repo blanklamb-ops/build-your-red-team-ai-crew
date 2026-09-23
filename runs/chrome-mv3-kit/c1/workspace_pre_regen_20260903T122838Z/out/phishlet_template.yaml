@@ -1,0 +1,46 @@
+# Phishlet-oriented template — GENERATED, NOT PRODUCTION-READY
+# Tool: chrome-mv3-kit / generators/lib/phishlet_template.js
+# Authorized-use only. See ../../README.md and ../../OPSEC_CARD.md.
+#
+# Every "__REPLACE_*__" placeholder MUST be filled in by the operator
+# before this template is usable, and only against systems covered by a
+# signed authorization / rules of engagement.
+
+name: "lab-fixture-sso"
+author: "__REPLACE_OPERATOR_NAME__"
+min_ver: "0.0.0"
+
+proxy_hosts:
+  - phish_sub: "__REPLACE_PHISH_SUBDOMAIN__"
+    orig_sub: "__REPLACE_ORIGINAL_SUBDOMAIN__"
+    domain: "REPLACE_ME.lab.invalid"
+    session: true
+    is_landing: true
+
+auth_urls:
+      - "/login"  # __REPLACE_PROXY_HOST_FOR_PATH__
+      - "/oauth/authorize"  # __REPLACE_PROXY_HOST_FOR_PATH__
+
+credentials:
+  username:
+    key: "__REPLACE_USERNAME_FIELD_NAME__"
+  password:
+    key: "__REPLACE_PASSWORD_FIELD_NAME__"
+
+cookies:
+      - name: "session_id"
+        domain: "__REPLACE_COOKIE_DOMAIN__"
+        path: "/"
+        is_session: true
+      - name: "csrf_token"
+        domain: "__REPLACE_COOKIE_DOMAIN__"
+        path: "/"
+        is_session: true
+
+login:
+  domain: "REPLACE_ME.lab.invalid"
+  path: "__REPLACE_LOGIN_LANDING_PATH__"
+
+notes: |
+  Synthetic fixture for ACCEPTANCE A5. Derived from testdata/fixtures/session.sample.json, an authorized lab session against example.com-style fixtures only.
+  Generated at: 2026-09-03T11:14:49.633Z

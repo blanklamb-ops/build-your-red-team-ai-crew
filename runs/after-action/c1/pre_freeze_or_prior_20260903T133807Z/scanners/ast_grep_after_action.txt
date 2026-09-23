@@ -1,0 +1,48 @@
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:63:9
+   │
+63 │         print("warning: no events loaded from any adapter", file=sys.stderr)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:65:9
+   │
+65 │         print("warning: no decisions loaded", file=sys.stderr)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:82:5
+   │
+82 │     print(f"events loaded: {len(events)} (jsonl={len(jsonl_result.items)}, csv={len(csv_result.items)})")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:83:5
+   │
+83 │     print(f"decisions loaded: {len(decisions)}")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:84:5
+   │
+84 │     print(f"correlated timeline entries: {len(correlated)} (linked: {linked_count(correlated)})")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:85:5
+   │
+85 │     print(f"ingest warnings: {len(warnings)}")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:86:5
+   │
+86 │     print(f"redaction hits applied to client export: {redactor.hit_count}")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.
+   ┌─ after_action/cli.py:87:5
+   │
+87 │     print(f"reports written to: {out_dir.resolve()}")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+

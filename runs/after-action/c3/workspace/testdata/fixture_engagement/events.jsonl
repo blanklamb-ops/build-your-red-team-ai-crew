@@ -1,0 +1,4 @@
+{"timestamp":"2026-08-12T12:00:00Z","asset":"WEB-01.EXAMPLE.TEST.","event_type":"authentication","summary":"Administrative sign-in observed; canary PLANTED_SECRET_CLIENT_CANARY","details":"Synthetic evidence api_key=lab-fixture-key-92831"}
+{"timestamp":"2026-08-12T12:04:00Z","asset":"web-01.example.test","event_type":"process","summary":"New administration process recorded","details":"Command metadata retained for internal review"}
+{"timestamp":"2026-08-12T12:20:00Z","asset":"db-01.example.test","event_type":"database","summary":"Service account query pattern changed","details":"Authorization header Bearer fixture.header.signature"}
+{"timestamp":"2026-08-12T12:21:00Z", malformed fixture row

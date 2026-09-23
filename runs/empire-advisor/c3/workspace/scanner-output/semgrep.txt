@@ -1,0 +1,19 @@
+scanner: Semgrep
+version: 1.176.0
+timestamp_utc: 2026-09-04T10:12:19Z
+status: pass
+exit_code: 0
+network: disabled
+settings: temporary writable settings/log paths; metrics and version check disabled
+command: SEMGREP_SETTINGS_FILE=/tmp/empire-advisor-semgrep-settings.yml SEMGREP_LOG_FILE=/tmp/empire-advisor-semgrep.log SEMGREP_SEND_METRICS=off semgrep scan --config scanners/semgrep.yml --disable-version-check --metrics=off --no-git-ignore empire_advisor scripts tests
+
+Scan result:
+- Findings: 0 (0 blocking)
+- Rules run: 3
+- Targets scanned: 7
+- Parsed lines: approximately 100 percent
+- One file matched a built-in .semgrepignore pattern.
+
+The initial bare version invocation could not write under the sandboxed
+/home/kali/.config/.semgrep path. The successful scan above explicitly used
+writable /tmp settings and log paths. No scanner was installed or replaced.

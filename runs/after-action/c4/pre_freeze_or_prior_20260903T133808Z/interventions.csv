@@ -1,0 +1,5 @@
+timestamp_iso,intervention_number,summary
+20260903T131237Z,1,"Fresh C4 re-run; archived stub workspace to workspace_stub_*"
+20260903T131546Z,2,"Recovered path-space miswrite + materialized 16 stub FILE blocks"
+20260903T131600Z,3,"Fixed run_pipeline.py chdir + relative output_file; anti-brevity Architect text"
+20260903T131900Z,4,"POST-MODEL REPAIR: replaced Codestral stubs with working stdlib after-action (fixtures/CLI/tests). Not an unassisted model PASS — RQ3 remains FAIL. Also added stub_scan gate to pipeline."

@@ -1,0 +1,7 @@
+timestamp,asset,action,protocol,details
+2026-09-01 10:15:00,webserver-01.target.local,connection_scan,TCP,Full connect scan from 192.168.1.100
+2026-09-01 10:22:30,webserver-01.target.local,http_request,HTTP,GET /cgi-bin/test.cgi
+2026-09-01 10:45:00,webserver-01.target.local,vulnerability_probe,HTTP,Multiple path traversal attempts
+2026-09-01 11:05:00,webserver-01.target.local,exploit_delivery,HTTP,POST with CGI exploit payload
+2026-09-01 11:15:30,webserver-01.target.local,reverse_shell,TCP,Outbound connection to 192.168.1.100:4444
+2026-09-01 11:30:00,database-01.target.local,ssh_attempt,SSH,Connection from webserver-01.target.local

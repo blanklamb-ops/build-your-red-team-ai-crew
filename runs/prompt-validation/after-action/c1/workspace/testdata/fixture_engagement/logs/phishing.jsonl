@@ -1,0 +1,10 @@
+{"timestamp": "2024-01-15T09:00:00Z", "event_type": "email-sent", "asset": "mail-server", "campaign": "exec-lure", "recipients": 45, "template": "invoice.html"}
+{"timestamp": "2024-01-15T09:15:23Z", "event_type": "link-clicked", "asset": "WORKSTATION-7", "user": "jdoe", "ip": "10.20.30.45", "user_agent": "Mozilla/5.0"}
+{"timestamp": "2024-01-15T09:16:12Z", "event_type": "credential-captured", "asset": "WORKSTATION-7", "username": "jdoe", "password": "api_key=sk-1234567890abcdef1234567890abcdef", "domain": "CORP"}
+{"timestamp": "2024-01-15T09:20:05Z", "event_type": "auth-attempt", "asset": "DC01", "username": "jdoe", "source_ip": "10.20.30.45", "result": "success", "method": "NTLM"}
+{"timestamp": "2024-01-15T10:05:42Z", "event_type": "smb-connection", "asset": "FILE-SRV-01", "source": "WORKSTATION-7", "share": "Finance$", "status": "connected"}
+{"timestamp": "2024-01-15T10:35:18Z", "event_type": "process-created", "asset": "DC01", "process": "powershell.exe", "cmdline": "-enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQA", "parent": "winlogon.exe"}
+{"timestamp": "2024-01-15T11:15:00Z", "event_type": "credential-dump", "asset": "DC01", "tool": "mimikatz", "accounts_extracted": 12, "method": "lsass"}
+{"timestamp": "2024-01-15T11:20:33Z", "event_type": "lateral-movement", "asset": "EXCHANGE-01", "method": "psexec", "source": "DC01", "result": "success"}
+{"timestamp": "2024-01-15T12:00:15Z", "event_type": "data-staged", "asset": "EXCHANGE-01", "path": "C:\\temp\\exfil.zip", "size_mb": 450, "file_count": 1203}
+{"timestamp": "2024-01-15T12:30:00Z", "event_type": "exfiltration", "asset": "EXCHANGE-01", "destination": "https://transfer.example.com", "size_mb": 450, "duration_seconds": 180}

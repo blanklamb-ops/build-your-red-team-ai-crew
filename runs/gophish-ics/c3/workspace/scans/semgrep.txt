@@ -1,0 +1,14 @@
+Semgrep controlled static-analysis archive
+Timestamp (UTC): 2026-09-04T09:57:17Z
+Scanner version: 1.176.0
+Scope: gophish_ics and tests; 6 Python implementation files scanned (test paths were excluded by the environment's Semgrep ignore policy)
+Rules: dynamic eval/exec, subprocess shell=True, unsafe pickle/yaml deserialization
+Rule source: temporary local /tmp/gophish-ics-semgrep-rules.yaml; no scanner or ruleset was installed
+Command: SEMGREP_SETTINGS_FILE=<temporary> SEMGREP_LOG_FILE=<temporary> SEMGREP_VERSION_CACHE_PATH=<temporary> SEMGREP_ENABLE_VERSION_CHECK=0 semgrep scan --config /tmp/gophish-ics-semgrep-rules.yaml --error --json --metrics off --no-git-ignore gophish_ics tests
+Exit status: 0
+Result: PASS — 3 rules run on 6 implementation files; 0 findings and 0 errors.
+
+Environment note: the first invocation could not create /home/kali/.config/.semgrep/settings*.yml because that location is read-only. A second invocation with only the settings path redirected still attempted to create semgrep.log there and failed. The archived successful invocation isolated settings, log, and version cache under /tmp and disabled the network version check. No repository source or shipped configuration was changed by the scanner.
+
+Machine-readable result summary:
+{"version":"1.176.0","results":[],"errors":[],"paths":{"scanned":["gophish_ics/__init__.py","gophish_ics/__main__.py","gophish_ics/cli.py","gophish_ics/config.py","gophish_ics/ics.py","gophish_ics/store.py"]},"engine_requested":"OSS"}

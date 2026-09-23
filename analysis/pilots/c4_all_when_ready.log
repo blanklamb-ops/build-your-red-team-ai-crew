@@ -1,0 +1,176 @@
+Waiting for Ollama at http://192.168.224.1:11434 ...
+Host Ollama reachable with codestral (11:37:05Z)
+==== C4 chrome-mv3-kit ====
+starting chrome-mv3-kit/c4: 2026-09-15T11:37:05Z
+{
+  "tool": "chrome-mv3-kit",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "chrome-mv3-kit",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/chrome-mv3-kit/c4/workspace"
+  ],
+  "start": "2026-09-15T11:37:05Z",
+  "end": "2026-09-15T11:40:43Z",
+  "minutes": 3.64,
+  "returncode": 0,
+  "generation_stop_reason": "generated"
+}
+==== C4 gophish-ics ====
+starting gophish-ics/c4: 2026-09-15T11:40:43Z
+{
+  "tool": "gophish-ics",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "gophish-ics",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/gophish-ics/c4/workspace"
+  ],
+  "start": "2026-09-15T11:40:43Z",
+  "end": "2026-09-15T11:54:35Z",
+  "minutes": 13.86,
+  "returncode": 2,
+  "generation_stop_reason": "hard_fail"
+}
+==== DETACH 2026-09-15T12:01:14Z host=192.168.224.1 ====
+Waiting for Ollama at http://192.168.224.1:11434 ...
+Host Ollama reachable with codestral (12:01:14Z)
+==== C4 empire-advisor ====
+starting empire-advisor/c4: 2026-09-15T12:01:14Z
+{
+  "tool": "empire-advisor",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "empire-advisor",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/empire-advisor/c4/workspace"
+  ],
+  "start": "2026-09-15T12:01:14Z",
+  "end": "2026-09-15T12:03:00Z",
+  "minutes": 1.77,
+  "returncode": 2,
+  "generation_stop_reason": "hard_fail"
+}
+==== C4 empire-advisor finished rc=2 ====
+==== C4 after-action ====
+starting after-action/c4: 2026-09-15T12:03:00Z
+{
+  "tool": "after-action",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "after-action",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/after-action/c4/workspace"
+  ],
+  "start": "2026-09-15T12:03:00Z",
+  "end": "2026-09-15T12:05:55Z",
+  "minutes": 2.91,
+  "returncode": 0,
+  "generation_stop_reason": "generated"
+}
+==== C4 after-action finished rc=0 ====
+All C4 cells finished (2026-09-15T12:05:55Z).
+==== DETACH 2026-09-15T12:36:10Z host=192.168.224.1 ====
+Waiting for Ollama at http://192.168.224.1:11434 ...
+Host Ollama reachable with codestral (12:36:10Z)
+==== C4 gophish-ics ====
+starting gophish-ics/c4: 2026-09-15T12:36:10Z
+{
+  "tool": "gophish-ics",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "gophish-ics",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/gophish-ics/c4/workspace"
+  ],
+  "start": "2026-09-15T12:36:10Z",
+  "end": "2026-09-15T13:07:59Z",
+  "minutes": 31.81,
+  "returncode": 0,
+  "generation_stop_reason": "generated"
+}
+==== C4 gophish-ics finished rc=0 ====
+==== C4 empire-advisor ====
+starting empire-advisor/c4: 2026-09-15T13:07:59Z
+{
+  "tool": "empire-advisor",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "empire-advisor",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/empire-advisor/c4/workspace"
+  ],
+  "start": "2026-09-15T13:07:59Z",
+  "end": "2026-09-15T13:09:33Z",
+  "minutes": 1.57,
+  "returncode": 2,
+  "generation_stop_reason": "hard_fail"
+}
+==== C4 empire-advisor finished rc=2 ====
+All C4 cells finished (2026-09-15T13:09:33Z).
+==== DETACH 2026-09-15T13:19:35Z host=192.168.224.1 ====
+Waiting for Ollama at http://192.168.224.1:11434 ...
+Host Ollama reachable with codestral (13:19:35Z)
+==== C4 empire-advisor ====
+starting empire-advisor/c4: 2026-09-15T13:19:35Z
+{
+  "tool": "empire-advisor",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "empire-advisor",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/empire-advisor/c4/workspace"
+  ],
+  "start": "2026-09-15T13:19:35Z",
+  "end": "2026-09-15T13:26:32Z",
+  "minutes": 6.93,
+  "returncode": 0,
+  "generation_stop_reason": "generated"
+}
+==== C4 empire-advisor finished rc=0 ====
+All C4 cells finished (2026-09-15T13:26:32Z).
+==== DETACH 2026-09-15T13:31:22Z host=192.168.224.1 ====
+Waiting for Ollama at http://192.168.224.1:11434 ...
+Host Ollama reachable with codestral (13:31:22Z)
+==== C4 chrome-mv3-kit ====
+starting chrome-mv3-kit/c4: 2026-09-15T13:31:22Z
+{
+  "tool": "chrome-mv3-kit",
+  "condition": "c4",
+  "command": [
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/.venv/bin/python",
+    "/home/kali/Desktop/research/rootcon 20/conditions/c4-ollama-codestral-crewai/run_pipeline.py",
+    "--tool",
+    "chrome-mv3-kit",
+    "--workspace",
+    "/home/kali/Desktop/research/rootcon 20/runs/chrome-mv3-kit/c4/workspace"
+  ],
+  "start": "2026-09-15T13:31:22Z",
+  "end": "2026-09-15T13:46:08Z",
+  "minutes": 14.77,
+  "returncode": 0,
+  "generation_stop_reason": "generated"
+}
+==== C4 chrome-mv3-kit finished rc=0 ====
+All C4 cells finished (2026-09-15T13:46:08Z).

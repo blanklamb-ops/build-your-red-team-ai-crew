@@ -1,0 +1,25 @@
+{
+  "name": "chrome-mv3-kit",
+  "version": "1.0.0",
+  "description": "Chrome MV3 auth flow lab documentation kit - authorized research only",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/test-runner.js",
+    "generate:phishlet": "node generators/phishlet-generator.js",
+    "generate:traffic": "node generators/traffic-pattern-generator.js",
+    "generate:markdown": "node generators/markdown-exporter.js"
+  },
+  "keywords": [
+    "chrome",
+    "mv3",
+    "security-research",
+    "authorized-lab"
+  ],
+  "author": "lab-operator",
+  "license": "SEE AUTHORIZED_USE.md",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {}
+}

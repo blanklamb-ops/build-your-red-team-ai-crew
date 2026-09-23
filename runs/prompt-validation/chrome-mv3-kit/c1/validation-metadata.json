@@ -1,0 +1,11 @@
+{
+  "purpose": "C1 prompt validation; not a formal matrix cell",
+  "tool": "chrome-mv3-kit",
+  "condition": "c1",
+  "method": "single comprehensive prompt; no agent personas",
+  "model": "claude-sonnet-4-5",
+  "prompt_sha256": "0ea85058760607cbcd84f361dd687dfa24384e44f425b21dccd48d03662a7b37",
+  "acceptance_sha256": "c7d72566f2d7e6827832597cffc889ce14703abc8f6f91639a18919a6f02d2e9",
+  "repository_head": "facf471f78033b7992f21f987fb4a5d82427758c",
+  "prepared_at": "2026-09-05T10:40:30Z"
+}

@@ -1,0 +1,12 @@
+{
+  "lab_unsafe_modules": false,
+  "default_phishlet_name": "lab-target",
+  "excluded_hosts": [
+    "clarity.ms",
+    "bing.com",
+    "browser.events.data.microsoft.com",
+    "google-analytics.com",
+    "copilot.com",
+    "copilot.microsoft.com"
+  ]
+}

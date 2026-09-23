@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>Internal Learning Summary</title></head><body>
+<h1>Internal Learning Summary</h1>
+<br/>
+<p>&gt; Not for client delivery. May retain secrets/PII — see OPSEC_CARD.md.</p>
+<br/>
+<h2>Successes</h2>
+<br/>
+<li>Correlation joined decisions to multi-format events on asset + time window.</li>
+<li>Dual adapters (JSONL + CSV) exercised on the fixture pack.</li>
+<br/>
+<h2>Failures</h2>
+<br/>
+<li>Manual gaps remain where asset keys were inconsistent (see warnings).</li>
+<br/>
+<h2>Tool gaps</h2>
+<br/>
+<li>PDF export optional; HTML provided alongside Markdown.</li>
+<br/>
+<h2>Reusable notes / TTP references</h2>
+<br/>
+<li>Keep decision logs with stable asset keys (`host-a`, not aliases).</li>
+<li>Always run redaction before client export (R6).</li>
+<li>Correlation: asset equality + ±30 minute window (documented in README).</li>
+<br/>
+<h2>Detailed timeline (unredacted internal)</h2>
+<br/>
+<li>2026-08-01T10:06:00+00:00 | host-a | continue monitoring | auth flow incomplete</li>
+<p>  - [jsonl] session start</p>
+<p>  - [jsonl] observed auth redirect</p>
+<p>  - [csv] operator note: pivot deferred</p>
+<li>2026-08-01T10:08:00+00:00 | host-a | document findings | enough evidence</li>
+<p>  - [jsonl] session start</p>
+<p>  - [jsonl] observed auth redirect</p>
+<p>  - [csv] operator note: pivot deferred</p>
+<li>2026-08-01T10:22:00+00:00 | mail-1 | hold second wave | need telemetry</li>
+<p>  - [jsonl] campaign send batch=1</p>
+<p>  - [csv] open pixel count=3</p>
+<li>2026-08-01T10:30:00+00:00 | mail-1 | close campaign path | objectives met</li>
+<p>  - [jsonl] campaign send batch=1</p>
+<p>  - [csv] open pixel count=3</p>
+<li>2026-08-01T11:01:00+00:00 | host-b | scrub secrets before export | api_key=should-be-redacted AKIAIOSFODNN7EXAMPLE</li>
+<p>  - [jsonl] planted secret AKIAIOSFODNN7EXAMPLE password=SuperSecret123</p>
+</body></html>

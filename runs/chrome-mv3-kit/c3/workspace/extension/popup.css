@@ -1,0 +1,12 @@
+:root { color-scheme: light dark; font: 14px system-ui, sans-serif; }
+body { margin: 0; min-width: 390px; }
+main { padding: 14px; }
+h1 { font-size: 18px; margin: 0 0 8px; }
+h2 { font-size: 15px; }
+.warning { border-left: 4px solid #c77b00; padding: 7px; background: color-mix(in srgb, #c77b00 12%, transparent); }
+textarea { box-sizing: border-box; display: block; margin: 5px 0; width: 100%; }
+button { margin: 3px 3px 3px 0; padding: 6px 9px; }
+.buttons { display: flex; flex-wrap: wrap; }
+dl { display: grid; grid-template-columns: 75px 1fr; gap: 3px; font-size: 12px; }
+dt { font-weight: 700; } dd { margin: 0; overflow-wrap: anywhere; }
+#status.error, #missing:not(:empty) { color: #c33; }

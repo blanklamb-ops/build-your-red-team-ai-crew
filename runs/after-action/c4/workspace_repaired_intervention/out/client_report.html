@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>Client After-Action Report</title></head><body>
+<h1>Client After-Action Report (draft)</h1>
+<br/>
+<h2>Executive summary</h2>
+<br/>
+<p>Authorized testing produced correlated operator decisions and telemetry for the engagement window. Details below are redacted for client delivery.</p>
+<br/>
+<h2>Timeline</h2>
+<br/>
+<li>**2026-08-01T10:06:00+00:00** · `host-a` · continue monitoring — auth flow incomplete</li>
+<p>  - event[jsonl] session start</p>
+<p>  - event[jsonl] observed auth redirect</p>
+<p>  - event[csv] operator note: pivot deferred</p>
+<li>**2026-08-01T10:08:00+00:00** · `host-a` · document findings — enough evidence</li>
+<p>  - event[jsonl] session start</p>
+<p>  - event[jsonl] observed auth redirect</p>
+<p>  - event[csv] operator note: pivot deferred</p>
+<li>**2026-08-01T10:22:00+00:00** · `mail-1` · hold second wave — need telemetry</li>
+<p>  - event[jsonl] campaign send batch=1</p>
+<p>  - event[csv] open pixel count=3</p>
+<li>**2026-08-01T10:30:00+00:00** · `mail-1` · close campaign path — objectives met</li>
+<p>  - event[jsonl] campaign send batch=1</p>
+<p>  - event[csv] open pixel count=3</p>
+<li>**2026-08-01T11:01:00+00:00** · `host-b` · scrub secrets before export — api_key=[REDACTED] [REDACTED_AWS_KEY]</li>
+<p>  - event[jsonl] planted secret [REDACTED_AWS_KEY] password=[REDACTED]</p>
+<br/>
+<h2>Findings placeholders</h2>
+<br/>
+<li>Finding F1: _to be completed by operator_</li>
+<br/>
+<h2>Detection Recommendations</h2>
+<br/>
+<li>Alert on unusual automation from non-mail hosts during engagement windows.</li>
+<li>Monitor operator workstations for bulk auth-flow export artifacts.</li>
+<li>Review after-action report repositories for unredacted secrets before sharing.</li>
+</body></html>

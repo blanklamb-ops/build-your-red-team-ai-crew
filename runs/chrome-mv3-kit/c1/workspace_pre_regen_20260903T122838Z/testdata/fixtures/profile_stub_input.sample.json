@@ -1,0 +1,9 @@
+{
+  "profile_label": "lab-fixture-sso-traffic-shape",
+  "observed_patterns": [
+    { "uri_path": "/login", "method": "GET", "content_type": "text/html", "note": "initial login page load" },
+    { "uri_path": "/oauth/authorize", "method": "POST", "content_type": "application/x-www-form-urlencoded", "note": "auth submission" },
+    { "uri_path": "/session/refresh", "method": "GET", "content_type": "application/json", "note": "periodic session refresh" }
+  ],
+  "notes": "Synthetic fixture for ACCEPTANCE A7. Documentation aid only, derived from testdata/fixtures/session.sample.json."
+}

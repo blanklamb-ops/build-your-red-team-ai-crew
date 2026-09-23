@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "name": "empire-advisor",
+  "version": "1.0.0",
+  "authors": ["Authorized Research Pipeline"],
+  "description": "Plugin-shaped, advisory-only pre-submit command scorer for an Empire-like lab workflow.",
+  "entrypoint": "empire_advisor.empire_plugin:Plugin",
+  "compatibility": {
+    "mode": "offline-shim",
+    "empire_api_shape": "5.x/6.x execute(command, **kwargs)",
+    "transparent_global_hook": false,
+    "notes": "Call explicitly before task submission. No live Empire dependency and no task dispatcher are included."
+  },
+  "options": {
+    "Command": {
+      "type": "string",
+      "required": true,
+      "description": "Pending command text to analyze; never executed."
+    },
+    "Source": {
+      "type": "string",
+      "required": false,
+      "default": "empire-wrapper",
+      "description": "Non-sensitive source label."
+    }
+  }
+}

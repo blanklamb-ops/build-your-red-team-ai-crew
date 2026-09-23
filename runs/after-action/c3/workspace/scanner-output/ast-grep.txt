@@ -1,0 +1,4 @@
+scanner=ast-grep
+timestamp=2026-09-04T10:22:31Z
+command=ast-grep --pattern eval($A) --lang python after_action
+exit_status=1

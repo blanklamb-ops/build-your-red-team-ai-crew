@@ -1,0 +1,28 @@
+"use strict";
+const { assert, readJson } = require("./helpers");
+const { generateYaml, generatePhishlet } = require("../generators/phishlet");
+const { validateYaml, validatePhishlet } = require("../generators/validate");
+module.exports = async function generatorTest() {
+  const fixture = readJson("testdata/session-fixture.json");
+  const generated = generateYaml(fixture);
+  assert.equal(generated.phishlet.min_ver, "2.3.0");
+  assert.ok(generated.phishlet.proxy_hosts.length >= 1);
+  assert.ok(Array.isArray(generated.phishlet.auth_tokens));
+  assert.ok(generated.phishlet.auth_tokens.some((entry) => entry.keys.includes("lab_session")));
+  assert.equal(generated.phishlet.credentials.username.key, "email");
+  assert.equal(generated.phishlet.credentials.password.key, "password");
+  assert.equal(Array.isArray(generated.phishlet.credentials), false);
+  assert.ok(generated.phishlet.sub_filters.every((filter) => typeof filter === "object"));
+  assert.equal(generated.yaml.includes("{{PLACEHOLDER}}"), false);
+  assert.equal(validateYaml(generated.yaml).valid, true);
+  assert.equal(/\.(js|css|png)$/.test(generated.phishlet.login.path), false);
+  const noCookies = JSON.parse(JSON.stringify(fixture));
+  noCookies.events.forEach((event) => { event.set_cookie_names = []; delete event.form_fields; });
+  const heuristic = generatePhishlet(noCookies).phishlet;
+  assert.deepEqual(heuristic.auth_tokens, []);
+  assert.equal(heuristic.credentials.username.key, "login");
+  assert.equal(heuristic.credentials.password.key, "passwd");
+  const invalid = JSON.parse(JSON.stringify(generated.phishlet));
+  invalid.credentials = [];
+  assert.equal(validatePhishlet(invalid).valid, false);
+};

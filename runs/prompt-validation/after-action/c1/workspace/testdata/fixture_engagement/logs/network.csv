@@ -1,0 +1,7 @@
+timestamp,event,target,result,details
+2024-01-15T09:00:30Z,port-scan,10.20.30.0/24,complete,discovered 15 hosts
+2024-01-15T09:05:12Z,service-enum,WORKSTATION-7,success,SMB port 445 open
+2024-01-15T10:30:45Z,privilege-check,DC01,admin,SeDebugPrivilege enabled
+2024-01-15T10:32:10Z,registry-access,DC01,success,HKLM\SAM\SAM read
+2024-01-15T11:18:23Z,network-recon,EXCHANGE-01,success,discovered 3 mailbox databases
+2024-01-15T12:28:55Z,dns-query,EXCHANGE-01,success,transfer.example.com resolved to 203.0.113.50

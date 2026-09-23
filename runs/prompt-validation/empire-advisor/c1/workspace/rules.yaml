@@ -1,0 +1,99 @@
+# Empire Advisor OPSEC Rules
+# Each rule scores commands based on operational security considerations
+
+rules:
+  - id: R001
+    name: "Noisy Network Scan"
+    pattern: "(?i)(portscan|nmap|masscan|unicornscan)"
+    severity: high
+    rationale: "Full network scans generate high volumes of connection attempts visible to IDS/IPS and network monitoring"
+    score_penalty: 80
+    category: reconnaissance
+
+  - id: R002
+    name: "Direct Credential Dump"
+    pattern: "(?i)(mimikatz|dump.*creds?|hashdump|pwdump)"
+    severity: critical
+    rationale: "Direct credential dumping triggers AV/EDR behavioral detection and LSASS access monitoring"
+    score_penalty: 90
+    category: credential_access
+
+  - id: R003
+    name: "PowerShell Download Cradle"
+    pattern: "(?i)(IEX.*downloadstring|invoke.*webrequest.*iex|downloadfile)"
+    severity: high
+    rationale: "Download cradles are heavily monitored by AMSI, script block logging, and web proxies"
+    score_penalty: 75
+    category: execution
+
+  - id: R004
+    name: "Cleartext HTTP Traffic"
+    pattern: "(?i)http://(?!127\\.0\\.0\\.1|localhost)"
+    severity: medium
+    rationale: "Unencrypted C2 traffic is easily detected and intercepted by network monitoring"
+    score_penalty: 60
+    category: command_and_control
+
+  - id: R005
+    name: "Known Tool Name"
+    pattern: "(?i)(metasploit|meterpreter|cobalt.*strike|empire|covenant)"
+    severity: high
+    rationale: "Using well-known tool names triggers signature-based detection and SOC alert rules"
+    score_penalty: 85
+    category: defense_evasion
+
+  - id: R006
+    name: "Batch User Enumeration"
+    pattern: "(?i)(net user /domain|get-aduser -filter|dsquery user)"
+    severity: medium
+    rationale: "Bulk AD enumeration creates unusual authentication patterns and multiple LDAP queries"
+    score_penalty: 55
+    category: discovery
+
+  - id: R007
+    name: "Service Creation"
+    pattern: "(?i)(sc create|new-service|psexec)"
+    severity: high
+    rationale: "Service creation generates event logs (7045) and is commonly monitored for lateral movement"
+    score_penalty: 70
+    category: persistence
+
+  - id: R008
+    name: "Registry Run Key"
+    pattern: "(?i)HKCU[:\\\\]+Software[\\\\]+Microsoft[\\\\]+Windows[\\\\]+CurrentVersion[\\\\]+Run"
+    severity: medium
+    rationale: "Run keys are heavily monitored persistence locations with high baseline detection rates"
+    score_penalty: 65
+    category: persistence
+
+  - id: R009
+    name: "Scheduled Task Creation"
+    pattern: "(?i)(schtasks /create|new-scheduledtask|at \\d)"
+    severity: medium
+    rationale: "Scheduled tasks generate event logs (4698) and are monitored for persistence mechanisms"
+    score_penalty: 60
+    category: persistence
+
+  - id: R010
+    name: "WMI Process Creation"
+    pattern: "(?i)(wmic\\s+.*process\\s+call\\s+create|invoke-wmimethod.*win32_process)"
+    severity: high
+    rationale: "WMI process creation is monitored for lateral movement and generates distinct telemetry"
+    score_penalty: 75
+    category: execution
+
+  - id: R011
+    name: "Packet Capture"
+    pattern: "(?i)(tcpdump|windump|wireshark|tshark|netsh trace)"
+    severity: medium
+    rationale: "Packet capture requires elevated privileges and may trigger driver-based detection"
+    score_penalty: 50
+    category: collection
+
+  - id: R012
+    name: "Keylogger Pattern"
+    pattern: "(?i)(keylog|get-keystroke|readkey)"
+    severity: high
+    rationale: "Keyboard monitoring triggers behavioral detection and input capture indicators"
+    score_penalty: 80
+    category: collection

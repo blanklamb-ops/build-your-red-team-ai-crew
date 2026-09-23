@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.invalid/schemas/session.schema.json",
+  "title": "AuthFlowSession",
+  "description": "A locally captured browser auth-flow observation session. Contains request metadata only — never raw header values, cookie values, tokens, or bodies.",
+  "type": "object",
+  "required": ["session_id", "started_at_iso", "target_label", "events"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string", "description": "Operator-assigned or generated UUID for this recording session." },
+    "started_at_iso": { "type": "string", "format": "date-time" },
+    "ended_at_iso": { "type": ["string", "null"], "format": "date-time" },
+    "target_label": { "type": "string", "description": "Operator-supplied free-text label for the engagement target. Must not contain secrets." },
+    "notes": { "type": "string" },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/RequestEvent" }
+    }
+  },
+  "definitions": {
+    "RequestEvent": {
+      "type": "object",
+      "required": ["url", "method", "auth_header_names", "timestamp_iso"],
+      "additionalProperties": false,
+      "properties": {
+        "timestamp_iso": { "type": "string", "format": "date-time" },
+        "url": { "type": "string", "format": "uri", "description": "Full request URL. Query strings are retained; operators should scrub tokens embedded in query params before export/sharing." },
+        "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"] },
+        "status_code": { "type": ["integer", "null"] },
+        "type": { "type": "string", "description": "Resource type as reported by the browser (xmlhttprequest, main_frame, sub_frame, etc.)." },
+        "auth_header_names": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Names only (e.g. 'authorization', 'cookie', 'x-csrf-token') of request/response headers that matched an auth-related name pattern. Values are never captured."
+        },
+        "set_cookie_names": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Names only of cookies set in Set-Cookie response headers, if observable. Values are never captured."
+        }
+      }
+    }
+  }
+}

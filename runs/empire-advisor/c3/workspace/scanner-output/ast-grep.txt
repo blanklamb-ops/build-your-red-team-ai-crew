@@ -1,0 +1,15 @@
+scanner: ast-grep
+version: 0.45.3
+timestamp_utc: 2026-09-04T10:12:19Z
+status: pass
+exit_code: 0
+network: not used
+command: ast-grep scan --rule scanners/ast-grep.yml empire_advisor scripts tests
+
+Scan result:
+- Findings: 0
+- Standard output: empty
+
+ast-grep returns exit code 0 with no diagnostics when no configured pattern
+matches. The local rule checked runtime execution and network primitives. No
+scanner was installed or replaced.

@@ -1,0 +1,24 @@
+error[unexpected-network-call]: fetch()/XMLHttpRequest usage found - this kit must not exfiltrate captured auth-flow metadata off-host by default (R2/README "Data handling"). The only expected call site is extension/background.js's getLabUnsafeModules(), which fetches the extension's own bundled config/lab_unsafe_modules.json via chrome.runtime.getURL (same-origin, no network egress). Any other call site should be treated as a finding.
+    ┌─ extension/background.js:404:23
+    │
+404 │     const res = await fetch(url);
+    │                       ^^^^^^^^^^
+
+warning[chrome-scripting-executescript]: chrome.scripting.executeScript found - expected only for R5's page-snapshot capture and the labeled training-awareness banner injection, both scoped to the active tab and triggered by an explicit popup click. Confirm any other use stays within lab-authorized targets and does not rewrite forms or inject collectors (Non-goals in PROMPT.md).
+    ┌─ extension/background.js:338:25
+    │  
+338 │       [injection] = await chrome.scripting.executeScript({
+    │ ╭─────────────────────────^
+    · │
+358 │ │     });
+    │ ╰──────^
+
+warning[chrome-scripting-executescript]: chrome.scripting.executeScript found - expected only for R5's page-snapshot capture and the labeled training-awareness banner injection, both scoped to the active tab and triggered by an explicit popup click. Confirm any other use stays within lab-authorized targets and does not rewrite forms or inject collectors (Non-goals in PROMPT.md).
+    ┌─ extension/background.js:437:9
+    │  
+437 │     await chrome.scripting.executeScript({
+    │ ╭─────────^
+    · │
+459 │ │   });
+    │ ╰────^
+

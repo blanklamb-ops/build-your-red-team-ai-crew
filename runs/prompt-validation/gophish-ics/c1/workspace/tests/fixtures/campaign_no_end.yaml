@@ -1,0 +1,7 @@
+organizer: "admin@testlab.local"
+summary: "Emergency Security Update Meeting"
+description: "Authorized phishing test - do not click links or provide credentials"
+dtstart: "2024-12-20T10:00:00"
+attendees:
+  - "victim1@testlab.local"
+  - "victim2@testlab.local"

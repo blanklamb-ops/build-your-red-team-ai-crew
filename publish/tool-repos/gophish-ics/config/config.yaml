@@ -1,0 +1,21 @@
+# gophish-ics configuration
+# SAFETY: ICS generation is DISABLED by default for lab safety
+
+# Feature flag: enable ICS generation
+# WARNING: Only set to true during authorized phishing engagements
+# For demos, use --enable-ics CLI flag instead of editing this file
+ics_enabled: false
+
+# Safe domain allowlist (for --force bypass validation)
+safe_domains:
+  - example.com
+  - example.org
+  - example.net
+  - test.invalid
+  - localhost.localdomain
+
+# Default timezone for ICS generation
+default_timezone: UTC
+
+# Database path (relative to working directory)
+database_path: ./telemetry.db

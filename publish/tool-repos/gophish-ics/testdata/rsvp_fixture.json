@@ -1,0 +1,27 @@
+[
+  {
+    "recipient_id": "alice.smith@example.com",
+    "campaign_id": "fixture-campaign-001",
+    "status": "accept"
+  },
+  {
+    "recipient_id": "bob.jones@example.com",
+    "campaign_id": "fixture-campaign-001",
+    "status": "accept"
+  },
+  {
+    "recipient_id": "carol.davis@example.com",
+    "campaign_id": "fixture-campaign-001",
+    "status": "decline"
+  },
+  {
+    "recipient_id": "dave.wilson@example.com",
+    "campaign_id": "fixture-campaign-001",
+    "status": "tentative"
+  },
+  {
+    "recipient_id": "eve.martinez@example.com",
+    "campaign_id": "fixture-campaign-001",
+    "status": "accept"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.invalid/schemas/clone_report.schema.json",
+  "title": "PageCloneReport",
+  "description": "Report accompanying a static page-clone snapshot produced by the lab utility.",
+  "type": "object",
+  "required": ["source", "captured_at_iso", "snapshot_file", "lab_unsafe_modules_enabled", "modules_run"],
+  "additionalProperties": false,
+  "properties": {
+    "source": { "type": "string", "description": "Local file path or lab URL that was snapshotted." },
+    "captured_at_iso": { "type": "string", "format": "date-time" },
+    "snapshot_file": { "type": "string" },
+    "form_count": { "type": "integer" },
+    "external_script_count": { "type": "integer" },
+    "lab_unsafe_modules_enabled": { "type": "boolean" },
+    "modules_run": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["clickjack_overlay_report", "file_prompt_report"] }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

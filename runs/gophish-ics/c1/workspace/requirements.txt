@@ -1,0 +1,11 @@
+# GoPhish ICS Integration Dependencies
+
+# Configuration
+PyYAML>=6.0
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# ICS validation (for tests)
+icalendar>=5.0.0

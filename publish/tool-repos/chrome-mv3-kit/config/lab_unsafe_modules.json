@@ -1,0 +1,4 @@
+{
+  "lab_unsafe_modules": false,
+  "description": "Set to true to enable optional training modules (ui_overlay_awareness, file_picker_awareness). Default is false - modules are disabled."
+}

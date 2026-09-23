@@ -1,0 +1,11 @@
+rules:
+  - id: dangerous-dynamic-eval
+    message: Dynamic eval is not permitted in the offline report collector.
+    severity: ERROR
+    languages: [python]
+    pattern: eval(...)
+  - id: unsafe-shell
+    message: Review subprocess use with shell=True.
+    severity: WARNING
+    languages: [python]
+    pattern: subprocess.$FUNC(..., shell=True, ...)

@@ -1,0 +1,100 @@
+adapters/jsonlines_adapter.py:11:    def load(self, path: Path) -> List[Dict[str, Any]]:
+adapters/jsonlines_adapter.py:12:        """Load and parse JSON Lines file.
+adapters/jsonlines_adapter.py:13:
+adapters/jsonlines_adapter.py:14:        Args:
+adapters/jsonlines_adapter.py:15:            path: Path to .jsonl file
+adapters/jsonlines_adapter.py:16:
+adapters/jsonlines_adapter.py:17:        Returns:
+adapters/jsonlines_adapter.py:18:            List of parsed event dictionaries
+adapters/jsonlines_adapter.py:19:        """
+adapters/jsonlines_adapter.py:20:        events = []
+adapters/jsonlines_adapter.py:21:
+adapters/jsonlines_adapter.py:22:        if not path.exists():
+adapters/jsonlines_adapter.py:23:            print(f"Warning: File not found: {path}")
+adapters/jsonlines_adapter.py:24:            return events
+adapters/jsonlines_adapter.py:25:
+adapters/jsonlines_adapter.py:26:        with open(path, 'r') as f:
+adapters/jsonlines_adapter.py:27:            for line_num, line in enumerate(f, 1):
+adapters/jsonlines_adapter.py:28:                line = line.strip()
+adapters/jsonlines_adapter.py:29:                if not line:
+adapters/jsonlines_adapter.py:30:                    continue
+adapters/jsonlines_adapter.py:31:
+adapters/jsonlines_adapter.py:32:                try:
+adapters/jsonlines_adapter.py:33:                    event = json.loads(line)
+adapters/jsonlines_adapter.py:34:                    # Normalize timestamp
+adapters/jsonlines_adapter.py:35:                    if 'timestamp' in event:
+adapters/jsonlines_adapter.py:36:                        event['_timestamp'] = self._parse_timestamp(event['timestamp'])
+adapters/jsonlines_adapter.py:37:                    events.append(event)
+adapters/jsonlines_adapter.py:38:                except json.JSONDecodeError as e:
+adapters/jsonlines_adapter.py:39:                    print(f"Warning: Failed to parse line {line_num} in {path.name}: {e}")
+adapters/jsonlines_adapter.py:40:                except Exception as e:
+adapters/jsonlines_adapter.py:41:                    print(f"Warning: Error processing line {line_num} in {path.name}: {e}")
+adapters/jsonlines_adapter.py:42:
+adapters/jsonlines_adapter.py:43:        return events
+adapters/jsonlines_adapter.py:45:    def _parse_timestamp(self, ts_str: str) -> datetime:
+adapters/jsonlines_adapter.py:46:        """Parse timestamp string to datetime object.
+adapters/jsonlines_adapter.py:47:
+adapters/jsonlines_adapter.py:48:        Supports ISO 8601 format and common variations.
+adapters/jsonlines_adapter.py:49:        """
+adapters/jsonlines_adapter.py:50:        # Try ISO format first
+adapters/jsonlines_adapter.py:51:        for fmt in [
+adapters/jsonlines_adapter.py:52:            "%Y-%m-%dT%H:%M:%SZ",
+adapters/jsonlines_adapter.py:53:            "%Y-%m-%dT%H:%M:%S",
+adapters/jsonlines_adapter.py:54:            "%Y-%m-%d %H:%M:%S",
+adapters/jsonlines_adapter.py:55:            "%Y-%m-%dT%H:%M:%S.%fZ",
+adapters/jsonlines_adapter.py:56:            "%Y-%m-%dT%H:%M:%S.%f",
+adapters/jsonlines_adapter.py:57:        ]:
+adapters/jsonlines_adapter.py:58:            try:
+adapters/jsonlines_adapter.py:59:                return datetime.strptime(ts_str, fmt)
+adapters/jsonlines_adapter.py:60:            except ValueError:
+adapters/jsonlines_adapter.py:61:                continue
+adapters/jsonlines_adapter.py:62:
+adapters/jsonlines_adapter.py:63:        # Fallback: try to parse with fromisoformat
+adapters/jsonlines_adapter.py:64:        try:
+adapters/jsonlines_adapter.py:65:            return datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
+adapters/jsonlines_adapter.py:66:        except Exception:
+adapters/jsonlines_adapter.py:67:            pass
+adapters/jsonlines_adapter.py:68:
+adapters/jsonlines_adapter.py:69:        raise ValueError(f"Unable to parse timestamp: {ts_str}")
+renderers/client_renderer.py:9:    def render(
+renderers/client_renderer.py:10:        self,
+renderers/client_renderer.py:11:        timeline: List[Dict[str, Any]],
+renderers/client_renderer.py:12:        correlated: List[Dict[str, Any]],
+renderers/client_renderer.py:13:        metadata: Dict[str, Any]
+renderers/client_renderer.py:14:    ) -> str:
+renderers/client_renderer.py:15:        """Render client report in Markdown format.
+renderers/client_renderer.py:16:
+renderers/client_renderer.py:17:        Args:
+renderers/client_renderer.py:18:            timeline: Unified timeline of events and decisions
+renderers/client_renderer.py:19:            correlated: Correlated event-decision pairs
+renderers/client_renderer.py:20:            metadata: Report metadata (generation time, etc.)
+renderers/client_renderer.py:21:
+renderers/client_renderer.py:22:        Returns:
+renderers/client_renderer.py:23:            Markdown-formatted client report
+renderers/client_renderer.py:24:        """
+renderers/client_renderer.py:25:        sections = []
+renderers/client_renderer.py:26:
+renderers/client_renderer.py:27:        sections.append(self._render_header(metadata))
+renderers/client_renderer.py:28:        sections.append(self._render_executive_summary(timeline, correlated))
+renderers/client_renderer.py:29:        sections.append(self._render_timeline(timeline))
+renderers/client_renderer.py:30:        sections.append(self._render_findings_placeholder())
+renderers/client_renderer.py:31:        sections.append(self._render_detection_recommendations())
+renderers/client_renderer.py:32:        sections.append(self._render_footer())
+renderers/client_renderer.py:33:
+renderers/client_renderer.py:34:        return "\n\n".join(sections)
+renderers/client_renderer.py:36:    def _render_header(self, metadata: Dict[str, Any]) -> str:
+renderers/client_renderer.py:37:        """Render report header."""
+renderers/client_renderer.py:38:        return f"""# Security Assessment Report
+renderers/client_renderer.py:39:
+renderers/client_renderer.py:40:**Report Generated:** {metadata.get('generated_at', 'N/A')}
+renderers/client_renderer.py:41:**Assessment Period:** {metadata.get('assessment_start', 'N/A')} to {metadata.get('assessment_end', 'N/A')}
+renderers/client_renderer.py:42:
+renderers/client_renderer.py:43:---"""
+renderers/client_renderer.py:45:    def _render_executive_summary(
+renderers/client_renderer.py:46:        self,
+renderers/client_renderer.py:47:        timeline: List[Dict[str, Any]],
+renderers/client_renderer.py:48:        correlated: List[Dict[str, Any]]
+renderers/client_renderer.py:49:    ) -> str:
+renderers/client_renderer.py:50:        """Render executive summary section."""
+renderers/client_renderer.py:51:        total_events = len([t for t in timeline if t['type'] == 'event'])
+renderers/client_renderer.py:52:        total_decisions = len([t for t in timeline if t['type'] == 'decision'])

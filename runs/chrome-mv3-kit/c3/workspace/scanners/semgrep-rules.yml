@@ -1,0 +1,25 @@
+rules:
+  - id: lab-no-dynamic-eval
+    languages: [javascript]
+    message: Dynamic evaluation is not appropriate for this offline lab kit.
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - pattern: eval(...)
+          - pattern: new Function(...)
+  - id: lab-no-remote-fetch
+    languages: [javascript]
+    message: Review network transport; this kit must not exfiltrate off-host.
+    severity: WARNING
+    pattern-either:
+      - pattern: fetch(...)
+      - pattern: new WebSocket(...)
+  - id: lab-no-form-value-read
+    languages: [javascript]
+    message: Review DOM value access; captured form values are prohibited.
+    severity: ERROR
+    paths:
+      include:
+        - extension/form_capture.js
+        - extension/snapshot.js
+    pattern: $FIELD.value

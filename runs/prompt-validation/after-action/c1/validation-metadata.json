@@ -1,0 +1,11 @@
+{
+  "purpose": "C1 prompt validation; not a formal matrix cell",
+  "tool": "after-action",
+  "condition": "c1",
+  "method": "single comprehensive prompt; no agent personas",
+  "model": "claude-sonnet-4-5",
+  "prompt_sha256": "cfc8107dfecc4b6a8145b27c627be217df39ac7e1cfd817a2d1e0ec18a9eeec7",
+  "acceptance_sha256": "16346ec5dc464bce9a59596a19dfbf107d8c2db51a97ef7df7cad8071c040221",
+  "repository_head": "fc240352c1385ca4e356f4ea6760bb599c0dd88e",
+  "prepared_at": "2026-09-04T04:52:16Z"
+}

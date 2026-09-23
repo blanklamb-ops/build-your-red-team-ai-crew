@@ -1,0 +1,12 @@
+{
+  "source": "testdata/fixtures/sample_page.html",
+  "captured_at_iso": "2026-09-03T11:19:07.515Z",
+  "snapshot_file": "out/clone/snapshot.html",
+  "form_count": 1,
+  "external_script_count": 1,
+  "lab_unsafe_modules_enabled": false,
+  "modules_run": [],
+  "warnings": [
+    "lab_unsafe_modules is false (default); unsafe modules skipped."
+  ]
+}

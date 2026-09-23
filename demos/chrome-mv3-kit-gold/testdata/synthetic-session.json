@@ -1,0 +1,170 @@
+{
+  "session": {
+    "start_time": "2024-01-15T10:00:00.000Z",
+    "stop_time": "2024-01-15T10:05:00.000Z",
+    "requested_origins": [
+      "https://login.example.test/*",
+      "https://auth.example.test/*"
+    ],
+    "observed_origins": [
+      "https://login.example.test",
+      "https://auth.example.test"
+    ],
+    "missing_origins": []
+  },
+  "diagnostics": {
+    "total_events": 12,
+    "events_by_source": {
+      "webRequest.onBeforeRequest+onCompleted": 8,
+      "webNavigation.onCompleted": 4
+    },
+    "events_by_origin": {
+      "https://login.example.test": 7,
+      "https://auth.example.test": 5
+    },
+    "coverage": "complete",
+    "has_webRequest_events": true,
+    "only_fallback": false
+  },
+  "events": [
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:01.000Z",
+      "url": "https://login.example.test/",
+      "origin": "https://login.example.test",
+      "method": "GET",
+      "type": "main_frame",
+      "status_code": 200,
+      "response_headers": ["Content-Type", "Set-Cookie"],
+      "set_cookie_names": ["session_id"],
+      "request_id": "req-001"
+    },
+    {
+      "event_source": "webNavigation.onCompleted",
+      "timestamp": "2024-01-15T10:00:01.100Z",
+      "url": "https://login.example.test/",
+      "origin": "https://login.example.test",
+      "frame_id": 0,
+      "tab_id": 123,
+      "form_fields": [
+        {
+          "form_action": "https://login.example.test/auth/login",
+          "fields": [
+            {
+              "name": "login",
+              "type": "hidden"
+            },
+            {
+              "name": "passwd",
+              "type": "password"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:15.000Z",
+      "url": "https://login.example.test/auth/login",
+      "origin": "https://login.example.test",
+      "method": "POST",
+      "type": "xmlhttprequest",
+      "status_code": 302,
+      "response_headers": ["Location", "Set-Cookie"],
+      "set_cookie_names": ["auth_token", "csrf_token"],
+      "request_id": "req-002"
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:16.000Z",
+      "url": "https://auth.example.test/oauth/authorize?client_id=test&redirect_uri=https://login.example.test/callback",
+      "origin": "https://auth.example.test",
+      "method": "GET",
+      "type": "main_frame",
+      "status_code": 200,
+      "response_headers": ["Content-Type"],
+      "request_id": "req-003"
+    },
+    {
+      "event_source": "webNavigation.onCompleted",
+      "timestamp": "2024-01-15T10:00:16.100Z",
+      "url": "https://auth.example.test/oauth/authorize?client_id=test&redirect_uri=https://login.example.test/callback",
+      "origin": "https://auth.example.test",
+      "frame_id": 0,
+      "tab_id": 123
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:20.000Z",
+      "url": "https://auth.example.test/oauth/token",
+      "origin": "https://auth.example.test",
+      "method": "POST",
+      "type": "xmlhttprequest",
+      "status_code": 200,
+      "response_headers": ["Content-Type", "Set-Cookie"],
+      "set_cookie_names": ["oauth_session"],
+      "request_id": "req-004"
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:25.000Z",
+      "url": "https://login.example.test/callback?code=test123",
+      "origin": "https://login.example.test",
+      "method": "GET",
+      "type": "main_frame",
+      "status_code": 302,
+      "response_headers": ["Location", "Set-Cookie"],
+      "set_cookie_names": ["__Host-session"],
+      "request_id": "req-005"
+    },
+    {
+      "event_source": "webNavigation.onCompleted",
+      "timestamp": "2024-01-15T10:00:25.100Z",
+      "url": "https://login.example.test/callback?code=test123",
+      "origin": "https://login.example.test",
+      "frame_id": 0,
+      "tab_id": 123
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:30.000Z",
+      "url": "https://login.example.test/dashboard",
+      "origin": "https://login.example.test",
+      "method": "GET",
+      "type": "main_frame",
+      "status_code": 200,
+      "response_headers": ["Content-Type"],
+      "request_id": "req-006"
+    },
+    {
+      "event_source": "webNavigation.onCompleted",
+      "timestamp": "2024-01-15T10:00:30.100Z",
+      "url": "https://login.example.test/dashboard",
+      "origin": "https://login.example.test",
+      "frame_id": 0,
+      "tab_id": 123
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:35.000Z",
+      "url": "https://login.example.test/api/user",
+      "origin": "https://login.example.test",
+      "method": "GET",
+      "type": "xmlhttprequest",
+      "status_code": 200,
+      "response_headers": ["Content-Type"],
+      "request_id": "req-007"
+    },
+    {
+      "event_source": "webRequest.onBeforeRequest+onCompleted",
+      "timestamp": "2024-01-15T10:00:40.000Z",
+      "url": "https://auth.example.test/api/profile",
+      "origin": "https://auth.example.test",
+      "method": "GET",
+      "type": "xmlhttprequest",
+      "status_code": 200,
+      "response_headers": ["Content-Type"],
+      "request_id": "req-008"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Shipped safety default. Generation must fail unless an alternate config is explicit.
+ics_enabled: false

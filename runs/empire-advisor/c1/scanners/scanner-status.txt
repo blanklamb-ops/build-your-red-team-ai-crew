@@ -1,0 +1,2 @@
+semgrep_exit=0
+ast_grep_exit=0

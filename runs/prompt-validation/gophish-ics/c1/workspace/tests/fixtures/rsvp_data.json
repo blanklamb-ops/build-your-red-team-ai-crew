@@ -1,0 +1,26 @@
+[
+  {
+    "campaign_id": "campaign-fixture-001",
+    "recipient_id": "recip-001",
+    "recipient_email": "alice@testlab.local",
+    "status": "ACCEPTED"
+  },
+  {
+    "campaign_id": "campaign-fixture-001",
+    "recipient_id": "recip-002",
+    "recipient_email": "bob@testlab.local",
+    "status": "DECLINED"
+  },
+  {
+    "campaign_id": "campaign-fixture-001",
+    "recipient_id": "recip-003",
+    "recipient_email": "charlie@testlab.local",
+    "status": "TENTATIVE"
+  },
+  {
+    "campaign_id": "campaign-fixture-002",
+    "recipient_id": "recip-004",
+    "recipient_email": "dave@testlab.local",
+    "status": "ACCEPTED"
+  }
+]

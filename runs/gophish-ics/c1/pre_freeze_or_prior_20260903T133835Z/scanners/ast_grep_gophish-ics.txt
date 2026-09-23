@@ -1,0 +1,111 @@
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+   ┌─ gophish_ics/cli.py:46:9
+   │
+46 │         print(f"error: {e}", file=sys.stderr)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+   ┌─ gophish_ics/cli.py:60:13
+   │  
+60 │ ╭             print(f"error: generated invite for {recipient_id} failed validation: {result.errors}",
+61 │ │                   file=sys.stderr)
+   │ ╰──────────────────────────────────^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+   ┌─ gophish_ics/cli.py:74:5
+   │
+74 │     print(f"generated {len(written)} invite(s) for campaign {event.campaign_id}:")
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+   ┌─ gophish_ics/cli.py:76:9
+   │
+76 │         print(f"  {path}")
+   │         ^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+   ┌─ gophish_ics/cli.py:85:9
+   │
+85 │         print(f"error: {e}", file=sys.stderr)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+   ┌─ gophish_ics/cli.py:92:9
+   │
+92 │         print(f"error: malformed reply .ics ({args.reply}): {e}", file=sys.stderr)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:98:9
+    │  
+ 98 │ ╭         print(
+    · │
+102 │ │         )
+    │ ╰─────────^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:107:5
+    │
+107 │     print(f"recorded {parsed.status} for recipient {recipient_id} in campaign {campaign_id}")
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:117:9
+    │
+117 │         print(json.dumps(report, indent=2))
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:120:5
+    │
+120 │     print(f"Campaign: {report['campaign_id']}  (invited: {report['invited']})")
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:121:5
+    │
+121 │     print("-" * 40)
+    │     ^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:123:9
+    │
+123 │         print(f"  {status:<10} {report['counts'][status]}")
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:124:5
+    │
+124 │     print("-" * 40)
+    │     ^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:126:9
+    │
+126 │         print(f"  {r['recipient_id']:<10} {r['status']:<10} {r['email']}")
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:134:9
+    │
+134 │         print(f"OK: {args.ics} is a structurally valid ICS")
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:136:5
+    │
+136 │     print(f"INVALID: {args.ics}", file=sys.stderr)
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:138:9
+    │
+138 │         print(f"  - {err}", file=sys.stderr)
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+help[print-usage]: print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+    ┌─ gophish_ics/cli.py:166:5
+    │
+166 │     print()
+    │     ^^^^^^^
+

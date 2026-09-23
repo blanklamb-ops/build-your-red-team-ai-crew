@@ -1,0 +1,378 @@
+[
+{
+  "text": "class TestAcceptanceCriteria:\n    \"\"\"Tests for formal acceptance criteria A1-A10\"\"\"\n\n    @pytest.fixture\n    def advisor(self):\n        \"\"\"Create advisor instance for testing\"\"\"\n        return EmpireAdvisor(\n            rules_path=\"rules.yaml\",\n            kb_path=\"knowledge_base.yaml\"\n        )\n\n    @pytest.fixture\n    def plugin(self):\n        \"\"\"Create plugin instance for testing\"\"\"\n        return Plugin()\n\n    @pytest.fixture\n    def fixtures(self):\n        \"\"\"Load test fixtures\"\"\"\n        fixture_path = Path(__file__).parent / \"fixtures\" / \"commands.yaml\"\n        with open(fixture_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data['fixtures']\n\n    def test_a1_plugin_loads(self, plugin):\n        \"\"\"A1: Plugin or shim loads via documented procedure\"\"\"\n        assert plugin is not None\n        assert plugin.info['Name'] == 'EmpireAdvisor'\n        assert plugin.advisor is not None\n        assert plugin.onLoad() is True\n\n    def test_a2_advisory_without_execution(self, plugin, fixtures):\n        \"\"\"A2: Submitting fixture command produces advisory JSON/text without executing alternatives\"\"\"\n        # Test with noisy command\n        fixture = fixtures[0]  # Mimikatz\n        result = plugin.check_command(fixture['command'], output_format=\"json\")\n\n        # Verify advisory produced\n        assert 'advisory' in result\n        assert 'allow_execution' in result\n\n        # Parse JSON output\n        advisory_data = json.loads(result['advisory'])\n        assert 'command' in advisory_data\n        assert 'opsec_score' in advisory_data\n        assert 'matched_rules' in advisory_data\n\n        # Verify no execution occurred (advisory only)\n        assert advisory_data['command'] == fixture['command']\n\n        # Test text format too\n        result_text = plugin.check_command(fixture['command'], output_format=\"text\")\n        assert \"EMPIRE ADVISOR\" in result_text['advisory']\n        assert \"No commands have been executed\" in result_text['advisory']\n\n    def test_a3_rules_yaml_content(self, advisor):\n        \"\"\"A3: rules.yaml contains ≥10 rules with id + rationale\"\"\"\n        assert len(advisor.rules) >= 10\n\n        for rule in advisor.rules:\n            # Verify required fields\n            assert 'id' in rule\n            assert 'rationale' in rule\n            assert 'pattern' in rule\n            assert 'severity' in rule\n\n            # Verify non-empty\n            assert rule['id'].strip() != ''\n            assert rule['rationale'].strip() != ''\n\n    def test_a4_determinism(self, advisor, fixtures):\n        \"\"\"A4: Same input twice → identical score (determinism test)\"\"\"\n        # Test with multiple fixtures\n        for fixture in fixtures[:5]:\n            command = fixture['command']\n\n            # Score twice\n            result1 = advisor.score_command(command)\n            result2 = advisor.score_command(command)\n\n            # Verify identical results\n            assert result1.opsec_score == result2.opsec_score\n            assert result1.risk_level == result2.risk_level\n            assert result1.action == result2.action\n            assert len(result1.matched_rules) == len(result2.matched_rules)\n            assert len(result1.suggestions) == len(result2.suggestions)\n\n            # Verify matched rules are identical\n            for r1, r2 in zip(result1.matched_rules, result2.matched_rules):\n                assert r1.rule_id == r2.rule_id\n\n    def test_a5_suggestion_with_citation(self, advisor, fixtures):\n        \"\"\"A5: At least one fixture triggers a suggestion with KB citation\"\"\"\n        found_suggestion = False\n\n        for fixture in fixtures:\n            if fixture.get('has_suggestion', False):\n                advisory = advisor.score_command(fixture['command'])\n\n                if advisory.suggestions:\n                    found_suggestion = True\n                    # Verify suggestion has KB citation\n                    for sug in advisory.suggestions:\n                        assert sug.citation is not None\n                        assert sug.citation.strip() != ''\n                        assert sug.commands is not None\n                        assert len(sug.commands) > 0\n                    break\n\n        assert found_suggestion, \"At least one fixture should trigger a suggestion\"\n\n    def test_a6_offline_fixture_mode(self, advisor, fixtures):\n        \"\"\"A6: Offline fixture mode works without live Empire C2\"\"\"\n        # Verify advisor works completely offline\n        for fixture in fixtures:\n            # This should work without any network or Empire connection\n            advisory = advisor.score_command(fixture['command'])\n\n            # Verify results are produced\n            assert advisory is not None\n            assert advisory.opsec_score >= 0\n            assert advisory.opsec_score <= 100\n            assert advisory.risk_level in ['low', 'medium', 'high', 'critical']\n            assert advisory.action in ['allow', 'warn', 'block']\n\n    def test_a7_readme_exists(self):\n        \"\"\"A7: README documents Empire version compatibility or shim limits\"\"\"\n        readme_path = Path(__file__).parent.parent / \"README.md\"\n        assert readme_path.exists(), \"README.md must exist\"\n\n        content = readme_path.read_text()\n        # Check for key documentation sections\n        assert len(content) > 500, \"README should be substantial\"\n        # Will be validated manually for Empire compatibility notes\n\n    def test_a8_opsec_card_exists(self):\n        \"\"\"A8: OPSEC_CARD.md with Detection Recommendations (≥3 bullets)\"\"\"\n        opsec_path = Path(__file__).parent.parent / \"OPSEC_CARD.md\"\n        assert opsec_path.exists(), \"OPSEC_CARD.md must exist\"\n\n        content = opsec_path.read_text()\n        # Check for detection recommendations section\n        assert \"Detection\" in content or \"detection\" in content\n        # Count bullets (lines starting with -, *, or numbers)\n        lines = content.split('\\n')\n        bullets = [l for l in lines if l.strip().startswith(('-', '*', '1.', '2.', '3.'))]\n        assert len(bullets) >= 3, \"Should have at least 3 detection recommendations\"\n\n    def test_a9_authorized_use_notice(self):\n        \"\"\"A9: Authorized-use notice present\"\"\"\n        # Check in main plugin file\n        plugin_path = Path(__file__).parent.parent / \"empire_advisor.py\"\n        content = plugin_path.read_text()\n        assert \"Authorized\" in content or \"authorized\" in content\n\n        # Check in README\n        readme_path = Path(__file__).parent.parent / \"README.md\"\n        if readme_path.exists():\n            readme = readme_path.read_text()\n            assert \"Authorized\" in readme or \"authorized\" in readme or \"AUTHORIZED\" in readme",
+  "range": {
+    "byteOffset": {
+      "start": 358,
+      "end": 7037
+    },
+    "start": {
+      "line": 19,
+      "column": 0
+    },
+    "end": {
+      "line": 178,
+      "column": 93
+    }
+  },
+  "file": "tests/test_advisor.py",
+  "lines": "class TestAcceptanceCriteria:\n    \"\"\"Tests for formal acceptance criteria A1-A10\"\"\"\n\n    @pytest.fixture\n    def advisor(self):\n        \"\"\"Create advisor instance for testing\"\"\"\n        return EmpireAdvisor(\n            rules_path=\"rules.yaml\",\n            kb_path=\"knowledge_base.yaml\"\n        )\n\n    @pytest.fixture\n    def plugin(self):\n        \"\"\"Create plugin instance for testing\"\"\"\n        return Plugin()\n\n    @pytest.fixture\n    def fixtures(self):\n        \"\"\"Load test fixtures\"\"\"\n        fixture_path = Path(__file__).parent / \"fixtures\" / \"commands.yaml\"\n        with open(fixture_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data['fixtures']\n\n    def test_a1_plugin_loads(self, plugin):\n        \"\"\"A1: Plugin or shim loads via documented procedure\"\"\"\n        assert plugin is not None\n        assert plugin.info['Name'] == 'EmpireAdvisor'\n        assert plugin.advisor is not None\n        assert plugin.onLoad() is True\n\n    def test_a2_advisory_without_execution(self, plugin, fixtures):\n        \"\"\"A2: Submitting fixture command produces advisory JSON/text without executing alternatives\"\"\"\n        # Test with noisy command\n        fixture = fixtures[0]  # Mimikatz\n        result = plugin.check_command(fixture['command'], output_format=\"json\")\n\n        # Verify advisory produced\n        assert 'advisory' in result\n        assert 'allow_execution' in result\n\n        # Parse JSON output\n        advisory_data = json.loads(result['advisory'])\n        assert 'command' in advisory_data\n        assert 'opsec_score' in advisory_data\n        assert 'matched_rules' in advisory_data\n\n        # Verify no execution occurred (advisory only)\n        assert advisory_data['command'] == fixture['command']\n\n        # Test text format too\n        result_text = plugin.check_command(fixture['command'], output_format=\"text\")\n        assert \"EMPIRE ADVISOR\" in result_text['advisory']\n        assert \"No commands have been executed\" in result_text['advisory']\n\n    def test_a3_rules_yaml_content(self, advisor):\n        \"\"\"A3: rules.yaml contains ≥10 rules with id + rationale\"\"\"\n        assert len(advisor.rules) >= 10\n\n        for rule in advisor.rules:\n            # Verify required fields\n            assert 'id' in rule\n            assert 'rationale' in rule\n            assert 'pattern' in rule\n            assert 'severity' in rule\n\n            # Verify non-empty\n            assert rule['id'].strip() != ''\n            assert rule['rationale'].strip() != ''\n\n    def test_a4_determinism(self, advisor, fixtures):\n        \"\"\"A4: Same input twice → identical score (determinism test)\"\"\"\n        # Test with multiple fixtures\n        for fixture in fixtures[:5]:\n            command = fixture['command']\n\n            # Score twice\n            result1 = advisor.score_command(command)\n            result2 = advisor.score_command(command)\n\n            # Verify identical results\n            assert result1.opsec_score == result2.opsec_score\n            assert result1.risk_level == result2.risk_level\n            assert result1.action == result2.action\n            assert len(result1.matched_rules) == len(result2.matched_rules)\n            assert len(result1.suggestions) == len(result2.suggestions)\n\n            # Verify matched rules are identical\n            for r1, r2 in zip(result1.matched_rules, result2.matched_rules):\n                assert r1.rule_id == r2.rule_id\n\n    def test_a5_suggestion_with_citation(self, advisor, fixtures):\n        \"\"\"A5: At least one fixture triggers a suggestion with KB citation\"\"\"\n        found_suggestion = False\n\n        for fixture in fixtures:\n            if fixture.get('has_suggestion', False):\n                advisory = advisor.score_command(fixture['command'])\n\n                if advisory.suggestions:\n                    found_suggestion = True\n                    # Verify suggestion has KB citation\n                    for sug in advisory.suggestions:\n                        assert sug.citation is not None\n                        assert sug.citation.strip() != ''\n                        assert sug.commands is not None\n                        assert len(sug.commands) > 0\n                    break\n\n        assert found_suggestion, \"At least one fixture should trigger a suggestion\"\n\n    def test_a6_offline_fixture_mode(self, advisor, fixtures):\n        \"\"\"A6: Offline fixture mode works without live Empire C2\"\"\"\n        # Verify advisor works completely offline\n        for fixture in fixtures:\n            # This should work without any network or Empire connection\n            advisory = advisor.score_command(fixture['command'])\n\n            # Verify results are produced\n            assert advisory is not None\n            assert advisory.opsec_score >= 0\n            assert advisory.opsec_score <= 100\n            assert advisory.risk_level in ['low', 'medium', 'high', 'critical']\n            assert advisory.action in ['allow', 'warn', 'block']\n\n    def test_a7_readme_exists(self):\n        \"\"\"A7: README documents Empire version compatibility or shim limits\"\"\"\n        readme_path = Path(__file__).parent.parent / \"README.md\"\n        assert readme_path.exists(), \"README.md must exist\"\n\n        content = readme_path.read_text()\n        # Check for key documentation sections\n        assert len(content) > 500, \"README should be substantial\"\n        # Will be validated manually for Empire compatibility notes\n\n    def test_a8_opsec_card_exists(self):\n        \"\"\"A8: OPSEC_CARD.md with Detection Recommendations (≥3 bullets)\"\"\"\n        opsec_path = Path(__file__).parent.parent / \"OPSEC_CARD.md\"\n        assert opsec_path.exists(), \"OPSEC_CARD.md must exist\"\n\n        content = opsec_path.read_text()\n        # Check for detection recommendations section\n        assert \"Detection\" in content or \"detection\" in content\n        # Count bullets (lines starting with -, *, or numbers)\n        lines = content.split('\\n')\n        bullets = [l for l in lines if l.strip().startswith(('-', '*', '1.', '2.', '3.'))]\n        assert len(bullets) >= 3, \"Should have at least 3 detection recommendations\"\n\n    def test_a9_authorized_use_notice(self):\n        \"\"\"A9: Authorized-use notice present\"\"\"\n        # Check in main plugin file\n        plugin_path = Path(__file__).parent.parent / \"empire_advisor.py\"\n        content = plugin_path.read_text()\n        assert \"Authorized\" in content or \"authorized\" in content\n\n        # Check in README\n        readme_path = Path(__file__).parent.parent / \"README.md\"\n        if readme_path.exists():\n            readme = readme_path.read_text()\n            assert \"Authorized\" in readme or \"authorized\" in readme or \"AUTHORIZED\" in readme",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "TestAcceptanceCriteria",
+        "range": {
+          "byteOffset": {
+            "start": 364,
+            "end": 386
+          },
+          "start": {
+            "line": 19,
+            "column": 6
+          },
+          "end": {
+            "line": 19,
+            "column": 28
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class TestManualFidelity:\n    \"\"\"Tests for manual fidelity checks M1-M3\"\"\"\n\n    @pytest.fixture\n    def advisor(self):\n        return EmpireAdvisor(\n            rules_path=\"rules.yaml\",\n            kb_path=\"knowledge_base.yaml\"\n        )\n\n    @pytest.fixture\n    def plugin(self):\n        return Plugin()\n\n    def test_m1_rationale_understandable(self, plugin):\n        \"\"\"M1: Scoring rationale understandable to operator without reading source\"\"\"\n        command = \"Invoke-Mimikatz -Command coffee\"\n        result = plugin.check_command(command, output_format=\"text\")\n\n        advisory = result['advisory']\n\n        # Should contain human-readable rationale\n        assert \"Rationale:\" in advisory\n        # Should explain the risk clearly\n        assert len(advisory) > 200  # Substantial explanation\n        # Should not just be code dumps\n        assert \"def \" not in advisory\n        assert \"class \" not in advisory\n\n    def test_m2_suggestions_are_alternatives(self, advisor):\n        \"\"\"M2: Suggestions are alternatives in KB, not vague advice only\"\"\"\n        command = \"Invoke-Mimikatz\"\n        advisory = advisor.score_command(command)\n\n        if advisory.suggestions:\n            for sug in advisory.suggestions:\n                # Should have concrete commands\n                assert sug.commands is not None\n                assert len(sug.commands) > 0\n\n                # Commands should not be vague advice\n                for cmd in sug.commands:\n                    assert len(cmd) > 10  # Substantial command\n                    # Should contain technical details, not just \"be careful\"\n                    assert not cmd.lower().startswith(\"be \")\n                    assert not cmd.lower().startswith(\"try \")\n\n    def test_m3_dangerous_rules_warn_or_block(self, advisor, plugin):\n        \"\"\"M3: Dangerous rules default to warn/block advisory, not silent ignore\"\"\"\n        dangerous_commands = [\n            \"Invoke-Mimikatz\",\n            \"nmap -sS 10.0.0.0/16\",\n            \"wmic process call create malware.exe\"\n        ]\n\n        for cmd in dangerous_commands:\n            result = plugin.check_command(cmd)\n\n            # Should not be silently allowed\n            assert result['action'] in ['warn', 'block']\n            assert result['score'] < 50  # Should be flagged as risky",
+  "range": {
+    "byteOffset": {
+      "start": 7040,
+      "end": 9339
+    },
+    "start": {
+      "line": 181,
+      "column": 0
+    },
+    "end": {
+      "line": 241,
+      "column": 69
+    }
+  },
+  "file": "tests/test_advisor.py",
+  "lines": "class TestManualFidelity:\n    \"\"\"Tests for manual fidelity checks M1-M3\"\"\"\n\n    @pytest.fixture\n    def advisor(self):\n        return EmpireAdvisor(\n            rules_path=\"rules.yaml\",\n            kb_path=\"knowledge_base.yaml\"\n        )\n\n    @pytest.fixture\n    def plugin(self):\n        return Plugin()\n\n    def test_m1_rationale_understandable(self, plugin):\n        \"\"\"M1: Scoring rationale understandable to operator without reading source\"\"\"\n        command = \"Invoke-Mimikatz -Command coffee\"\n        result = plugin.check_command(command, output_format=\"text\")\n\n        advisory = result['advisory']\n\n        # Should contain human-readable rationale\n        assert \"Rationale:\" in advisory\n        # Should explain the risk clearly\n        assert len(advisory) > 200  # Substantial explanation\n        # Should not just be code dumps\n        assert \"def \" not in advisory\n        assert \"class \" not in advisory\n\n    def test_m2_suggestions_are_alternatives(self, advisor):\n        \"\"\"M2: Suggestions are alternatives in KB, not vague advice only\"\"\"\n        command = \"Invoke-Mimikatz\"\n        advisory = advisor.score_command(command)\n\n        if advisory.suggestions:\n            for sug in advisory.suggestions:\n                # Should have concrete commands\n                assert sug.commands is not None\n                assert len(sug.commands) > 0\n\n                # Commands should not be vague advice\n                for cmd in sug.commands:\n                    assert len(cmd) > 10  # Substantial command\n                    # Should contain technical details, not just \"be careful\"\n                    assert not cmd.lower().startswith(\"be \")\n                    assert not cmd.lower().startswith(\"try \")\n\n    def test_m3_dangerous_rules_warn_or_block(self, advisor, plugin):\n        \"\"\"M3: Dangerous rules default to warn/block advisory, not silent ignore\"\"\"\n        dangerous_commands = [\n            \"Invoke-Mimikatz\",\n            \"nmap -sS 10.0.0.0/16\",\n            \"wmic process call create malware.exe\"\n        ]\n\n        for cmd in dangerous_commands:\n            result = plugin.check_command(cmd)\n\n            # Should not be silently allowed\n            assert result['action'] in ['warn', 'block']\n            assert result['score'] < 50  # Should be flagged as risky",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "TestManualFidelity",
+        "range": {
+          "byteOffset": {
+            "start": 7046,
+            "end": 7064
+          },
+          "start": {
+            "line": 181,
+            "column": 6
+          },
+          "end": {
+            "line": 181,
+            "column": 24
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class TestFixtureValidation:\n    \"\"\"Validate behavior against test fixtures\"\"\"\n\n    @pytest.fixture\n    def advisor(self):\n        return EmpireAdvisor(\n            rules_path=\"rules.yaml\",\n            kb_path=\"knowledge_base.yaml\"\n        )\n\n    @pytest.fixture\n    def fixtures(self):\n        fixture_path = Path(__file__).parent / \"fixtures\" / \"commands.yaml\"\n        with open(fixture_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data['fixtures']\n\n    def test_fixture_expectations(self, advisor, fixtures):\n        \"\"\"Validate each fixture meets its expected behavior\"\"\"\n        for fixture in fixtures:\n            command = fixture['command']\n            advisory = advisor.score_command(command)\n\n            # Check expected rules matched\n            if fixture.get('expected_rules'):\n                matched_ids = [r.rule_id for r in advisory.matched_rules]\n                for expected_rule in fixture['expected_rules']:\n                    assert expected_rule in matched_ids, \\\n                        f\"Expected rule {expected_rule} for: {command}\"\n\n            # Check score boundaries\n            if 'expected_score_max' in fixture:\n                assert advisory.opsec_score <= fixture['expected_score_max'], \\\n                    f\"Score too high for: {command}\"\n\n            if 'expected_score_min' in fixture:\n                assert advisory.opsec_score >= fixture['expected_score_min'], \\\n                    f\"Score too low for: {command}\"\n\n            # Check action\n            if 'expected_action' in fixture:\n                assert advisory.action == fixture['expected_action'], \\\n                    f\"Wrong action for: {command}\"\n\n            # Check suggestion presence\n            if fixture.get('has_suggestion'):\n                assert len(advisory.suggestions) > 0, \\\n                    f\"Expected suggestion for: {command}\"",
+  "range": {
+    "byteOffset": {
+      "start": 9342,
+      "end": 11229
+    },
+    "start": {
+      "line": 244,
+      "column": 0
+    },
+    "end": {
+      "line": 291,
+      "column": 57
+    }
+  },
+  "file": "tests/test_advisor.py",
+  "lines": "class TestFixtureValidation:\n    \"\"\"Validate behavior against test fixtures\"\"\"\n\n    @pytest.fixture\n    def advisor(self):\n        return EmpireAdvisor(\n            rules_path=\"rules.yaml\",\n            kb_path=\"knowledge_base.yaml\"\n        )\n\n    @pytest.fixture\n    def fixtures(self):\n        fixture_path = Path(__file__).parent / \"fixtures\" / \"commands.yaml\"\n        with open(fixture_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data['fixtures']\n\n    def test_fixture_expectations(self, advisor, fixtures):\n        \"\"\"Validate each fixture meets its expected behavior\"\"\"\n        for fixture in fixtures:\n            command = fixture['command']\n            advisory = advisor.score_command(command)\n\n            # Check expected rules matched\n            if fixture.get('expected_rules'):\n                matched_ids = [r.rule_id for r in advisory.matched_rules]\n                for expected_rule in fixture['expected_rules']:\n                    assert expected_rule in matched_ids, \\\n                        f\"Expected rule {expected_rule} for: {command}\"\n\n            # Check score boundaries\n            if 'expected_score_max' in fixture:\n                assert advisory.opsec_score <= fixture['expected_score_max'], \\\n                    f\"Score too high for: {command}\"\n\n            if 'expected_score_min' in fixture:\n                assert advisory.opsec_score >= fixture['expected_score_min'], \\\n                    f\"Score too low for: {command}\"\n\n            # Check action\n            if 'expected_action' in fixture:\n                assert advisory.action == fixture['expected_action'], \\\n                    f\"Wrong action for: {command}\"\n\n            # Check suggestion presence\n            if fixture.get('has_suggestion'):\n                assert len(advisory.suggestions) > 0, \\\n                    f\"Expected suggestion for: {command}\"",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "TestFixtureValidation",
+        "range": {
+          "byteOffset": {
+            "start": 9348,
+            "end": 9369
+          },
+          "start": {
+            "line": 244,
+            "column": 6
+          },
+          "end": {
+            "line": 244,
+            "column": 27
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class RuleMatch:\n    \"\"\"Represents a matched OPSEC rule\"\"\"\n    rule_id: str\n    name: str\n    severity: str\n    rationale: str\n    score_penalty: int\n    category: str",
+  "range": {
+    "byteOffset": {
+      "start": 418,
+      "end": 585
+    },
+    "start": {
+      "line": 19,
+      "column": 0
+    },
+    "end": {
+      "line": 26,
+      "column": 17
+    }
+  },
+  "file": "empire_advisor.py",
+  "lines": "class RuleMatch:\n    \"\"\"Represents a matched OPSEC rule\"\"\"\n    rule_id: str\n    name: str\n    severity: str\n    rationale: str\n    score_penalty: int\n    category: str",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "RuleMatch",
+        "range": {
+          "byteOffset": {
+            "start": 424,
+            "end": 433
+          },
+          "start": {
+            "line": 19,
+            "column": 6
+          },
+          "end": {
+            "line": 19,
+            "column": 15
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class Suggestion:\n    \"\"\"Represents an alternative command suggestion\"\"\"\n    rule_id: str\n    suggestion: str\n    commands: List[str]\n    rationale: str\n    citation: str",
+  "range": {
+    "byteOffset": {
+      "start": 599,
+      "end": 769
+    },
+    "start": {
+      "line": 30,
+      "column": 0
+    },
+    "end": {
+      "line": 36,
+      "column": 17
+    }
+  },
+  "file": "empire_advisor.py",
+  "lines": "class Suggestion:\n    \"\"\"Represents an alternative command suggestion\"\"\"\n    rule_id: str\n    suggestion: str\n    commands: List[str]\n    rationale: str\n    citation: str",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "Suggestion",
+        "range": {
+          "byteOffset": {
+            "start": 605,
+            "end": 615
+          },
+          "start": {
+            "line": 30,
+            "column": 6
+          },
+          "end": {
+            "line": 30,
+            "column": 16
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class Advisory:\n    \"\"\"Complete advisory response for a command\"\"\"\n    command: str\n    opsec_score: int  # 0-100, lower is noisier\n    risk_level: str  # low, medium, high, critical\n    matched_rules: List[RuleMatch]\n    suggestions: List[Suggestion]\n    action: str  # allow, warn, block",
+  "range": {
+    "byteOffset": {
+      "start": 783,
+      "end": 1072
+    },
+    "start": {
+      "line": 40,
+      "column": 0
+    },
+    "end": {
+      "line": 47,
+      "column": 37
+    }
+  },
+  "file": "empire_advisor.py",
+  "lines": "class Advisory:\n    \"\"\"Complete advisory response for a command\"\"\"\n    command: str\n    opsec_score: int  # 0-100, lower is noisier\n    risk_level: str  # low, medium, high, critical\n    matched_rules: List[RuleMatch]\n    suggestions: List[Suggestion]\n    action: str  # allow, warn, block",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "Advisory",
+        "range": {
+          "byteOffset": {
+            "start": 789,
+            "end": 797
+          },
+          "start": {
+            "line": 40,
+            "column": 6
+          },
+          "end": {
+            "line": 40,
+            "column": 14
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class EmpireAdvisor:\n    \"\"\"\n    Empire-compatible plugin (or shim) for OPSEC command advisory.\n\n    This implementation works as:\n    1. A standalone shim for offline testing\n    2. A compatible plugin structure for Empire integration\n    \"\"\"\n\n    def __init__(self, rules_path: str = \"rules.yaml\", kb_path: str = \"knowledge_base.yaml\"):\n        \"\"\"Initialize the advisor with rules and knowledge base\"\"\"\n        self.rules_path = Path(rules_path)\n        self.kb_path = Path(kb_path)\n        self.rules = self._load_rules()\n        self.knowledge_base = self._load_kb()\n\n    def _load_rules(self) -> List[Dict]:\n        \"\"\"Load OPSEC rules from YAML\"\"\"\n        if not self.rules_path.exists():\n            raise FileNotFoundError(f\"Rules file not found: {self.rules_path}\")\n\n        with open(self.rules_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data.get('rules', [])\n\n    def _load_kb(self) -> List[Dict]:\n        \"\"\"Load knowledge base alternatives from YAML\"\"\"\n        if not self.kb_path.exists():\n            raise FileNotFoundError(f\"Knowledge base not found: {self.kb_path}\")\n\n        with open(self.kb_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data.get('alternatives', [])\n\n    def score_command(self, command: str) -> Advisory:\n        \"\"\"\n        Score a command against OPSEC rules and provide suggestions.\n\n        Args:\n            command: The operator command to evaluate\n\n        Returns:\n            Advisory object with score, matched rules, and suggestions\n        \"\"\"\n        matched_rules = []\n        total_penalty = 0\n\n        # Check command against all rules\n        for rule in self.rules:\n            pattern = rule.get('pattern', '')\n            if re.search(pattern, command, re.IGNORECASE):\n                matched_rules.append(RuleMatch(\n                    rule_id=rule['id'],\n                    name=rule['name'],\n                    severity=rule['severity'],\n                    rationale=rule['rationale'],\n                    score_penalty=rule['score_penalty'],\n                    category=rule['category']\n                ))\n                total_penalty += rule['score_penalty']\n\n        # Calculate OPSEC score (100 = perfect, 0 = very noisy)\n        # Cap penalties at 100 for worst case\n        opsec_score = max(0, 100 - min(total_penalty, 100))\n\n        # Determine risk level and action\n        risk_level, action = self._calculate_risk_action(opsec_score, matched_rules)\n\n        # Find suggestions for matched rules\n        suggestions = self._get_suggestions([r.rule_id for r in matched_rules])\n\n        return Advisory(\n            command=command,\n            opsec_score=opsec_score,\n            risk_level=risk_level,\n            matched_rules=matched_rules,\n            suggestions=suggestions,\n            action=action\n        )\n\n    def _calculate_risk_action(self, score: int, matches: List[RuleMatch]) -> Tuple[str, str]:\n        \"\"\"Determine risk level and recommended action based on score and severity\"\"\"\n        # Check for critical severity matches\n        has_critical = any(m.severity == 'critical' for m in matches)\n        has_high = any(m.severity == 'high' for m in matches)\n\n        if has_critical or score < 20:\n            return \"critical\", \"block\"\n        elif has_high or score < 40:\n            return \"high\", \"warn\"\n        elif score < 70:\n            return \"medium\", \"warn\"\n        else:\n            return \"low\", \"allow\"\n\n    def _get_suggestions(self, rule_ids: List[str]) -> List[Suggestion]:\n        \"\"\"Retrieve alternative command suggestions for matched rules\"\"\"\n        suggestions = []\n\n        for rule_id in rule_ids:\n            # Find alternatives in knowledge base\n            for alt in self.knowledge_base:\n                if alt['rule_id'] == rule_id:\n                    suggestions.append(Suggestion(\n                        rule_id=rule_id,\n                        suggestion=alt['suggestion'],\n                        commands=alt['commands'],\n                        rationale=alt['rationale'],\n                        citation=alt['citation']\n                    ))\n                    break  # Only one suggestion per rule\n\n        return suggestions\n\n    def format_advisory_text(self, advisory: Advisory) -> str:\n        \"\"\"Format advisory as human-readable text\"\"\"\n        lines = []\n        lines.append(\"=\" * 70)\n        lines.append(\"EMPIRE ADVISOR - OPSEC ANALYSIS\")\n        lines.append(\"=\" * 70)\n        lines.append(f\"\\nCommand: {advisory.command}\")\n        lines.append(f\"\\nOPSEC Score: {advisory.opsec_score}/100\")\n        lines.append(f\"Risk Level: {advisory.risk_level.upper()}\")\n        lines.append(f\"Recommended Action: {advisory.action.upper()}\")\n\n        if advisory.matched_rules:\n            lines.append(f\"\\n{'=' * 70}\")\n            lines.append(f\"MATCHED RULES ({len(advisory.matched_rules)})\")\n            lines.append(\"=\" * 70)\n\n            for i, rule in enumerate(advisory.matched_rules, 1):\n                lines.append(f\"\\n[{i}] {rule.name} ({rule.rule_id})\")\n                lines.append(f\"    Severity: {rule.severity.upper()}\")\n                lines.append(f\"    Category: {rule.category}\")\n                lines.append(f\"    Penalty: -{rule.score_penalty} points\")\n                lines.append(f\"    Rationale: {rule.rationale}\")\n\n        if advisory.suggestions:\n            lines.append(f\"\\n{'=' * 70}\")\n            lines.append(f\"QUIETER ALTERNATIVES ({len(advisory.suggestions)})\")\n            lines.append(\"=\" * 70)\n\n            for i, sug in enumerate(advisory.suggestions, 1):\n                lines.append(f\"\\n[{i}] {sug.suggestion}\")\n                lines.append(f\"    Rationale: {sug.rationale}\")\n                lines.append(f\"    Citation: {sug.citation}\")\n                lines.append(f\"    Alternative commands:\")\n                for cmd in sug.commands:\n                    lines.append(f\"      • {cmd}\")\n\n        lines.append(f\"\\n{'=' * 70}\")\n        lines.append(\"NOTE: This is advisory only. No commands have been executed.\")\n        lines.append(\"=\" * 70)\n\n        return \"\\n\".join(lines)\n\n    def format_advisory_json(self, advisory: Advisory) -> str:\n        \"\"\"Format advisory as JSON\"\"\"\n        # Convert dataclasses to dicts\n        data = {\n            'command': advisory.command,\n            'opsec_score': advisory.opsec_score,\n            'risk_level': advisory.risk_level,\n            'action': advisory.action,\n            'matched_rules': [asdict(r) for r in advisory.matched_rules],\n            'suggestions': [asdict(s) for s in advisory.suggestions]\n        }\n        return json.dumps(data, indent=2)",
+  "range": {
+    "byteOffset": {
+      "start": 1075,
+      "end": 7716
+    },
+    "start": {
+      "line": 50,
+      "column": 0
+    },
+    "end": {
+      "line": 217,
+      "column": 41
+    }
+  },
+  "file": "empire_advisor.py",
+  "lines": "class EmpireAdvisor:\n    \"\"\"\n    Empire-compatible plugin (or shim) for OPSEC command advisory.\n\n    This implementation works as:\n    1. A standalone shim for offline testing\n    2. A compatible plugin structure for Empire integration\n    \"\"\"\n\n    def __init__(self, rules_path: str = \"rules.yaml\", kb_path: str = \"knowledge_base.yaml\"):\n        \"\"\"Initialize the advisor with rules and knowledge base\"\"\"\n        self.rules_path = Path(rules_path)\n        self.kb_path = Path(kb_path)\n        self.rules = self._load_rules()\n        self.knowledge_base = self._load_kb()\n\n    def _load_rules(self) -> List[Dict]:\n        \"\"\"Load OPSEC rules from YAML\"\"\"\n        if not self.rules_path.exists():\n            raise FileNotFoundError(f\"Rules file not found: {self.rules_path}\")\n\n        with open(self.rules_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data.get('rules', [])\n\n    def _load_kb(self) -> List[Dict]:\n        \"\"\"Load knowledge base alternatives from YAML\"\"\"\n        if not self.kb_path.exists():\n            raise FileNotFoundError(f\"Knowledge base not found: {self.kb_path}\")\n\n        with open(self.kb_path, 'r') as f:\n            data = yaml.safe_load(f)\n            return data.get('alternatives', [])\n\n    def score_command(self, command: str) -> Advisory:\n        \"\"\"\n        Score a command against OPSEC rules and provide suggestions.\n\n        Args:\n            command: The operator command to evaluate\n\n        Returns:\n            Advisory object with score, matched rules, and suggestions\n        \"\"\"\n        matched_rules = []\n        total_penalty = 0\n\n        # Check command against all rules\n        for rule in self.rules:\n            pattern = rule.get('pattern', '')\n            if re.search(pattern, command, re.IGNORECASE):\n                matched_rules.append(RuleMatch(\n                    rule_id=rule['id'],\n                    name=rule['name'],\n                    severity=rule['severity'],\n                    rationale=rule['rationale'],\n                    score_penalty=rule['score_penalty'],\n                    category=rule['category']\n                ))\n                total_penalty += rule['score_penalty']\n\n        # Calculate OPSEC score (100 = perfect, 0 = very noisy)\n        # Cap penalties at 100 for worst case\n        opsec_score = max(0, 100 - min(total_penalty, 100))\n\n        # Determine risk level and action\n        risk_level, action = self._calculate_risk_action(opsec_score, matched_rules)\n\n        # Find suggestions for matched rules\n        suggestions = self._get_suggestions([r.rule_id for r in matched_rules])\n\n        return Advisory(\n            command=command,\n            opsec_score=opsec_score,\n            risk_level=risk_level,\n            matched_rules=matched_rules,\n            suggestions=suggestions,\n            action=action\n        )\n\n    def _calculate_risk_action(self, score: int, matches: List[RuleMatch]) -> Tuple[str, str]:\n        \"\"\"Determine risk level and recommended action based on score and severity\"\"\"\n        # Check for critical severity matches\n        has_critical = any(m.severity == 'critical' for m in matches)\n        has_high = any(m.severity == 'high' for m in matches)\n\n        if has_critical or score < 20:\n            return \"critical\", \"block\"\n        elif has_high or score < 40:\n            return \"high\", \"warn\"\n        elif score < 70:\n            return \"medium\", \"warn\"\n        else:\n            return \"low\", \"allow\"\n\n    def _get_suggestions(self, rule_ids: List[str]) -> List[Suggestion]:\n        \"\"\"Retrieve alternative command suggestions for matched rules\"\"\"\n        suggestions = []\n\n        for rule_id in rule_ids:\n            # Find alternatives in knowledge base\n            for alt in self.knowledge_base:\n                if alt['rule_id'] == rule_id:\n                    suggestions.append(Suggestion(\n                        rule_id=rule_id,\n                        suggestion=alt['suggestion'],\n                        commands=alt['commands'],\n                        rationale=alt['rationale'],\n                        citation=alt['citation']\n                    ))\n                    break  # Only one suggestion per rule\n\n        return suggestions\n\n    def format_advisory_text(self, advisory: Advisory) -> str:\n        \"\"\"Format advisory as human-readable text\"\"\"\n        lines = []\n        lines.append(\"=\" * 70)\n        lines.append(\"EMPIRE ADVISOR - OPSEC ANALYSIS\")\n        lines.append(\"=\" * 70)\n        lines.append(f\"\\nCommand: {advisory.command}\")\n        lines.append(f\"\\nOPSEC Score: {advisory.opsec_score}/100\")\n        lines.append(f\"Risk Level: {advisory.risk_level.upper()}\")\n        lines.append(f\"Recommended Action: {advisory.action.upper()}\")\n\n        if advisory.matched_rules:\n            lines.append(f\"\\n{'=' * 70}\")\n            lines.append(f\"MATCHED RULES ({len(advisory.matched_rules)})\")\n            lines.append(\"=\" * 70)\n\n            for i, rule in enumerate(advisory.matched_rules, 1):\n                lines.append(f\"\\n[{i}] {rule.name} ({rule.rule_id})\")\n                lines.append(f\"    Severity: {rule.severity.upper()}\")\n                lines.append(f\"    Category: {rule.category}\")\n                lines.append(f\"    Penalty: -{rule.score_penalty} points\")\n                lines.append(f\"    Rationale: {rule.rationale}\")\n\n        if advisory.suggestions:\n            lines.append(f\"\\n{'=' * 70}\")\n            lines.append(f\"QUIETER ALTERNATIVES ({len(advisory.suggestions)})\")\n            lines.append(\"=\" * 70)\n\n            for i, sug in enumerate(advisory.suggestions, 1):\n                lines.append(f\"\\n[{i}] {sug.suggestion}\")\n                lines.append(f\"    Rationale: {sug.rationale}\")\n                lines.append(f\"    Citation: {sug.citation}\")\n                lines.append(f\"    Alternative commands:\")\n                for cmd in sug.commands:\n                    lines.append(f\"      • {cmd}\")\n\n        lines.append(f\"\\n{'=' * 70}\")\n        lines.append(\"NOTE: This is advisory only. No commands have been executed.\")\n        lines.append(\"=\" * 70)\n\n        return \"\\n\".join(lines)\n\n    def format_advisory_json(self, advisory: Advisory) -> str:\n        \"\"\"Format advisory as JSON\"\"\"\n        # Convert dataclasses to dicts\n        data = {\n            'command': advisory.command,\n            'opsec_score': advisory.opsec_score,\n            'risk_level': advisory.risk_level,\n            'action': advisory.action,\n            'matched_rules': [asdict(r) for r in advisory.matched_rules],\n            'suggestions': [asdict(s) for s in advisory.suggestions]\n        }\n        return json.dumps(data, indent=2)",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "EmpireAdvisor",
+        "range": {
+          "byteOffset": {
+            "start": 1081,
+            "end": 1094
+          },
+          "start": {
+            "line": 50,
+            "column": 6
+          },
+          "end": {
+            "line": 50,
+            "column": 19
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+},
+{
+  "text": "class Plugin:\n    \"\"\"\n    Empire plugin interface shim.\n\n    This provides the expected Empire plugin structure for compatibility.\n    When full Empire is available, this integrates as a standard plugin.\n    In offline mode, this serves as a standalone shim.\n    \"\"\"\n\n    def __init__(self, mainMenu=None):\n        \"\"\"Initialize plugin with optional Empire mainMenu reference\"\"\"\n        self.info = {\n            'Name': 'EmpireAdvisor',\n            'Author': ['Research Team'],\n            'Description': 'OPSEC advisory plugin for Empire commands',\n            'Software': 'Empire 4.x+',\n            'Techniques': ['T1059', 'T1027'],\n            'Comments': [\n                'Provides pre-execution OPSEC scoring',\n                'Advisory only - never auto-executes',\n                'Authorized research use only'\n            ]\n        }\n        self.mainMenu = mainMenu\n        self.advisor = EmpireAdvisor()\n\n    def onLoad(self):\n        \"\"\"Called when plugin is loaded by Empire\"\"\"\n        print(\"[+] Empire Advisor plugin loaded\")\n        print(\"[*] Commands will be scored for OPSEC considerations\")\n        return True\n\n    def register(self, mainMenu):\n        \"\"\"Register plugin hooks with Empire\"\"\"\n        self.mainMenu = mainMenu\n        # Hook into command execution pipeline\n        # In real Empire: mainMenu.register_command_hook(self.check_command)\n        return True\n\n    def check_command(self, command: str, output_format: str = \"text\") -> Dict:\n        \"\"\"\n        Main entry point for command checking.\n        Called before command execution.\n\n        Args:\n            command: The command to check\n            output_format: 'text' or 'json'\n\n        Returns:\n            Dict with 'advisory' and 'allow_execution' keys\n        \"\"\"\n        advisory = self.advisor.score_command(command)\n\n        if output_format == \"json\":\n            output = self.advisor.format_advisory_json(advisory)\n        else:\n            output = self.advisor.format_advisory_text(advisory)\n\n        return {\n            'advisory': output,\n            'allow_execution': advisory.action != 'block',\n            'action': advisory.action,\n            'score': advisory.opsec_score\n        }",
+  "range": {
+    "byteOffset": {
+      "start": 7752,
+      "end": 9951
+    },
+    "start": {
+      "line": 221,
+      "column": 0
+    },
+    "end": {
+      "line": 284,
+      "column": 9
+    }
+  },
+  "file": "empire_advisor.py",
+  "lines": "class Plugin:\n    \"\"\"\n    Empire plugin interface shim.\n\n    This provides the expected Empire plugin structure for compatibility.\n    When full Empire is available, this integrates as a standard plugin.\n    In offline mode, this serves as a standalone shim.\n    \"\"\"\n\n    def __init__(self, mainMenu=None):\n        \"\"\"Initialize plugin with optional Empire mainMenu reference\"\"\"\n        self.info = {\n            'Name': 'EmpireAdvisor',\n            'Author': ['Research Team'],\n            'Description': 'OPSEC advisory plugin for Empire commands',\n            'Software': 'Empire 4.x+',\n            'Techniques': ['T1059', 'T1027'],\n            'Comments': [\n                'Provides pre-execution OPSEC scoring',\n                'Advisory only - never auto-executes',\n                'Authorized research use only'\n            ]\n        }\n        self.mainMenu = mainMenu\n        self.advisor = EmpireAdvisor()\n\n    def onLoad(self):\n        \"\"\"Called when plugin is loaded by Empire\"\"\"\n        print(\"[+] Empire Advisor plugin loaded\")\n        print(\"[*] Commands will be scored for OPSEC considerations\")\n        return True\n\n    def register(self, mainMenu):\n        \"\"\"Register plugin hooks with Empire\"\"\"\n        self.mainMenu = mainMenu\n        # Hook into command execution pipeline\n        # In real Empire: mainMenu.register_command_hook(self.check_command)\n        return True\n\n    def check_command(self, command: str, output_format: str = \"text\") -> Dict:\n        \"\"\"\n        Main entry point for command checking.\n        Called before command execution.\n\n        Args:\n            command: The command to check\n            output_format: 'text' or 'json'\n\n        Returns:\n            Dict with 'advisory' and 'allow_execution' keys\n        \"\"\"\n        advisory = self.advisor.score_command(command)\n\n        if output_format == \"json\":\n            output = self.advisor.format_advisory_json(advisory)\n        else:\n            output = self.advisor.format_advisory_text(advisory)\n\n        return {\n            'advisory': output,\n            'allow_execution': advisory.action != 'block',\n            'action': advisory.action,\n            'score': advisory.opsec_score\n        }",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {
+      "A": {
+        "text": "Plugin",
+        "range": {
+          "byteOffset": {
+            "start": 7758,
+            "end": 7764
+          },
+          "start": {
+            "line": 221,
+            "column": 6
+          },
+          "end": {
+            "line": 221,
+            "column": 12
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  }
+}
+]

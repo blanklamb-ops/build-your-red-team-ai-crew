@@ -1,0 +1,4 @@
+timestamp,asset,event_type,summary,details
+2026-08-12T12:30:00Z,mail-01.example.test,email,Mailbox rule creation observed,Synthetic rule targeted a lab mailbox
+2026-08-12T12:40:00Z,vpn-01.example.test,network,Remote session established,Synthetic authorized test session
+2026-08-12T12:50:00,web-02.example.test,authentication,Repeated authentication attempts,

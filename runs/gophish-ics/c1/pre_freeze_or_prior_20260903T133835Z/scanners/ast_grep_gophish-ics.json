@@ -1,0 +1,1553 @@
+[
+{
+  "text": "print(f\"error: {e}\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 1591,
+      "end": 1628
+    },
+    "start": {
+      "line": 45,
+      "column": 8
+    },
+    "end": {
+      "line": 45,
+      "column": 45
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"error: {e}\", file=sys.stderr)",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"error: {e}\"",
+          "range": {
+            "byteOffset": {
+              "start": 1597,
+              "end": 1610
+            },
+            "start": {
+              "line": 45,
+              "column": 14
+            },
+            "end": {
+              "line": 45,
+              "column": 27
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 1610,
+              "end": 1611
+            },
+            "start": {
+              "line": 45,
+              "column": 27
+            },
+            "end": {
+              "line": 45,
+              "column": 28
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 1612,
+              "end": 1627
+            },
+            "start": {
+              "line": 45,
+              "column": 29
+            },
+            "end": {
+              "line": 45,
+              "column": 44
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"error: {e}\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 1591,
+          "end": 1628
+        },
+        "start": {
+          "line": 45,
+          "column": 8
+        },
+        "end": {
+          "line": 45,
+          "column": 45
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"error: generated invite for {recipient_id} failed validation: {result.errors}\",\n                  file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 2150,
+      "end": 2272
+    },
+    "start": {
+      "line": 59,
+      "column": 12
+    },
+    "end": {
+      "line": 60,
+      "column": 34
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "            print(f\"error: generated invite for {recipient_id} failed validation: {result.errors}\",\n                  file=sys.stderr)",
+  "charCount": {
+    "leading": 12,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"error: generated invite for {recipient_id} failed validation: {result.errors}\"",
+          "range": {
+            "byteOffset": {
+              "start": 2156,
+              "end": 2236
+            },
+            "start": {
+              "line": 59,
+              "column": 18
+            },
+            "end": {
+              "line": 59,
+              "column": 98
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 2236,
+              "end": 2237
+            },
+            "start": {
+              "line": 59,
+              "column": 98
+            },
+            "end": {
+              "line": 59,
+              "column": 99
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 2256,
+              "end": 2271
+            },
+            "start": {
+              "line": 60,
+              "column": 18
+            },
+            "end": {
+              "line": 60,
+              "column": 33
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"error: generated invite for {recipient_id} failed validation: {result.errors}\",\n                  file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 2150,
+          "end": 2272
+        },
+        "start": {
+          "line": 59,
+          "column": 12
+        },
+        "end": {
+          "line": 60,
+          "column": 34
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"generated {len(written)} invite(s) for campaign {event.campaign_id}:\")",
+  "range": {
+    "byteOffset": {
+      "start": 2695,
+      "end": 2773
+    },
+    "start": {
+      "line": 73,
+      "column": 4
+    },
+    "end": {
+      "line": 73,
+      "column": 82
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print(f\"generated {len(written)} invite(s) for campaign {event.campaign_id}:\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"generated {len(written)} invite(s) for campaign {event.campaign_id}:\"",
+          "range": {
+            "byteOffset": {
+              "start": 2701,
+              "end": 2772
+            },
+            "start": {
+              "line": 73,
+              "column": 10
+            },
+            "end": {
+              "line": 73,
+              "column": 81
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"generated {len(written)} invite(s) for campaign {event.campaign_id}:\")",
+      "range": {
+        "byteOffset": {
+          "start": 2695,
+          "end": 2773
+        },
+        "start": {
+          "line": 73,
+          "column": 4
+        },
+        "end": {
+          "line": 73,
+          "column": 82
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"  {path}\")",
+  "range": {
+    "byteOffset": {
+      "start": 2807,
+      "end": 2825
+    },
+    "start": {
+      "line": 75,
+      "column": 8
+    },
+    "end": {
+      "line": 75,
+      "column": 26
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"  {path}\")",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"  {path}\"",
+          "range": {
+            "byteOffset": {
+              "start": 2813,
+              "end": 2824
+            },
+            "start": {
+              "line": 75,
+              "column": 14
+            },
+            "end": {
+              "line": 75,
+              "column": 25
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"  {path}\")",
+      "range": {
+        "byteOffset": {
+          "start": 2807,
+          "end": 2825
+        },
+        "start": {
+          "line": 75,
+          "column": 8
+        },
+        "end": {
+          "line": 75,
+          "column": 26
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"error: {e}\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 3065,
+      "end": 3102
+    },
+    "start": {
+      "line": 84,
+      "column": 8
+    },
+    "end": {
+      "line": 84,
+      "column": 45
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"error: {e}\", file=sys.stderr)",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"error: {e}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3071,
+              "end": 3084
+            },
+            "start": {
+              "line": 84,
+              "column": 14
+            },
+            "end": {
+              "line": 84,
+              "column": 27
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 3084,
+              "end": 3085
+            },
+            "start": {
+              "line": 84,
+              "column": 27
+            },
+            "end": {
+              "line": 84,
+              "column": 28
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 3086,
+              "end": 3101
+            },
+            "start": {
+              "line": 84,
+              "column": 29
+            },
+            "end": {
+              "line": 84,
+              "column": 44
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"error: {e}\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 3065,
+          "end": 3102
+        },
+        "start": {
+          "line": 84,
+          "column": 8
+        },
+        "end": {
+          "line": 84,
+          "column": 45
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"error: malformed reply .ics ({args.reply}): {e}\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 3264,
+      "end": 3338
+    },
+    "start": {
+      "line": 91,
+      "column": 8
+    },
+    "end": {
+      "line": 91,
+      "column": 82
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"error: malformed reply .ics ({args.reply}): {e}\", file=sys.stderr)",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"error: malformed reply .ics ({args.reply}): {e}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3270,
+              "end": 3320
+            },
+            "start": {
+              "line": 91,
+              "column": 14
+            },
+            "end": {
+              "line": 91,
+              "column": 64
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 3320,
+              "end": 3321
+            },
+            "start": {
+              "line": 91,
+              "column": 64
+            },
+            "end": {
+              "line": 91,
+              "column": 65
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 3322,
+              "end": 3337
+            },
+            "start": {
+              "line": 91,
+              "column": 66
+            },
+            "end": {
+              "line": 91,
+              "column": 81
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"error: malformed reply .ics ({args.reply}): {e}\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 3264,
+          "end": 3338
+        },
+        "start": {
+          "line": 91,
+          "column": 8
+        },
+        "end": {
+          "line": 91,
+          "column": 82
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(\n            f\"error: no invite on record for UID={parsed.uid} attendee={parsed.attendee_email}; \"\n            \"was `generate` run for this campaign first?\",\n            file=sys.stderr,\n        )",
+  "range": {
+    "byteOffset": {
+      "start": 3519,
+      "end": 3721
+    },
+    "start": {
+      "line": 97,
+      "column": 8
+    },
+    "end": {
+      "line": 101,
+      "column": 9
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(\n            f\"error: no invite on record for UID={parsed.uid} attendee={parsed.attendee_email}; \"\n            \"was `generate` run for this campaign first?\",\n            file=sys.stderr,\n        )",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"error: no invite on record for UID={parsed.uid} attendee={parsed.attendee_email}; \"\n            \"was `generate` run for this campaign first?\"",
+          "range": {
+            "byteOffset": {
+              "start": 3538,
+              "end": 3681
+            },
+            "start": {
+              "line": 98,
+              "column": 12
+            },
+            "end": {
+              "line": 99,
+              "column": 57
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 3681,
+              "end": 3682
+            },
+            "start": {
+              "line": 99,
+              "column": 57
+            },
+            "end": {
+              "line": 99,
+              "column": 58
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 3695,
+              "end": 3710
+            },
+            "start": {
+              "line": 100,
+              "column": 12
+            },
+            "end": {
+              "line": 100,
+              "column": 27
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 3710,
+              "end": 3711
+            },
+            "start": {
+              "line": 100,
+              "column": 27
+            },
+            "end": {
+              "line": 100,
+              "column": 28
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(\n            f\"error: no invite on record for UID={parsed.uid} attendee={parsed.attendee_email}; \"\n            \"was `generate` run for this campaign first?\",\n            file=sys.stderr,\n        )",
+      "range": {
+        "byteOffset": {
+          "start": 3519,
+          "end": 3721
+        },
+        "start": {
+          "line": 97,
+          "column": 8
+        },
+        "end": {
+          "line": 101,
+          "column": 9
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"recorded {parsed.status} for recipient {recipient_id} in campaign {campaign_id}\")",
+  "range": {
+    "byteOffset": {
+      "start": 3865,
+      "end": 3954
+    },
+    "start": {
+      "line": 106,
+      "column": 4
+    },
+    "end": {
+      "line": 106,
+      "column": 93
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print(f\"recorded {parsed.status} for recipient {recipient_id} in campaign {campaign_id}\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"recorded {parsed.status} for recipient {recipient_id} in campaign {campaign_id}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3871,
+              "end": 3953
+            },
+            "start": {
+              "line": 106,
+              "column": 10
+            },
+            "end": {
+              "line": 106,
+              "column": 92
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"recorded {parsed.status} for recipient {recipient_id} in campaign {campaign_id}\")",
+      "range": {
+        "byteOffset": {
+          "start": 3865,
+          "end": 3954
+        },
+        "start": {
+          "line": 106,
+          "column": 4
+        },
+        "end": {
+          "line": 106,
+          "column": 93
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(json.dumps(report, indent=2))",
+  "range": {
+    "byteOffset": {
+      "start": 4196,
+      "end": 4231
+    },
+    "start": {
+      "line": 116,
+      "column": 8
+    },
+    "end": {
+      "line": 116,
+      "column": 43
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(json.dumps(report, indent=2))",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "json.dumps(report, indent=2)",
+          "range": {
+            "byteOffset": {
+              "start": 4202,
+              "end": 4230
+            },
+            "start": {
+              "line": 116,
+              "column": 14
+            },
+            "end": {
+              "line": 116,
+              "column": 42
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(json.dumps(report, indent=2))",
+      "range": {
+        "byteOffset": {
+          "start": 4196,
+          "end": 4231
+        },
+        "start": {
+          "line": 116,
+          "column": 8
+        },
+        "end": {
+          "line": 116,
+          "column": 43
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"Campaign: {report['campaign_id']}  (invited: {report['invited']})\")",
+  "range": {
+    "byteOffset": {
+      "start": 4254,
+      "end": 4329
+    },
+    "start": {
+      "line": 119,
+      "column": 4
+    },
+    "end": {
+      "line": 119,
+      "column": 79
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print(f\"Campaign: {report['campaign_id']}  (invited: {report['invited']})\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"Campaign: {report['campaign_id']}  (invited: {report['invited']})\"",
+          "range": {
+            "byteOffset": {
+              "start": 4260,
+              "end": 4328
+            },
+            "start": {
+              "line": 119,
+              "column": 10
+            },
+            "end": {
+              "line": 119,
+              "column": 78
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"Campaign: {report['campaign_id']}  (invited: {report['invited']})\")",
+      "range": {
+        "byteOffset": {
+          "start": 4254,
+          "end": 4329
+        },
+        "start": {
+          "line": 119,
+          "column": 4
+        },
+        "end": {
+          "line": 119,
+          "column": 79
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(\"-\" * 40)",
+  "range": {
+    "byteOffset": {
+      "start": 4334,
+      "end": 4349
+    },
+    "start": {
+      "line": 120,
+      "column": 4
+    },
+    "end": {
+      "line": 120,
+      "column": 19
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print(\"-\" * 40)",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "\"-\" * 40",
+          "range": {
+            "byteOffset": {
+              "start": 4340,
+              "end": 4348
+            },
+            "start": {
+              "line": 120,
+              "column": 10
+            },
+            "end": {
+              "line": 120,
+              "column": 18
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(\"-\" * 40)",
+      "range": {
+        "byteOffset": {
+          "start": 4334,
+          "end": 4349
+        },
+        "start": {
+          "line": 120,
+          "column": 4
+        },
+        "end": {
+          "line": 120,
+          "column": 19
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"  {status:<10} {report['counts'][status]}\")",
+  "range": {
+    "byteOffset": {
+      "start": 4420,
+      "end": 4471
+    },
+    "start": {
+      "line": 122,
+      "column": 8
+    },
+    "end": {
+      "line": 122,
+      "column": 59
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"  {status:<10} {report['counts'][status]}\")",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"  {status:<10} {report['counts'][status]}\"",
+          "range": {
+            "byteOffset": {
+              "start": 4426,
+              "end": 4470
+            },
+            "start": {
+              "line": 122,
+              "column": 14
+            },
+            "end": {
+              "line": 122,
+              "column": 58
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"  {status:<10} {report['counts'][status]}\")",
+      "range": {
+        "byteOffset": {
+          "start": 4420,
+          "end": 4471
+        },
+        "start": {
+          "line": 122,
+          "column": 8
+        },
+        "end": {
+          "line": 122,
+          "column": 59
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(\"-\" * 40)",
+  "range": {
+    "byteOffset": {
+      "start": 4476,
+      "end": 4491
+    },
+    "start": {
+      "line": 123,
+      "column": 4
+    },
+    "end": {
+      "line": 123,
+      "column": 19
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print(\"-\" * 40)",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "\"-\" * 40",
+          "range": {
+            "byteOffset": {
+              "start": 4482,
+              "end": 4490
+            },
+            "start": {
+              "line": 123,
+              "column": 10
+            },
+            "end": {
+              "line": 123,
+              "column": 18
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(\"-\" * 40)",
+      "range": {
+        "byteOffset": {
+          "start": 4476,
+          "end": 4491
+        },
+        "start": {
+          "line": 123,
+          "column": 4
+        },
+        "end": {
+          "line": 123,
+          "column": 19
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"  {r['recipient_id']:<10} {r['status']:<10} {r['email']}\")",
+  "range": {
+    "byteOffset": {
+      "start": 4535,
+      "end": 4601
+    },
+    "start": {
+      "line": 125,
+      "column": 8
+    },
+    "end": {
+      "line": 125,
+      "column": 74
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"  {r['recipient_id']:<10} {r['status']:<10} {r['email']}\")",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"  {r['recipient_id']:<10} {r['status']:<10} {r['email']}\"",
+          "range": {
+            "byteOffset": {
+              "start": 4541,
+              "end": 4600
+            },
+            "start": {
+              "line": 125,
+              "column": 14
+            },
+            "end": {
+              "line": 125,
+              "column": 73
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"  {r['recipient_id']:<10} {r['status']:<10} {r['email']}\")",
+      "range": {
+        "byteOffset": {
+          "start": 4535,
+          "end": 4601
+        },
+        "start": {
+          "line": 125,
+          "column": 8
+        },
+        "end": {
+          "line": 125,
+          "column": 74
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"OK: {args.ics} is a structurally valid ICS\")",
+  "range": {
+    "byteOffset": {
+      "start": 4823,
+      "end": 4875
+    },
+    "start": {
+      "line": 133,
+      "column": 8
+    },
+    "end": {
+      "line": 133,
+      "column": 60
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"OK: {args.ics} is a structurally valid ICS\")",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"OK: {args.ics} is a structurally valid ICS\"",
+          "range": {
+            "byteOffset": {
+              "start": 4829,
+              "end": 4874
+            },
+            "start": {
+              "line": 133,
+              "column": 14
+            },
+            "end": {
+              "line": 133,
+              "column": 59
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"OK: {args.ics} is a structurally valid ICS\")",
+      "range": {
+        "byteOffset": {
+          "start": 4823,
+          "end": 4875
+        },
+        "start": {
+          "line": 133,
+          "column": 8
+        },
+        "end": {
+          "line": 133,
+          "column": 60
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"INVALID: {args.ics}\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 4897,
+      "end": 4943
+    },
+    "start": {
+      "line": 135,
+      "column": 4
+    },
+    "end": {
+      "line": 135,
+      "column": 50
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print(f\"INVALID: {args.ics}\", file=sys.stderr)",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"INVALID: {args.ics}\"",
+          "range": {
+            "byteOffset": {
+              "start": 4903,
+              "end": 4925
+            },
+            "start": {
+              "line": 135,
+              "column": 10
+            },
+            "end": {
+              "line": 135,
+              "column": 32
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 4925,
+              "end": 4926
+            },
+            "start": {
+              "line": 135,
+              "column": 32
+            },
+            "end": {
+              "line": 135,
+              "column": 33
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 4927,
+              "end": 4942
+            },
+            "start": {
+              "line": 135,
+              "column": 34
+            },
+            "end": {
+              "line": 135,
+              "column": 49
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"INVALID: {args.ics}\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 4897,
+          "end": 4943
+        },
+        "start": {
+          "line": 135,
+          "column": 4
+        },
+        "end": {
+          "line": 135,
+          "column": 50
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"  - {err}\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 4982,
+      "end": 5018
+    },
+    "start": {
+      "line": 137,
+      "column": 8
+    },
+    "end": {
+      "line": 137,
+      "column": 44
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "        print(f\"  - {err}\", file=sys.stderr)",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"  - {err}\"",
+          "range": {
+            "byteOffset": {
+              "start": 4988,
+              "end": 5000
+            },
+            "start": {
+              "line": 137,
+              "column": 14
+            },
+            "end": {
+              "line": 137,
+              "column": 26
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 5000,
+              "end": 5001
+            },
+            "start": {
+              "line": 137,
+              "column": 26
+            },
+            "end": {
+              "line": 137,
+              "column": 27
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 5002,
+              "end": 5017
+            },
+            "start": {
+              "line": 137,
+              "column": 28
+            },
+            "end": {
+              "line": 137,
+              "column": 43
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print(f\"  - {err}\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 4982,
+          "end": 5018
+        },
+        "start": {
+          "line": 137,
+          "column": 8
+        },
+        "end": {
+          "line": 137,
+          "column": 44
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print()",
+  "range": {
+    "byteOffset": {
+      "start": 5859,
+      "end": 5866
+    },
+    "start": {
+      "line": 165,
+      "column": 4
+    },
+    "end": {
+      "line": 165,
+      "column": 11
+    }
+  },
+  "file": "gophish_ics/cli.py",
+  "lines": "    print()",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": []
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "hint",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking recipient identities/telemetry from a library module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).",
+  "labels": [
+    {
+      "text": "print()",
+      "range": {
+        "byteOffset": {
+          "start": 5859,
+          "end": 5866
+        },
+        "start": {
+          "line": 165,
+          "column": 4
+        },
+        "end": {
+          "line": 165,
+          "column": 11
+        }
+      },
+      "style": "primary"
+    }
+  ]
+}
+]

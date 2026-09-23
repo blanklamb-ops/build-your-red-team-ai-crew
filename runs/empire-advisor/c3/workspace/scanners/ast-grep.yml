@@ -1,0 +1,13 @@
+id: no-runtime-dispatch-or-network
+language: Python
+message: Runtime execution and network primitives are forbidden.
+severity: error
+rule:
+  any:
+    - pattern: subprocess.$F($$$ARGS)
+    - pattern: os.system($$$ARGS)
+    - pattern: eval($$$ARGS)
+    - pattern: exec($$$ARGS)
+    - pattern: socket.$F($$$ARGS)
+    - pattern: requests.$F($$$ARGS)
+    - pattern: urllib.request.$F($$$ARGS)

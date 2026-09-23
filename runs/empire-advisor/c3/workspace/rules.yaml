@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "description": "Deterministic advisory heuristics. Scores estimate relative operational noise, not detection probability.",
+  "max_command_length": 4096,
+  "thresholds": {
+    "warn": 20,
+    "deny": 60
+  },
+  "rules": [
+    {
+      "id": "encoded-powershell",
+      "pattern": "(?:powershell|pwsh)(?:\\.exe)?\\b[^\\r\\n]*(?:-e(?:nc(?:odedcommand)?)?|/e(?:nc(?:odedcommand)?)?)\\b",
+      "severity": "critical",
+      "weight": 65,
+      "rationale": "Encoded PowerShell obscures operator intent and is commonly scrutinized by command-line and script telemetry.",
+      "suggestion_ids": ["transparent-powershell"]
+    },
+    {
+      "id": "in-memory-download",
+      "pattern": "(?:downloadstring|downloadfile|invoke-webrequest|\\biwr\\b|curl(?:\\.exe)?\\b)[^\\r\\n]*https?://",
+      "severity": "high",
+      "weight": 45,
+      "rationale": "Combining an interpreter or transfer utility with a URL creates correlated process, script, DNS, and network evidence.",
+      "suggestion_ids": ["verify-approved-local-file"]
+    },
+    {
+      "id": "credential-dumping-name",
+      "pattern": "(?:invoke-mimikatz|sekurlsa::|lsadump::|dcsync)",
+      "severity": "critical",
+      "weight": 80,
+      "rationale": "Credential-dumping command families are high-risk and strongly associated with credential-access detections.",
+      "suggestion_ids": ["inspect-local-account-metadata"]
+    },
+    {
+      "id": "security-control-change",
+      "pattern": "(?:set-mppreference[^\\r\\n]*disable|sc(?:\\.exe)?\\s+(?:stop|delete)\\s+(?:windefend|sense)|netsh\\s+advfirewall\\s+set[^\\r\\n]*state\\s+off)",
+      "severity": "critical",
+      "weight": 85,
+      "rationale": "Changing endpoint protection or firewall state is disruptive, highly visible, and outside an advisory workflow.",
+      "suggestion_ids": ["inspect-protection-status"]
+    },
+    {
+      "id": "event-log-clearing",
+      "pattern": "(?:wevtutil(?:\\.exe)?\\s+cl\\b|clear-eventlog\\b)",
+      "severity": "critical",
+      "weight": 90,
+      "rationale": "Clearing event logs destroys evidence and commonly produces its own high-confidence audit trail.",
+      "suggestion_ids": ["sample-event-log"]
+    },
+    {
+      "id": "shadow-copy-deletion",
+      "pattern": "(?:(?:vssadmin|wmic)(?:\\.exe)?[^\\r\\n]*(?:delete\\s+shadows|shadowcopy\\s+delete)|remove-wmiobject[^\\r\\n]*win32_shadowcopy)",
+      "severity": "critical",
+      "weight": 90,
+      "rationale": "Deleting shadow copies is destructive and commonly associated with impact activity.",
+      "suggestion_ids": ["inspect-shadow-copies"]
+    },
+    {
+      "id": "sam-hive-export",
+      "pattern": "reg(?:\\.exe)?\\s+(?:save|export)\\s+(?:hklm\\\\sam|hkey_local_machine\\\\sam)",
+      "severity": "critical",
+      "weight": 80,
+      "rationale": "Exporting the SAM registry hive creates sensitive credential material and conspicuous registry/file evidence.",
+      "suggestion_ids": ["inspect-local-account-metadata"]
+    },
+    {
+      "id": "broad-domain-user-enumeration",
+      "pattern": "net(?:\\.exe)?\\s+user\\s+/domain\\b",
+      "severity": "medium",
+      "weight": 30,
+      "rationale": "Enumerating every domain user is broad discovery and can create directory-service and process telemetry.",
+      "suggestion_ids": ["query-approved-domain-user"]
+    },
+    {
+      "id": "broad-privileged-group-enumeration",
+      "pattern": "net(?:\\.exe)?\\s+(?:group|localgroup)\\s+[\"']?domain admins[\"']?\\s+/domain\\b",
+      "severity": "high",
+      "weight": 40,
+      "rationale": "Bulk privileged-group discovery is a recognizable pattern; constrain lookup to an approved group when required.",
+      "suggestion_ids": ["query-approved-group"]
+    },
+    {
+      "id": "verbose-process-enumeration",
+      "pattern": "tasklist(?:\\.exe)?\\s+/v\\b",
+      "severity": "medium",
+      "weight": 20,
+      "rationale": "Verbose enumeration collects every visible process and window title when a targeted process query may suffice.",
+      "suggestion_ids": ["query-approved-process"]
+    },
+    {
+      "id": "broad-process-cim-enumeration",
+      "pattern": "(?:wmic(?:\\.exe)?\\s+process\\s+(?:list|get)|get-ciminstance\\s+(?:-classname\\s+)?win32_process\\b(?![^\\r\\n]*-filter))",
+      "severity": "medium",
+      "weight": 20,
+      "rationale": "Unfiltered process inventory can produce unnecessary volume; use an engagement-justified filter.",
+      "suggestion_ids": ["query-approved-process"]
+    },
+    {
+      "id": "full-network-configuration",
+      "pattern": "ipconfig(?:\\.exe)?\\s+/all\\b",
+      "severity": "medium",
+      "weight": 20,
+      "rationale": "Full adapter configuration is broader than necessary when a known interface is in scope.",
+      "suggestion_ids": ["query-approved-interface"]
+    },
+    {
+      "id": "recursive-filesystem-enumeration",
+      "pattern": "(?:dir\\s+[^\\r\\n]*/s\\b|get-childitem\\b[^\\r\\n]*-recurse\\b)",
+      "severity": "medium",
+      "weight": 25,
+      "rationale": "Unbounded recursive file enumeration creates avoidable file-access volume and can be slow.",
+      "suggestion_ids": ["query-approved-path"]
+    },
+    {
+      "id": "full-token-enumeration",
+      "pattern": "whoami(?:\\.exe)?\\s+/all\\b",
+      "severity": "medium",
+      "weight": 20,
+      "rationale": "Full token, group, and privilege enumeration is broader than a simple identity check.",
+      "suggestion_ids": ["query-current-identity"]
+    },
+    {
+      "id": "domain-controller-list",
+      "pattern": "nltest(?:\\.exe)?\\s+/dclist:",
+      "severity": "medium",
+      "weight": 30,
+      "rationale": "Listing all domain controllers is broad domain discovery; query an approved known controller when possible.",
+      "suggestion_ids": ["query-approved-domain-controller"]
+    }
+  ]
+}

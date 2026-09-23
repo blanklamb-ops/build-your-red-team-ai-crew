@@ -1,0 +1,5 @@
+globalThis.LabConfig = Object.freeze({
+  lab_unsafe_modules: false,
+  ui_overlay_awareness: false,
+  file_picker_awareness: false
+});

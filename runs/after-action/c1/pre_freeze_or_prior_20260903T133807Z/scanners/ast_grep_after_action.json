@@ -1,0 +1,654 @@
+[
+{
+  "text": "print(\"warning: no events loaded from any adapter\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 2320,
+      "end": 2388
+    },
+    "start": {
+      "line": 62,
+      "column": 8
+    },
+    "end": {
+      "line": 62,
+      "column": 76
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "        print(\"warning: no events loaded from any adapter\", file=sys.stderr)",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "\"warning: no events loaded from any adapter\"",
+          "range": {
+            "byteOffset": {
+              "start": 2326,
+              "end": 2370
+            },
+            "start": {
+              "line": 62,
+              "column": 14
+            },
+            "end": {
+              "line": 62,
+              "column": 58
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 2370,
+              "end": 2371
+            },
+            "start": {
+              "line": 62,
+              "column": 58
+            },
+            "end": {
+              "line": 62,
+              "column": 59
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 2372,
+              "end": 2387
+            },
+            "start": {
+              "line": 62,
+              "column": 60
+            },
+            "end": {
+              "line": 62,
+              "column": 75
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(\"warning: no events loaded from any adapter\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 2320,
+          "end": 2388
+        },
+        "start": {
+          "line": 62,
+          "column": 8
+        },
+        "end": {
+          "line": 62,
+          "column": 76
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(\"warning: no decisions loaded\", file=sys.stderr)",
+  "range": {
+    "byteOffset": {
+      "start": 2419,
+      "end": 2473
+    },
+    "start": {
+      "line": 64,
+      "column": 8
+    },
+    "end": {
+      "line": 64,
+      "column": 62
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "        print(\"warning: no decisions loaded\", file=sys.stderr)",
+  "charCount": {
+    "leading": 8,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "\"warning: no decisions loaded\"",
+          "range": {
+            "byteOffset": {
+              "start": 2425,
+              "end": 2455
+            },
+            "start": {
+              "line": 64,
+              "column": 14
+            },
+            "end": {
+              "line": 64,
+              "column": 44
+            }
+          }
+        },
+        {
+          "text": ",",
+          "range": {
+            "byteOffset": {
+              "start": 2455,
+              "end": 2456
+            },
+            "start": {
+              "line": 64,
+              "column": 44
+            },
+            "end": {
+              "line": 64,
+              "column": 45
+            }
+          }
+        },
+        {
+          "text": "file=sys.stderr",
+          "range": {
+            "byteOffset": {
+              "start": 2457,
+              "end": 2472
+            },
+            "start": {
+              "line": 64,
+              "column": 46
+            },
+            "end": {
+              "line": 64,
+              "column": 61
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(\"warning: no decisions loaded\", file=sys.stderr)",
+      "range": {
+        "byteOffset": {
+          "start": 2419,
+          "end": 2473
+        },
+        "start": {
+          "line": 64,
+          "column": 8
+        },
+        "end": {
+          "line": 64,
+          "column": 62
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"events loaded: {len(events)} (jsonl={len(jsonl_result.items)}, csv={len(csv_result.items)})\")",
+  "range": {
+    "byteOffset": {
+      "start": 3330,
+      "end": 3431
+    },
+    "start": {
+      "line": 81,
+      "column": 4
+    },
+    "end": {
+      "line": 81,
+      "column": 105
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "    print(f\"events loaded: {len(events)} (jsonl={len(jsonl_result.items)}, csv={len(csv_result.items)})\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"events loaded: {len(events)} (jsonl={len(jsonl_result.items)}, csv={len(csv_result.items)})\"",
+          "range": {
+            "byteOffset": {
+              "start": 3336,
+              "end": 3430
+            },
+            "start": {
+              "line": 81,
+              "column": 10
+            },
+            "end": {
+              "line": 81,
+              "column": 104
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(f\"events loaded: {len(events)} (jsonl={len(jsonl_result.items)}, csv={len(csv_result.items)})\")",
+      "range": {
+        "byteOffset": {
+          "start": 3330,
+          "end": 3431
+        },
+        "start": {
+          "line": 81,
+          "column": 4
+        },
+        "end": {
+          "line": 81,
+          "column": 105
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"decisions loaded: {len(decisions)}\")",
+  "range": {
+    "byteOffset": {
+      "start": 3436,
+      "end": 3480
+    },
+    "start": {
+      "line": 82,
+      "column": 4
+    },
+    "end": {
+      "line": 82,
+      "column": 48
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "    print(f\"decisions loaded: {len(decisions)}\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"decisions loaded: {len(decisions)}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3442,
+              "end": 3479
+            },
+            "start": {
+              "line": 82,
+              "column": 10
+            },
+            "end": {
+              "line": 82,
+              "column": 47
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(f\"decisions loaded: {len(decisions)}\")",
+      "range": {
+        "byteOffset": {
+          "start": 3436,
+          "end": 3480
+        },
+        "start": {
+          "line": 82,
+          "column": 4
+        },
+        "end": {
+          "line": 82,
+          "column": 48
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"correlated timeline entries: {len(correlated)} (linked: {linked_count(correlated)})\")",
+  "range": {
+    "byteOffset": {
+      "start": 3485,
+      "end": 3578
+    },
+    "start": {
+      "line": 83,
+      "column": 4
+    },
+    "end": {
+      "line": 83,
+      "column": 97
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "    print(f\"correlated timeline entries: {len(correlated)} (linked: {linked_count(correlated)})\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"correlated timeline entries: {len(correlated)} (linked: {linked_count(correlated)})\"",
+          "range": {
+            "byteOffset": {
+              "start": 3491,
+              "end": 3577
+            },
+            "start": {
+              "line": 83,
+              "column": 10
+            },
+            "end": {
+              "line": 83,
+              "column": 96
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(f\"correlated timeline entries: {len(correlated)} (linked: {linked_count(correlated)})\")",
+      "range": {
+        "byteOffset": {
+          "start": 3485,
+          "end": 3578
+        },
+        "start": {
+          "line": 83,
+          "column": 4
+        },
+        "end": {
+          "line": 83,
+          "column": 97
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"ingest warnings: {len(warnings)}\")",
+  "range": {
+    "byteOffset": {
+      "start": 3583,
+      "end": 3625
+    },
+    "start": {
+      "line": 84,
+      "column": 4
+    },
+    "end": {
+      "line": 84,
+      "column": 46
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "    print(f\"ingest warnings: {len(warnings)}\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"ingest warnings: {len(warnings)}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3589,
+              "end": 3624
+            },
+            "start": {
+              "line": 84,
+              "column": 10
+            },
+            "end": {
+              "line": 84,
+              "column": 45
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(f\"ingest warnings: {len(warnings)}\")",
+      "range": {
+        "byteOffset": {
+          "start": 3583,
+          "end": 3625
+        },
+        "start": {
+          "line": 84,
+          "column": 4
+        },
+        "end": {
+          "line": 84,
+          "column": 46
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"redaction hits applied to client export: {redactor.hit_count}\")",
+  "range": {
+    "byteOffset": {
+      "start": 3630,
+      "end": 3701
+    },
+    "start": {
+      "line": 85,
+      "column": 4
+    },
+    "end": {
+      "line": 85,
+      "column": 75
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "    print(f\"redaction hits applied to client export: {redactor.hit_count}\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"redaction hits applied to client export: {redactor.hit_count}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3636,
+              "end": 3700
+            },
+            "start": {
+              "line": 85,
+              "column": 10
+            },
+            "end": {
+              "line": 85,
+              "column": 74
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(f\"redaction hits applied to client export: {redactor.hit_count}\")",
+      "range": {
+        "byteOffset": {
+          "start": 3630,
+          "end": 3701
+        },
+        "start": {
+          "line": 85,
+          "column": 4
+        },
+        "end": {
+          "line": 85,
+          "column": 75
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "print(f\"reports written to: {out_dir.resolve()}\")",
+  "range": {
+    "byteOffset": {
+      "start": 3706,
+      "end": 3755
+    },
+    "start": {
+      "line": 86,
+      "column": 4
+    },
+    "end": {
+      "line": 86,
+      "column": 53
+    }
+  },
+  "file": "after_action/cli.py",
+  "lines": "    print(f\"reports written to: {out_dir.resolve()}\")",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Python",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "ARGS": [
+        {
+          "text": "f\"reports written to: {out_dir.resolve()}\"",
+          "range": {
+            "byteOffset": {
+              "start": 3712,
+              "end": 3754
+            },
+            "start": {
+              "line": 86,
+              "column": 10
+            },
+            "end": {
+              "line": 86,
+              "column": 52
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "print-usage",
+  "severity": "info",
+  "note": null,
+  "message": "print() call found - confirm it is CLI status output only (cli.py), not a stray debug print leaking unredacted engagement data from a report/adapter module.",
+  "labels": [
+    {
+      "text": "print(f\"reports written to: {out_dir.resolve()}\")",
+      "range": {
+        "byteOffset": {
+          "start": 3706,
+          "end": 3755
+        },
+        "start": {
+          "line": 86,
+          "column": 4
+        },
+        "end": {
+          "line": 86,
+          "column": 53
+        }
+      },
+      "style": "primary"
+    }
+  ]
+}
+]

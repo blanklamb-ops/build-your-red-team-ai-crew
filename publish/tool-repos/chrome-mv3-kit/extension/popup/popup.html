@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chrome MV3 Lab Kit</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 16px;
+      margin: 0 0 12px 0;
+      font-weight: 600;
+    }
+    .section {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .section:last-child {
+      border-bottom: none;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 13px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    button:hover {
+      background: #f5f5f5;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    button.primary {
+      background: #1a73e8;
+      color: white;
+      border-color: #1a73e8;
+    }
+    button.primary:hover {
+      background: #1557b0;
+    }
+    .status {
+      padding: 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    .status.success {
+      background: #e6f4ea;
+      color: #137333;
+    }
+    .status.warning {
+      background: #fef7e0;
+      color: #ea8600;
+    }
+    .status.error {
+      background: #fce8e6;
+      color: #c5221f;
+    }
+    .status.info {
+      background: #e8f0fe;
+      color: #1967d2;
+    }
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .origin-list {
+      margin-top: 8px;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: monospace;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .origin-item {
+      padding: 2px 0;
+    }
+    .origin-item.granted {
+      color: #137333;
+    }
+    .origin-item.missing {
+      color: #c5221f;
+    }
+    .help-text {
+      font-size: 11px;
+      color: #5f6368;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chrome MV3 Lab Kit</h1>
+
+  <div class="section">
+    <label>1. Host Access (required for recording)</label>
+    <div id="accessStatus" class="status info">Checking permissions...</div>
+    <button id="enableDefaultAccess" class="primary">Enable Lab Access (http/https)</button>
+    <button id="enableCustomAccess">Custom Origins</button>
+    <div class="help-text">Grant → Reload extension if prompted → Start recording</div>
+    <div id="originList" class="origin-list" style="display: none;"></div>
+  </div>
+
+  <div class="section">
+    <label>2. Recording Session</label>
+    <div id="recordingStatus" class="status info">Ready to record</div>
+    <button id="startRecording" class="primary">Start Recording</button>
+    <button id="stopRecording" disabled>Stop Recording</button>
+    <div class="help-text">Browse authorized lab flows after starting</div>
+  </div>
+
+  <div class="section">
+    <label>3. Export Captured Data</label>
+    <button id="exportJson">Export JSON</button>
+    <button id="exportMarkdown">Export Markdown</button>
+    <div id="exportStatus" style="margin-top: 8px;"></div>
+  </div>
+
+  <div class="section" id="customOriginsSection" style="display: none;">
+    <label>Custom Origins</label>
+    <textarea id="customOriginsInput" placeholder="https://login.example.test&#10;https://auth.example.test&#10;account.example.com"></textarea>
+    <div class="help-text">One origin per line (bare domains, URLs, or match patterns)</div>
+    <button id="requestCustom" class="primary">Request Access</button>
+    <button id="cancelCustom">Cancel</button>
+  </div>
+
+  <script src="../shared/origin-utils.js" type="module"></script>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

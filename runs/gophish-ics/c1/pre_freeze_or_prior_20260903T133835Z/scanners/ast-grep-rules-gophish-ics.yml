@@ -1,0 +1,55 @@
+id: print-usage
+language: python
+severity: hint
+message: >-
+  print() call found - confirm it is CLI status output only (cli.py), not a
+  stray debug print leaking recipient identities/telemetry from a library
+  module (config.py/ics_generator.py/ics_reply_parser.py/telemetry.py/validator.py).
+rule:
+  pattern: print($$$ARGS)
+---
+id: eval-exec-usage
+language: python
+severity: error
+message: >-
+  eval()/exec() call found - dynamic code execution has no legitimate use in
+  this ICS/telemetry tool and would be a code-injection risk if fixture
+  input ever reached it.
+rule:
+  any:
+    - pattern: eval($$$ARGS)
+    - pattern: exec($$$ARGS)
+---
+id: shell-injection-risk
+language: python
+severity: error
+message: >-
+  os.system()/subprocess with shell=True found - this tool never needs to
+  shell out; such a call combined with campaign/recipient fixture data would
+  be a command-injection risk.
+rule:
+  any:
+    - pattern: os.system($$$ARGS)
+    - pattern: subprocess.$METHOD($$$ARGS, shell=True, $$$REST)
+    - pattern: subprocess.$METHOD($$$ARGS, shell=True)
+---
+id: pickle-deserialization
+language: python
+severity: warning
+message: >-
+  pickle.load()/loads() found - deserializing untrusted fixture/reply data
+  with pickle is unsafe; this tool should only ever parse JSON/YAML/ICS text.
+rule:
+  any:
+    - pattern: pickle.load($$$ARGS)
+    - pattern: pickle.loads($$$ARGS)
+---
+id: hardcoded-secret-like-assignment
+language: python
+severity: warning
+message: >-
+  Variable name suggests a hardcoded credential/secret - this tool should
+  never embed real credentials; fixtures must stay synthetic (A7).
+rule:
+  kind: assignment
+  regex: '(?i)(password|secret|api_key|token)\s*='

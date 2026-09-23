@@ -1,0 +1,7 @@
+Error: Cannot read rule .
+Help: The rule file either does not exist or cannot be opened.
+See also: https://ast-grep.github.io/guide/rule-config.html
+
+✖ Caused by
+╰▻ Is a directory (os error 21)
+

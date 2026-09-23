@@ -1,0 +1,7 @@
+{
+  "target_name": "lab-fixture-sso",
+  "landing_domain_placeholder": "REPLACE_ME.lab.invalid",
+  "login_paths": ["/login", "/oauth/authorize"],
+  "cookie_names": ["session_id", "csrf_token"],
+  "notes": "Synthetic fixture for ACCEPTANCE A5. Derived from testdata/fixtures/session.sample.json, an authorized lab session against example.com-style fixtures only."
+}

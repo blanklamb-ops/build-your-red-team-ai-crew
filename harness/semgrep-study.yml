@@ -1,0 +1,18 @@
+rules:
+  - id: python-eval-exec
+    languages: [python]
+    message: Dynamic code execution requires review.
+    severity: ERROR
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+  - id: python-subprocess-shell
+    languages: [python]
+    message: Shell-enabled subprocess requires review.
+    severity: WARNING
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+  - id: javascript-eval
+    languages: [javascript, typescript]
+    message: Dynamic JavaScript execution requires review.
+    severity: ERROR
+    pattern: eval(...)

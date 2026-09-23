@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Authorized Lab Auth-Flow Documentation Kit",
+  "version": "1.0.0",
+  "description": "Records sanitized HTTP and form metadata in an authorized local lab.",
+  "permissions": ["webRequest", "webNavigation", "storage", "downloads", "scripting", "activeTab"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": {"service_worker": "background.js"},
+  "action": {"default_popup": "popup.html", "default_title": "Lab flow recorder"},
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["form_capture.js", "snapshot.js"],
+    "run_at": "document_idle",
+    "all_frames": false
+  }]
+}

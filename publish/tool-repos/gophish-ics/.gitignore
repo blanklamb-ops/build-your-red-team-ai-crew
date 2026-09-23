@@ -1,0 +1,24 @@
+# Build artifacts
+/gophish-ics
+/cmd/*/main
+
+# Evidence and operational data
+telemetry.db
+telemetry.db-journal
+output/
+*.ics
+
+# Scanner outputs (committed explicitly, not ignored)
+# semgrep-output.json
+# ast-grep-output.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

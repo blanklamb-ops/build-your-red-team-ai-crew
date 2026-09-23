@@ -1,0 +1,24 @@
+rules:
+  - id: no-subprocess-dispatch
+    languages: [python]
+    message: Runtime command dispatch is forbidden.
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - pattern: subprocess.$FUNC(...)
+          - pattern: os.system(...)
+  - id: no-dynamic-code-execution
+    languages: [python]
+    message: Dynamic code execution is forbidden.
+    severity: ERROR
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+  - id: no-network-client
+    languages: [python]
+    message: Runtime network clients are forbidden.
+    severity: ERROR
+    pattern-either:
+      - pattern: socket.$FUNC(...)
+      - pattern: requests.$FUNC(...)
+      - pattern: urllib.request.$FUNC(...)

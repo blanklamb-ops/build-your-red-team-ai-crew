@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Auth Flow Session",
+  "description": "Captured authentication flow session from chrome-mv3-kit",
+  "type": "object",
+  "required": ["session_id", "started_at", "coverage", "events"],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique session identifier (UUID)"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Session start timestamp (ISO 8601)"
+    },
+    "stopped_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Session stop timestamp (ISO 8601)"
+    },
+    "coverage": {
+      "type": "string",
+      "enum": ["complete", "incomplete"],
+      "description": "Coverage quality indicator"
+    },
+    "diagnostics": {
+      "type": "object",
+      "properties": {
+        "event_counts": {
+          "type": "object",
+          "properties": {
+            "webRequest": { "type": "number" },
+            "webRequestResponse": { "type": "number" },
+            "webNavigation": { "type": "number" }
+          }
+        },
+        "requested_origins": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "granted_origins": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "missing_origins": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "observed_origins": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url", "source"],
+        "properties": {
+          "url": { "type": "string" },
+          "method": { "type": "string" },
+          "status": { "type": "number" },
+          "source": {
+            "type": "string",
+            "enum": ["webRequest", "webNavigation", "contentScript"]
+          },
+          "set_cookie_names": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "form_fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": { "type": "string" },
+                "form_action": { "type": "string" },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "type": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

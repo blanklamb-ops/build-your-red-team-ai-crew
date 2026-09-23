@@ -1,0 +1,32 @@
+{
+  "lock_name": "prompts-locked-for-matrix",
+  "locked_at": "2026-09-05T11:16:12Z",
+  "base_freeze_tag": "freeze-v1.0",
+  "note": "Matrix runs must use these prompt/acceptance/fixture hashes. Do not edit prompts without a new lock + protocol deviation. Live-capture finding F-2026-09-05-01 is accepted as residual (not a prompt change).",
+  "chrome_scope": "Evilginx 2.3.0 placeholder-free operator-ready YAML; Choice-1 shared prompts only",
+  "file_sha256": {
+    "prompts/chrome-mv3-kit/PROMPT.md": "0ea85058760607cbcd84f361dd687dfa24384e44f425b21dccd48d03662a7b37",
+    "prompts/chrome-mv3-kit/ACCEPTANCE.md": "c7d72566f2d7e6827832597cffc889ce14703abc8f6f91639a18919a6f02d2e9",
+    "prompts/chrome-mv3-kit/fixtures/README.md": "c7d0f7478e588302b0560a802cee6bb79420b27123aa7be1312b9aa6295ecf69",
+    "prompts/chrome-mv3-kit/fixtures/phishlet-schema-2.3.0.json": "2f4f0685cd51b6a04a606051a99d1eb2c9b0779061db0a31df57d1143854dce4",
+    "prompts/chrome-mv3-kit/fixtures/regression-mixed-capture.json": "eddf034a05b205d7c2018e088f55a54a520c12c4c02b0463e46f869fe7b2a95f",
+    "prompts/gophish-ics/PROMPT.md": "e6b0d5687c4809b468fefcedefbedfd9bec9721670f46d3d7c5d437f1c988f87",
+    "prompts/gophish-ics/ACCEPTANCE.md": "7d1860f31eca6b473bfe24323bf799db061e739f25a22ce7669147c6d6a8406f",
+    "prompts/empire-advisor/PROMPT.md": "5681cb3fbe434680b10873875b51fdbdd6fbca26709b54e3df521e80667e82ae",
+    "prompts/empire-advisor/ACCEPTANCE.md": "935c9286d4a006e449de1fad7343d8076740fbae6145609a30db5798b0e6634f",
+    "prompts/after-action/PROMPT.md": "cfc8107dfecc4b6a8145b27c627be217df39ac7e1cfd817a2d1e0ec18a9eeec7",
+    "prompts/after-action/ACCEPTANCE.md": "16346ec5dc464bce9a59596a19dfbf107d8c2db51a97ef7df7cad8071c040221",
+    "agents/01_domain_researcher.md": "1fb6d391922d3200bd117189e6a6befe558391b8d2a0e3310cec02534b7d979c",
+    "agents/02_planner.md": "6ca71f70b021efd465b35fa154bbf0ee26618e0de99c133b4e64302f4e63ae5d",
+    "agents/03_ops_advisor.md": "e845e11c7fe1a3e15a77a195f5e46d59075dbae2308c49bade0eb4f13bc62482",
+    "agents/04_tool_architect.md": "3f71d405c97e4f8bc2d5a73208b7ad8b3ad982481c13d3dbeb44e19354b07a15",
+    "agents/05_opsec_reviewer.md": "73c04309a633482d90b3e2d07c64349a22618922757be2ff246d5bbb2a047e65",
+    "conditions/c3-codex-pipeline/AGENTS.md": "f259748271d924f6ce33cc3ebc9a457984745b7bf93aced084e93fd4499c3cfb",
+    "rubric/OPSEC_CARD_TEMPLATE.md": "b8d11ba8cb82db462ce3d65e31f50aa6f959c164be85ca85543d48884fc7a67f",
+    "ethics/AUTHORIZED_USE.md": "aee290ec1667fa45efa8ffa91de85a0b7d2d491fd56f73704f06b904d97aba62"
+  },
+  "operator_decision": "Lock prompts for matrix; accept F-2026-09-05-01 as residual",
+  "lock_commit": "ef060a05471800efae9249e8a83fb3255188a946",
+  "lock_tag": "prompts-locked-for-matrix",
+  "note_lock_pointer": "Authoritative tip is git tag prompts-locked-for-matrix; file_sha256 verifies prompt bytes."
+}
